@@ -6,7 +6,7 @@
 /*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:07:03 by aweissha          #+#    #+#             */
-/*   Updated: 2024/05/17 14:28:44 by sparth           ###   ########.fr       */
+/*   Updated: 2024/05/17 21:56:50 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ void	init_player(t_data *data)
 	data->player->position.y = 6.0;
 	data->player->direction.x = 0;
 	data->player->direction.y = -0.5;
-	data->player->screen.x = 0.5;
+	data->player->screen.x = -data->player->direction.y * tan((FOV_IN_DEGREE / 2) * (PI / 180));
+	// data->player->screen.x = 0.5;
 	data->player->screen.y = 0;
 }
 

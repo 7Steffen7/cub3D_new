@@ -6,7 +6,7 @@
 /*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:02:00 by aweissha          #+#    #+#             */
-/*   Updated: 2024/05/17 17:31:19 by sparth           ###   ########.fr       */
+/*   Updated: 2024/05/17 21:59:06 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@
 # define SCREEN_WIDTH 1024
 # define SCREEN_HEIGHT 768
 # define WALL_DIST 0.25
-# define PI 3.1415926
+# define FOV_IN_DEGREE 60
+# define PI 3.14159265358979
 
 typedef struct s_vector
 {
