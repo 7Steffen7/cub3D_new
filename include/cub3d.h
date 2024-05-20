@@ -6,7 +6,7 @@
 /*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:02:00 by aweissha          #+#    #+#             */
-/*   Updated: 2024/05/17 21:59:06 by sparth           ###   ########.fr       */
+/*   Updated: 2024/05/21 00:43:05 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@
 # include <float.h>
 # include <limits.h>
 # include <math.h>
+# include <fcntl.h>
 # include "../MLX42/include/MLX42/MLX42.h"
+# include "../libft/libft.h"
 
 # define MAP_WIDTH 24
 # define MAP_HEIGHT 24
@@ -52,7 +54,7 @@ typedef struct s_ray
 	float		factor;
 	int			map_x;
 	int			map_y;
-	int			wall;
+	char		wall;
 	int			side;
 	double		perp_length;
 	int			line_height;
@@ -62,12 +64,14 @@ typedef struct s_ray
 
 typedef struct s_data
 {
-	int			argc;
-	char		**argv;
 	int			screen_width;
 	int			screen_height;
-	int			map[MAP_WIDTH][MAP_HEIGHT];
-	mlx_t 	 	*mlx;
+	int			map_width;
+	int			map_height;
+	// char		map[MAP_HEIGHT][MAP_WIDTH];
+	// char		(*map)[MAP_WIDTH];
+	char		**map;
+	mlx_t		*mlx;
 	mlx_image_t	*img;
 	t_player	*player;
 	t_ray		*ray;
@@ -79,7 +83,7 @@ typedef struct s_data
 void	init_ray(int ray_index, t_data *data);
 void	ft_init_mlx(t_data *data);
 void	init_player(t_data *data);
-t_data	*init_data(int argc, char **argv);
+t_data	*init_data(int argc);
 
 // error.c
 void	free_everything(t_data *data);
@@ -101,5 +105,8 @@ void	ray_algorithm(t_data *data);
 void	line_to_image(t_data *data);
 void	render_image(t_data *data);
 void	raycaster(t_data *data);
+
+// map.c
+void	parse_map(t_data *data, char *argv[]);
 
 #endif

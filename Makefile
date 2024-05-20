@@ -8,8 +8,8 @@ LIBFTTARGET	= $(LIBFT)libft.a
 SRC_DIR = src/
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -g 
-# -fsanitize=address
+CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address
+
 MLX42FLAGS = -Iinclude -lglfw -framework Cocoa -framework OpenGL -framework IOKit
 
 RM = rm -f
@@ -19,6 +19,7 @@ SRCS =		$(SRC_DIR)main.c \
 			$(SRC_DIR)init.c \
 			$(SRC_DIR)error.c \
 			$(SRC_DIR)raycasting.c \
+			$(SRC_DIR)map.c \
 
 
 OBJS = $(SRCS:.c=.o)

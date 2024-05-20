@@ -6,58 +6,87 @@
 /*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:07:59 by aweissha          #+#    #+#             */
-/*   Updated: 2024/05/17 17:36:49 by sparth           ###   ########.fr       */
+/*   Updated: 2024/05/21 01:02:45 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-int worldMap[MAP_HEIGHT][MAP_WIDTH]=
-{
-{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-{1,0,0,0,0,0,1,1,1,1,1,0,0,0,0,1,0,1,0,1,0,0,0,1},
-{1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1},
-{1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1},
-{1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1},
-{1,0,0,0,0,0,1,1,0,1,1,0,0,0,0,1,0,1,0,1,0,0,0,1},
-{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-{1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-{1,1,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-{1,1,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-{1,1,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-{1,1,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-{1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-{1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
-};
+// char worldMap[MAP_HEIGHT][MAP_WIDTH]=
+// {
+// {'1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1'},
+// {'1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1'},
+// {'1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1'},
+// {'1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1'},
+// {'1','0','0','0','0','0','1','1','1','1','1','0','0','0','0','1','0','1','0','1','0','0','0','1'},
+// {'1','0','0','0','0','0','1','0','0','0','1','0','0','0','0','0','0','0','0','0','0','0','0','1'},
+// {'1','0','0','0','0','0','1','0','0','0','1','0','0','0','0','1','0','0','0','1','0','0','0','1'},
+// {'1','0','0','0','0','0','1','0','0','0','1','0','0','0','0','0','0','0','0','0','0','0','0','1'},
+// {'1','0','0','0','0','0','1','1','0','1','1','0','0','0','0','1','0','1','0','1','0','0','0','1'},
+// {'1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1'},
+// {'1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1'},
+// {'1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1'},
+// {'1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1'},
+// {'1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1'},
+// {'1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1'},
+// {'1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1'},
+// {'1','1','1','1','1','1','1','1','1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1'},
+// {'1','1','0','1','0','0','0','0','1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1'},
+// {'1','1','0','0','0','0','1','0','1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1'},
+// {'1','1','0','1','0','0','0','0','1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1'},
+// {'1','1','0','1','1','1','1','1','1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1'},
+// {'1','1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1'},
+// {'1','1','1','1','1','1','1','1','1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1'},
+// {'1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1'}
+// };
 
-// for testing, parse_map() just defines data->map as worldMap
-void	parse_map(t_data *data)
-{
-	int	i;
-	int	j;
+// char worldMap[MAP_HEIGHT][MAP_WIDTH]=
+// {
+// {"111111111111111111111111"},
+// {"100000000000000000000001"},
+// {"100000000000000000000001"},
+// {"100000000000000000000001"},
+// {"100000111110000101010001"},
+// {"100000100010000000000001"},
+// {"100000100010000100010001"},
+// {"100000100010000000000001"},
+// {"100000110110000101010001"},
+// {"100000000000000000000001"},
+// {"100000000000000000000001"},
+// {"100000000000000000000001"},
+// {"100000000000000000000001"},
+// {"100000000000000000000001"},
+// {"100000000000000000000001"},
+// {"100000000000000000000001"},
+// {"111111111000000000000001"},
+// {"110100001000000000000001"},
+// {"110000101000000000000001"},
+// {"110100001000000000000001"},
+// {"110111111000000000000001"},
+// {"110000000000000000000001"},
+// {"111111111000000000000001"},
+// {"111111111111111111111111"}
+// };
 
-	i = 0;
-	j = 0;
-    for (int i = 0; i < MAP_HEIGHT; i++) 
-	{
-        for (int j = 0; j < MAP_WIDTH; j++) 
-		{
-            data->map[i][j] = worldMap[i][j];
-			printf("%d,", data->map[i][j]);
-        }
-		printf("\n");
-    }
-}
+// // // for testing, parse_map() just defines data->map as worldMap
+// void	parse_map(t_data *data, char *argv[])
+// {
+// 	int	i;
+// 	int	j;
+
+// 	(void)argv;
+// 	i = 0;
+// 	j = 0;
+//     for (int i = 0; i < MAP_HEIGHT; i++) 
+// 	{
+//         for (int j = 0; j < MAP_WIDTH; j++) 
+// 		{
+//             data->map[i][j] = worldMap[i][j];
+// 			printf("%c", data->map[i][j]);
+//         }
+// 		printf("\n");
+//     }
+// }
 
 // void	print_map(t_data *data)
 // {
@@ -155,13 +184,12 @@ void	ft_hook(void *param)
 		// 	data->player->position.x = temp_straight_x;
 		// if  (temp_straight_y > WALL_DIST && temp_straight_y < MAP_HEIGHT - WALL_DIST)
 		// 	data->player->position.y = temp_straight_y;
-		if (data->map[(int)(data->player->position.y)][(int)(temp_straight_x + WALL_DIST)] != 1
-			&& data->map[(int)(data->player->position.y)][(int)(temp_straight_x - WALL_DIST)] != 1)
+		if (data->map[(int)(data->player->position.y)][(int)(temp_straight_x + WALL_DIST)] != '1'
+			&& data->map[(int)(data->player->position.y)][(int)(temp_straight_x - WALL_DIST)] != '1')
 			data->player->position.x = temp_straight_x;
-		if (data->map[(int)(temp_straight_y + WALL_DIST)][(int)(data->player->position.x)] != 1
-			&& data->map[(int)(temp_straight_y - WALL_DIST)][(int)(data->player->position.x)] != 1)
+		if (data->map[(int)(temp_straight_y + WALL_DIST)][(int)(data->player->position.x)] != '1'
+			&& data->map[(int)(temp_straight_y - WALL_DIST)][(int)(data->player->position.x)] != '1')
 			data->player->position.y = temp_straight_y;
-
 	}
 	if (mlx_is_key_down(data->mlx, MLX_KEY_S))
 	{
@@ -169,11 +197,11 @@ void	ft_hook(void *param)
 		angle = atan2(data->player->direction.y, data->player->direction.x);
 		temp_straight_x += speed * cos(angle);
 		temp_straight_y += speed * sin(angle);
-		if (data->map[(int)(data->player->position.y)][(int)(temp_straight_x + WALL_DIST)] != 1
-			&& data->map[(int)(data->player->position.y)][(int)(temp_straight_x - WALL_DIST)] != 1)
+		if (data->map[(int)(data->player->position.y)][(int)(temp_straight_x + WALL_DIST)] != '1'
+			&& data->map[(int)(data->player->position.y)][(int)(temp_straight_x - WALL_DIST)] != '1')
 			data->player->position.x = temp_straight_x;
-		if (data->map[(int)(temp_straight_y + WALL_DIST)][(int)(data->player->position.x)] != 1
-			&& data->map[(int)(temp_straight_y - WALL_DIST)][(int)(data->player->position.x)] != 1)
+		if (data->map[(int)(temp_straight_y + WALL_DIST)][(int)(data->player->position.x)] != '1'
+			&& data->map[(int)(temp_straight_y - WALL_DIST)][(int)(data->player->position.x)] != '1')
 			data->player->position.y = temp_straight_y;
 	}
 	if (mlx_is_key_down(data->mlx, MLX_KEY_D))
@@ -183,11 +211,11 @@ void	ft_hook(void *param)
 		perp_y = data->player->direction.x;
 		temp_dir_x += speed * perp_x;
 		temp_dir_y += speed * perp_y;
-		if (data->map[(int)(data->player->position.y)][(int)(temp_dir_x + WALL_DIST)] != 1
-			&& data->map[(int)(data->player->position.y)][(int)(temp_dir_x - WALL_DIST)] != 1)
+		if (data->map[(int)(data->player->position.y)][(int)(temp_dir_x + WALL_DIST)] != '1'
+			&& data->map[(int)(data->player->position.y)][(int)(temp_dir_x - WALL_DIST)] != '1')
 			data->player->position.x = temp_dir_x;
-		if (data->map[(int)(temp_dir_y + WALL_DIST)][(int)(data->player->position.x)] != 1
-			&& data->map[(int)(temp_dir_y - WALL_DIST)][(int)(data->player->position.x)] != 1)
+		if (data->map[(int)(temp_dir_y + WALL_DIST)][(int)(data->player->position.x)] != '1'
+			&& data->map[(int)(temp_dir_y - WALL_DIST)][(int)(data->player->position.x)] != '1')
 			data->player->position.y = temp_dir_y;
 
 		// if (temp_dir_x > WALL_DIST && temp_dir_x < MAP_WIDTH - WALL_DIST)
@@ -202,27 +230,27 @@ void	ft_hook(void *param)
 		perp_y = data->player->direction.x;
 		temp_dir_x += speed * perp_x;
 		temp_dir_y += speed * perp_y;
-		if (data->map[(int)(data->player->position.y)][(int)(temp_dir_x + WALL_DIST)] != 1
-			&& data->map[(int)(data->player->position.y)][(int)(temp_dir_x - WALL_DIST)] != 1)
+		if (data->map[(int)(data->player->position.y)][(int)(temp_dir_x + WALL_DIST)] != '1'
+			&& data->map[(int)(data->player->position.y)][(int)(temp_dir_x - WALL_DIST)] != '1')
 			data->player->position.x = temp_dir_x;
-		if (data->map[(int)(temp_dir_y + WALL_DIST)][(int)(data->player->position.x)] != 1
-			&& data->map[(int)(temp_dir_y - WALL_DIST)][(int)(data->player->position.x)] != 1)
+		if (data->map[(int)(temp_dir_y + WALL_DIST)][(int)(data->player->position.x)] != '1'
+			&& data->map[(int)(temp_dir_y - WALL_DIST)][(int)(data->player->position.x)] != '1')
 			data->player->position.y = temp_dir_y;
 	}
-	printf("player_x: %f\n", data->player->position.x);
-	printf("player_y: %f\n", data->player->position.y);
+	// printf("player_x: %f\n", data->player->position.x);
+	// printf("player_y: %f\n", data->player->position.y);
 	print_background(data);
 	raycaster(data);
-	
 }
 
-int	main(int argc, char **argv)
+int	main(int argc, char *argv[])
 {
 	t_data	*data;
-
+	// (void)argv;
 	// printf("hello\n");
-	data = init_data(argc, argv);
-	parse_map(data);
+	data = init_data(argc);
+	// parse_map(data, argv);
+	parse_map(data, argv);
 	// print_map(data);
 	raycaster(data);
 

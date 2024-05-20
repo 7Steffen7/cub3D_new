@@ -37,7 +37,9 @@ SRCS =			ft_atoi_base.c \
 				ft_substr.c \
 				ft_tolower.c \
 				ft_toupper.c \
-				ft_strcmp.c
+				ft_strcmp.c \
+				get_next_line.c \
+				get_next_line_utils.c \
 
 BONUS =			ft_lstadd_back.c \
 				ft_lstadd_front.c \

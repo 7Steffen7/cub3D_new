@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aweissha <aweissha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 18:03:14 by aweissha          #+#    #+#             */
-/*   Updated: 2024/04/14 14:18:04 by aweissha         ###   ########.fr       */
+/*   Updated: 2024/05/20 19:00:40 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define LIBFT_H
 # include <unistd.h>
 # include <stdlib.h>
+# include "get_next_line.h"
 
 typedef struct s_list
 {
@@ -68,5 +69,15 @@ t_list	*ft_lstnew(void *content);
 t_list	*ft_lstlast(t_list *lst);
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 int		ft_lstsize(t_list *lst);
+char	*get_next_line(int fd);
+char	*create_line(t_listg *lst);
+void	lst_to_line(t_listg *lst, char *line);
+void	file_read(t_listg **header, int fd);
+void	create_buffer_list(t_listg **lst, char *buffer);
+void	remainings(t_listg **lst);
+int		linecount(t_listg *lst);
+bool	lstchr(t_listg *lst, char c);
+void	ft_lstclean(t_listg **lst, t_listg *replace, char *leftovers);
+t_listg	*ft_lstlast_clean(t_listg *lst, int check);
 
 #endif

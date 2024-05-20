@@ -6,7 +6,7 @@
 /*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:07:03 by aweissha          #+#    #+#             */
-/*   Updated: 2024/05/17 21:56:50 by sparth           ###   ########.fr       */
+/*   Updated: 2024/05/21 00:44:01 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	init_ray(int ray_index, t_data *data)
 	ray->dir.y = player->direction.y + player->screen.y * ray->factor;
 	ray->map_x = (int)player->position.x;
 	ray->map_y = (int)player->position.y;
-	ray->wall = 0;
+	ray->wall = '0';
 	ray->side = 0;
 	ray->perp_length = 0;
 	ray->line_height = 0;
@@ -66,19 +66,21 @@ void	init_player(t_data *data)
 	data->player->direction.x = 0;
 	data->player->direction.y = -0.5;
 	data->player->screen.x = -data->player->direction.y * tan((FOV_IN_DEGREE / 2) * (PI / 180));
-	// data->player->screen.x = 0.5;
 	data->player->screen.y = 0;
 }
 
-t_data	*init_data(int argc, char **argv)
+t_data	*init_data(int argc)
 {
 	t_data	*data;
-
+	
+	if (argc != 2)
+	{
+		printf("input: './cub3D' 'name_of_map'");
+		exit (1);
+	}
 	data = malloc(sizeof(t_data));
 	if (data == NULL)
 		ft_error("Memory allocation of data struct failed\n", errno);
-	data->argc = argc;
-	data->argv = argv;
 	data->screen_width = SCREEN_WIDTH;
 	data->screen_height = SCREEN_HEIGHT;
 	data->mlx = NULL;
@@ -87,6 +89,9 @@ t_data	*init_data(int argc, char **argv)
 	data->ray = NULL;
 	data->time = 0;
 	data->prev_time = 0;
+	data->map = NULL;
+	data->map_height = 0;
+	data->map_width = 0;
 	init_player(data);
 	ft_init_mlx(data);
 	return (data);

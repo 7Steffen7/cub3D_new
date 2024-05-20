@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aweissha <aweissha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 10:53:58 by aweissha          #+#    #+#             */
-/*   Updated: 2024/05/16 18:46:38 by aweissha         ###   ########.fr       */
+/*   Updated: 2024/05/21 01:01:20 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,19 +117,23 @@ void	check_for_wall(t_data *data)
 	// {
 	// 	ray->wall = data->map[ray->map_x][ray->map_y];
 	// }
+	// printf("ray dir.x: %f\n", ray->dir.x);
+	// printf("ray dir.y: %f\n", ray->dir.y);
+	// printf("ray map_x: %d\n", ray->map_x);
+	// printf("ray map_y: %d\n", ray->map_y);
 	if (ray->dir.x < 0 && is_integer(ray->pos.x) == 1
-		&& ray->dir.y < 0 && is_integer(ray->pos.y) == 1
-		&& data->map[ray->map_y - 1][ray->map_x - 1] != 0)
+		&& ray->dir.y < 0 && is_integer(ray->pos.y) == 1 && 0 <= ray->map_y - 1 && ray->map_y - 1 < 24 && 0 <= ray->map_x - 1 && ray->map_x - 1 < 24
+		&& data->map[ray->map_y - 1][ray->map_x - 1] != '0')
 	{
 		ray->wall = data->map[ray->map_y - 1][ray->map_x - 1];
 	}
-	else if (ray->dir.x < 0 && is_integer(ray->pos.x) == 1
-		&& data->map[ray->map_y][ray->map_x - 1] != 0)
+	else if (ray->dir.x < 0 && is_integer(ray->pos.x) == 1 && 0 <= ray->map_y && ray->map_y < 24 && 0 <= ray->map_x - 1 && ray->map_x - 1 < 24
+		&& data->map[ray->map_y][ray->map_x - 1] != '0')
 	{
 		ray->wall = data->map[ray->map_y][ray->map_x - 1];
 	}
-	else if (ray->dir.y < 0 && is_integer(ray->pos.y) == 1
-		&& data->map[ray->map_y - 1][ray->map_x] != 0)
+	else if (ray->dir.y < 0 && is_integer(ray->pos.y) == 1 && 0 <= ray->map_y - 1 && ray->map_y - 1 < 24 && 0 <= ray->map_x && ray->map_x < 24
+		&& data->map[ray->map_y - 1][ray->map_x] != '0')
 	{
 		ray->wall = data->map[ray->map_y - 1][ray->map_x];
 	}
@@ -169,7 +173,7 @@ void	ray_algorithm(t_data *data)
 	t_ray	*ray;
 
 	ray = data->ray;
-	while (!(ray->wall))
+	while ((ray->wall) == '0')
 	{
 		// printf("hello from ray algorithm\n");
 		elongate_ray(ray);
