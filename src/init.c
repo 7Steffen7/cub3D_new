@@ -6,7 +6,7 @@
 /*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:07:03 by aweissha          #+#    #+#             */
-/*   Updated: 2024/05/21 13:35:27 by sparth           ###   ########.fr       */
+/*   Updated: 2024/05/21 14:49:32 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,16 +60,35 @@ void	init_player(t_data *data)
 	data->player = malloc(sizeof(t_player));
 	if (data->player == NULL)
 		ft_error("Memory allocation of player struct failed\n", errno);
-	// set default values for player location and view angle
 	find_player(data);
-	printf("player.x: %f\n", data->player->position.x);
-	printf("player.y: %f\n", data->player->position.y);
-	// data->player->position.x = 22.0;
-	// data->player->position.y = 6.0;
-	data->player->direction.x = 0;
-	data->player->direction.y = -0.5;
-	data->player->screen.x = -data->player->direction.y * tan((FOV_IN_DEGREE / 2) * (PI / 180));
-	data->player->screen.y = 0;
+	if (data->init_player_dir == 'N')
+	{
+		data->player->direction.x = 0;
+		data->player->direction.y = -0.5;
+		data->player->screen.x = -data->player->direction.y * tan((FOV_IN_DEGREE / 2) * (PI / 180));
+		data->player->screen.y = 0;
+	}
+	else if (data->init_player_dir == 'S')
+	{
+		data->player->direction.x = 0;
+		data->player->direction.y = 0.5;
+		data->player->screen.x = -data->player->direction.y * tan((FOV_IN_DEGREE / 2) * (PI / 180));
+		data->player->screen.y = 0;
+	}
+	else if (data->init_player_dir == 'W')
+	{
+		data->player->direction.x = -0.5;
+		data->player->direction.y = 0;
+		data->player->screen.x = 0;
+		data->player->screen.y = data->player->direction.x * tan((FOV_IN_DEGREE / 2) * (PI / 180));
+	}
+	else if (data->init_player_dir == 'E')
+	{
+		data->player->direction.x = 0.5;
+		data->player->direction.y = 0;
+		data->player->screen.x = 0;
+		data->player->screen.y = data->player->direction.x * tan((FOV_IN_DEGREE / 2) * (PI / 180));
+	}
 }
 
 t_data	*init_data(int argc, char *argv[])
@@ -90,6 +109,10 @@ t_data	*init_data(int argc, char *argv[])
 	data->img = NULL;
 	data->player = NULL;
 	data->ray = NULL;
+	data->path_to_the_east_texture = NULL;
+	data->path_to_the_west_texture = NULL;
+	data->path_to_the_north_texture = NULL;
+	data->path_to_the_south_texture = NULL;
 	data->time = 0;
 	data->prev_time = 0;
 	data->map = NULL;

@@ -6,7 +6,7 @@
 /*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:02:00 by aweissha          #+#    #+#             */
-/*   Updated: 2024/05/21 13:46:16 by sparth           ###   ########.fr       */
+/*   Updated: 2024/05/21 15:37:30 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,10 @@ typedef struct s_data
 	t_ray		*ray;
 	double		time;
 	double		prev_time;
+	char		*path_to_the_east_texture;
+	char		*path_to_the_west_texture;
+	char		*path_to_the_north_texture;
+	char		*path_to_the_south_texture;
 }	t_data;
 
 // init.c

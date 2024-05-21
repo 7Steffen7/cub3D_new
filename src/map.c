@@ -6,7 +6,7 @@
 /*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 18:08:43 by sparth            #+#    #+#             */
-/*   Updated: 2024/05/21 13:49:04 by sparth           ###   ########.fr       */
+/*   Updated: 2024/05/21 17:27:04 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ void	find_player(t_data *data)
 {
 	int	x;
 	int	y;
+	
 	y = 0;
-	// while(map[*y])
 	while(data->map[y])
 	{
 		x = 0;
@@ -162,14 +162,91 @@ void	print_map(char **map)
 	while (i < 24)
 		printf("%s\n", map[i++]);
 }
+void	delete_nl(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] == '\n')
+			line[i] = '\0';
+		i++;
+	}
+}
+
+char	*check_texture(char *line, char *dir)
+{
+	int		fd;
+	ssize_t	bytes_read;
+	char	buffer[1];
+	char	*prep_line;
+	
+	line = line + 3;
+	delete_nl(line);
+	if (dir)
+	{
+		printf("Invalid file! Conflict between texture files\n");
+		exit (1);
+	}
+	fd = open(line, O_RDONLY);
+	if (fd == -1)
+	{
+		printf("Error opening %s\n", line);
+		exit (1);
+	}
+	bytes_read = read(fd, buffer, 1);
+	if (bytes_read == -1)
+	{
+		printf("Permission denied: %s\n", line);
+		exit (1);
+	}
+	if (close(fd) == -1)
+	{
+		printf("fatal error! closing %s failed\n", line);
+		exit (1);
+	}
+	prep_line = ft_strdup(line);
+	return (prep_line);
+}
+
+void	get_textures(char *file, t_data *data)
+{
+	int			fd;
+	char		*line;
+
+	fd = open(file, O_RDONLY);
+	if (fd == -1)
+	{
+		printf("error opening file\n");
+		exit (1);
+	}
+	while (1)
+	{
+		line = get_next_line(fd);
+		if (!line)
+			break;
+		if (!ft_strncmp(line, "EA ", 3))
+			data->path_to_the_east_texture = check_texture(line, data->path_to_the_east_texture);
+		else if (!ft_strncmp(line, "WE ", 3))
+			data->path_to_the_west_texture = check_texture(line, data->path_to_the_west_texture);
+		else if (!ft_strncmp(line, "NO ", 3))
+			data->path_to_the_north_texture = check_texture(line, data->path_to_the_north_texture);
+		else if (!ft_strncmp(line, "SO ", 3))
+			data->path_to_the_south_texture = check_texture(line, data->path_to_the_south_texture);
+		free(line);
+		line = NULL;
+	}
+	close (fd);
+	printf("path_east: %s\n", data->path_to_the_east_texture);
+	printf("path_west: %s\n", data->path_to_the_west_texture);
+	printf("path_north: %s\n", data->path_to_the_north_texture);
+	printf("path_south: %s\n", data->path_to_the_south_texture);
+}
 
 void	parse_map(t_data *data, char *argv[])
 {
-	// int	i;
-	// int	j;
-
-	// i = 0;
-	// j = 0;
+	get_textures(argv[1], data);
 	get_dimensions(argv[1], data);
 	create_map(argv[1], data);
 	print_map(data->map);
