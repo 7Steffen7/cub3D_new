@@ -6,7 +6,7 @@
 /*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:02:00 by aweissha          #+#    #+#             */
-/*   Updated: 2024/05/21 00:43:05 by sparth           ###   ########.fr       */
+/*   Updated: 2024/05/21 13:46:16 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
 # include "../MLX42/include/MLX42/MLX42.h"
 # include "../libft/libft.h"
 
-# define MAP_WIDTH 24
-# define MAP_HEIGHT 24
+// # define MAP_WIDTH 24
+// # define MAP_HEIGHT 24
 # define SCREEN_WIDTH 1024
 # define SCREEN_HEIGHT 768
 # define WALL_DIST 0.25
@@ -68,8 +68,7 @@ typedef struct s_data
 	int			screen_height;
 	int			map_width;
 	int			map_height;
-	// char		map[MAP_HEIGHT][MAP_WIDTH];
-	// char		(*map)[MAP_WIDTH];
+	char		init_player_dir;
 	char		**map;
 	mlx_t		*mlx;
 	mlx_image_t	*img;
@@ -83,7 +82,7 @@ typedef struct s_data
 void	init_ray(int ray_index, t_data *data);
 void	ft_init_mlx(t_data *data);
 void	init_player(t_data *data);
-t_data	*init_data(int argc);
+t_data	*init_data(int argc, char *argv[]);
 
 // error.c
 void	free_everything(t_data *data);
@@ -108,5 +107,7 @@ void	raycaster(t_data *data);
 
 // map.c
 void	parse_map(t_data *data, char *argv[]);
+void	find_player(t_data *data);
+
 
 #endif

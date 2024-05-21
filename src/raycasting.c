@@ -6,7 +6,7 @@
 /*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 10:53:58 by aweissha          #+#    #+#             */
-/*   Updated: 2024/05/21 01:01:20 by sparth           ###   ########.fr       */
+/*   Updated: 2024/05/21 13:38:52 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,17 +122,20 @@ void	check_for_wall(t_data *data)
 	// printf("ray map_x: %d\n", ray->map_x);
 	// printf("ray map_y: %d\n", ray->map_y);
 	if (ray->dir.x < 0 && is_integer(ray->pos.x) == 1
-		&& ray->dir.y < 0 && is_integer(ray->pos.y) == 1 && 0 <= ray->map_y - 1 && ray->map_y - 1 < 24 && 0 <= ray->map_x - 1 && ray->map_x - 1 < 24
+		&& ray->dir.y < 0 && is_integer(ray->pos.y) == 1 && 0 <= ray->map_y - 1
+		&& ray->map_y - 1 < data->map_height && 0 <= ray->map_x - 1 && ray->map_x - 1 < data->map_width
 		&& data->map[ray->map_y - 1][ray->map_x - 1] != '0')
 	{
 		ray->wall = data->map[ray->map_y - 1][ray->map_x - 1];
 	}
-	else if (ray->dir.x < 0 && is_integer(ray->pos.x) == 1 && 0 <= ray->map_y && ray->map_y < 24 && 0 <= ray->map_x - 1 && ray->map_x - 1 < 24
+	else if (ray->dir.x < 0 && is_integer(ray->pos.x) == 1 && 0 <= ray->map_y
+		&& ray->map_y < data->map_height && 0 <= ray->map_x - 1 && ray->map_x - 1 < data->map_width
 		&& data->map[ray->map_y][ray->map_x - 1] != '0')
 	{
 		ray->wall = data->map[ray->map_y][ray->map_x - 1];
 	}
-	else if (ray->dir.y < 0 && is_integer(ray->pos.y) == 1 && 0 <= ray->map_y - 1 && ray->map_y - 1 < 24 && 0 <= ray->map_x && ray->map_x < 24
+	else if (ray->dir.y < 0 && is_integer(ray->pos.y) == 1 && 0 <= ray->map_y - 1
+		&& ray->map_y - 1 < data->map_height && 0 <= ray->map_x && ray->map_x < data->map_width
 		&& data->map[ray->map_y - 1][ray->map_x] != '0')
 	{
 		ray->wall = data->map[ray->map_y - 1][ray->map_x];

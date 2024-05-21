@@ -6,7 +6,7 @@
 /*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 18:08:43 by sparth            #+#    #+#             */
-/*   Updated: 2024/05/21 00:43:16 by sparth           ###   ########.fr       */
+/*   Updated: 2024/05/21 13:49:04 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,33 @@ void	free_and_exit_map(char **map, int i)
 	if (map)
 		free(map);
 	printf("memory allocation failed\n");
+	exit (1);
+}
+
+void	find_player(t_data *data)
+{
+	int	x;
+	int	y;
+	y = 0;
+	// while(map[*y])
+	while(data->map[y])
+	{
+		x = 0;
+		while (data->map[y][x])
+		{
+			if (data->map[y][x] == 'N' || data->map[y][x] == 'E'
+				|| data->map[y][x] == 'S' || data->map[y][x] == 'W')
+			{
+				data->init_player_dir = data->map[y][x];
+				data->player->position.x = (double)x;
+				data->player->position.y = (double)y;
+				return ;
+			}
+			x++;
+		}
+		y++;
+	}
+	printf("Invalid Map, No Player found\n");
 	exit (1);
 }
 

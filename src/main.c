@@ -6,7 +6,7 @@
 /*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:07:59 by aweissha          #+#    #+#             */
-/*   Updated: 2024/05/21 01:02:45 by sparth           ###   ########.fr       */
+/*   Updated: 2024/05/21 13:35:21 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,9 +248,8 @@ int	main(int argc, char *argv[])
 	t_data	*data;
 	// (void)argv;
 	// printf("hello\n");
-	data = init_data(argc);
+	data = init_data(argc, argv);
 	// parse_map(data, argv);
-	parse_map(data, argv);
 	// print_map(data);
 	raycaster(data);
 

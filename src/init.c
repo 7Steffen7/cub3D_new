@@ -6,7 +6,7 @@
 /*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:07:03 by aweissha          #+#    #+#             */
-/*   Updated: 2024/05/21 00:44:01 by sparth           ###   ########.fr       */
+/*   Updated: 2024/05/21 13:35:27 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,15 +61,18 @@ void	init_player(t_data *data)
 	if (data->player == NULL)
 		ft_error("Memory allocation of player struct failed\n", errno);
 	// set default values for player location and view angle
-	data->player->position.x = 22.0;
-	data->player->position.y = 6.0;
+	find_player(data);
+	printf("player.x: %f\n", data->player->position.x);
+	printf("player.y: %f\n", data->player->position.y);
+	// data->player->position.x = 22.0;
+	// data->player->position.y = 6.0;
 	data->player->direction.x = 0;
 	data->player->direction.y = -0.5;
 	data->player->screen.x = -data->player->direction.y * tan((FOV_IN_DEGREE / 2) * (PI / 180));
 	data->player->screen.y = 0;
 }
 
-t_data	*init_data(int argc)
+t_data	*init_data(int argc, char *argv[])
 {
 	t_data	*data;
 	
@@ -92,6 +95,7 @@ t_data	*init_data(int argc)
 	data->map = NULL;
 	data->map_height = 0;
 	data->map_width = 0;
+	parse_map(data, argv);
 	init_player(data);
 	ft_init_mlx(data);
 	return (data);
