@@ -6,7 +6,7 @@
 /*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 18:08:43 by sparth            #+#    #+#             */
-/*   Updated: 2024/05/21 17:27:04 by sparth           ###   ########.fr       */
+/*   Updated: 2024/05/22 13:05:49 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,12 +154,12 @@ void	get_dimensions(char *file, t_data *data)
 	}
 }
 
-void	print_map(char **map)
+void	print_map(char **map, t_data *data)
 {
 	int	i;
 
 	i = 0;
-	while (i < 24)
+	while (i < data->map_height)
 		printf("%s\n", map[i++]);
 }
 void	delete_nl(char *line)
@@ -210,7 +210,7 @@ char	*check_texture(char *line, char *dir)
 	return (prep_line);
 }
 
-void	get_textures(char *file, t_data *data)
+void	get_textures_and_colors(char *file, t_data *data)
 {
 	int			fd;
 	char		*line;
@@ -234,6 +234,8 @@ void	get_textures(char *file, t_data *data)
 			data->path_to_the_north_texture = check_texture(line, data->path_to_the_north_texture);
 		else if (!ft_strncmp(line, "SO ", 3))
 			data->path_to_the_south_texture = check_texture(line, data->path_to_the_south_texture);
+		// else if (!ft_strncmp(line, "C ", 2))
+			
 		free(line);
 		line = NULL;
 	}
@@ -246,8 +248,8 @@ void	get_textures(char *file, t_data *data)
 
 void	parse_map(t_data *data, char *argv[])
 {
-	get_textures(argv[1], data);
+	get_textures_and_colors(argv[1], data);
 	get_dimensions(argv[1], data);
 	create_map(argv[1], data);
-	print_map(data->map);
+	print_map(data->map, data);
 }
