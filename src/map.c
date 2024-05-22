@@ -6,7 +6,7 @@
 /*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 18:08:43 by sparth            #+#    #+#             */
-/*   Updated: 2024/05/22 13:05:49 by sparth           ###   ########.fr       */
+/*   Updated: 2024/05/22 17:19:00 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,6 +210,47 @@ char	*check_texture(char *line, char *dir)
 	return (prep_line);
 }
 
+unsigned int	get_color(char *line, bool check_if_double)
+{
+	char **strarr;
+	int	red;
+	int	blue;
+	int	green;
+	int	i;
+	
+	i = 0;
+	if (check_if_double == true)
+	{
+		printf("Color error! Only one color for floor and one for ceiling accepted\n");
+		exit (1);
+	}
+	line = line + 2;
+	strarr = ft_split(line, ',');
+	while (strarr[i])
+	{
+		if (ft_strlen(strarr[i]) > 3)
+		{
+			printf("numbers too large - expected rgb input 0-255 -> '255,255,255'\n");
+			exit (1);
+		}
+		i++;
+	}
+	if (i != 3)
+	{
+		printf("color syntax wrong - expected rgb input 0-255 -> '255,255,255'\n");
+		exit (1);
+	}
+	blue = ft_atoi(strarr[2]);
+	green = ft_atoi(strarr[1]);
+	red = ft_atoi(strarr[0]);
+	if (blue > 255 || green > 255 || red > 255)
+	{
+		printf("numbers too large - expected rgb input 0-255 -> '255,255,255'\n");
+		exit (1);
+	}
+	// next step save checked value to hexa value in struct;
+}
+
 void	get_textures_and_colors(char *file, t_data *data)
 {
 	int			fd;
@@ -234,7 +275,10 @@ void	get_textures_and_colors(char *file, t_data *data)
 			data->path_to_the_north_texture = check_texture(line, data->path_to_the_north_texture);
 		else if (!ft_strncmp(line, "SO ", 3))
 			data->path_to_the_south_texture = check_texture(line, data->path_to_the_south_texture);
-		// else if (!ft_strncmp(line, "C ", 2))
+		else if (!ft_strncmp(line, "C ", 2))
+			data->color_ceiling = get_color(line, data->color_ceiling_check);
+		else if (!ft_strncmp(line, "F ", 2))
+			data->color_ceiling = get_color(line, data->color_floor_check);
 			
 		free(line);
 		line = NULL;

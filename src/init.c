@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aweissha <aweissha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:07:03 by aweissha          #+#    #+#             */
-/*   Updated: 2024/05/22 12:47:47 by aweissha         ###   ########.fr       */
+/*   Updated: 2024/05/22 16:54:19 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,10 @@ t_data	*init_data(int argc, char *argv[])
 	data->map = NULL;
 	data->map_height = 0;
 	data->map_width = 0;
+	data->color_ceiling = 0x0;
+	data->color_floor = 0x0;
+	data->color_ceiling_check = false;
+	data->color_floor_check = false;
 	parse_map(data, argv);
 	init_player(data);
 	ft_init_mlx(data);
