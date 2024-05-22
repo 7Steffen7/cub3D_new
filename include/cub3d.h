@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: aweissha <aweissha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:02:00 by aweissha          #+#    #+#             */
-/*   Updated: 2024/05/21 15:37:30 by sparth           ###   ########.fr       */
+/*   Updated: 2024/05/22 12:50:32 by aweissha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,11 @@ typedef struct s_ray
 	int			map_x;
 	int			map_y;
 	char		wall;
-	int			side;
 	double		perp_length;
+	int			side;
+	float		wall_x;
+	int			tex_x;
+	int			tex_y;
 	int			line_height;
 	int			line_bottom;
 	int			line_top;
@@ -70,6 +73,7 @@ typedef struct s_data
 	int			map_height;
 	char		init_player_dir;
 	char		**map;
+	mlx_texture_t*	textures[4];
 	mlx_t		*mlx;
 	mlx_image_t	*img;
 	t_player	*player;
@@ -100,7 +104,7 @@ double	get_lower(double a, double b);
 double	find_factor(t_ray *ray);
 void	elongate_ray(t_ray *ray);
 int 	is_integer(double x);
-void	check_side(t_data *data);
+void	check_side(t_ray *ray);
 void	check_for_wall(t_data *data);
 double	vector_len(t_vector vector);
 void	calc_perp_length(t_data *data);

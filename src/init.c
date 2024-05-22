@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: aweissha <aweissha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:07:03 by aweissha          #+#    #+#             */
-/*   Updated: 2024/05/21 14:49:32 by sparth           ###   ########.fr       */
+/*   Updated: 2024/05/22 12:47:47 by aweissha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,11 @@ void	init_ray(int ray_index, t_data *data)
 	ray->map_x = (int)player->position.x;
 	ray->map_y = (int)player->position.y;
 	ray->wall = '0';
-	ray->side = 0;
 	ray->perp_length = 0;
+	ray->side = 0;
+	ray->wall_x = 0;
+	ray->tex_x = 0;
+	ray->tex_y = 0;
 	ray->line_height = 0;
 	ray->line_bottom = 0;
 	ray->line_top = 0;
