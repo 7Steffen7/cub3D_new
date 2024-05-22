@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: aweissha <aweissha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 10:53:58 by aweissha          #+#    #+#             */
-/*   Updated: 2024/05/21 13:38:52 by sparth           ###   ########.fr       */
+/*   Updated: 2024/05/22 13:39:28 by aweissha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,20 +59,6 @@ int is_integer(double x)
 {
 	// printf("hello from is_integer\n");
     return (fabs(x - round(x)) < 1e-15);
-}
-
-void	check_side(t_data *data)
-{
-	t_ray	*ray;
-	
-	ray=data->ray;
-	if (is_integer(ray->pos.x == 1)
-		&& is_integer(ray->pos.y == 1))
-			ray->side = 0;
-	else if (is_integer(ray->pos.x == 1))
-		ray->side = 1;
-	else if (is_integer(ray->pos.y == 1))
-		ray->side = 2;
 }
 
 /*
@@ -171,6 +157,43 @@ void	calc_perp_length(t_data *data)
 		vector_len(player->direction);
 }
 
+void	check_side(t_ray *ray)
+{
+	// if ray hits vertical line
+	if (fabs(ray->pos.x - round(ray->pos.x)) < fabs(ray->pos.y - round(ray->pos.y))
+		&& is_integer(ray->pos.x) == 1)
+	{
+		if (ray->dir.x > 0)
+			ray->side = 1;	// east
+		else
+			ray->side = 3;	// west
+	}
+	// else if ray hits horizontal line
+	else if (fabs(ray->pos.x - round(ray->pos.x)) > fabs(ray->pos.y - round(ray->pos.y))
+		&& is_integer(ray->pos.y) == 1)
+	{
+		if (ray->dir.y > 0)
+			ray->side = 2;	// south
+		else
+			ray->side = 0;	// north
+	}
+}
+
+void	calc_texture(t_data *data)
+{
+	t_ray	*ray;
+	
+	ray = data->ray;
+	check_side(ray);
+	if (ray->side == 0 || ray->side == 2)
+		ray->wall_x = ray->pos.x;
+	else if (ray->side == 1 || ray->side == 3)
+		ray->wall_x = ray->pos.y;
+	ray->wall_x -= floor(ray->wall_x);
+	ray->tex_x = (int)(ray->wall_x * data->textures[ray->side]->width);
+}
+
+
 void	ray_algorithm(t_data *data)
 {
 	t_ray	*ray;
@@ -183,12 +206,27 @@ void	ray_algorithm(t_data *data)
 		check_for_wall(data);
 	}
 	calc_perp_length(data);
+	calc_texture(data);
+}
+
+int	find_color_from_texture(int	counter, t_data *data)
+{
+	t_ray	*ray;
+	int		color;
+	int		tex_width;
+
+	ray = data->ray;
+	tex_width = data->textures[ray->side]->width;
+	ray->tex_y = (int)(((counter - ray->line_top) / (float)ray->line_height) * data->textures[ray->side]->height);
+	color = data->textures[ray->side]->pixels[tex_width * ray->tex_y + ray->tex_x];
+	return (color);
 }
 
 void	line_to_image(t_data *data)
 {
 	t_ray	*ray;
 	int		counter;
+	int		color;
 
 	ray = data->ray;
 	counter = ray->line_top;
@@ -196,7 +234,8 @@ void	line_to_image(t_data *data)
 	while (counter < ray->line_bottom)
 	{
 		// printf("counter: %d\n", counter);
-		mlx_put_pixel(data->img, ray->index, counter, 0xFF0000FF);
+		color = find_color_from_texture(counter, data);
+		mlx_put_pixel(data->img, ray->index, counter, color);
 		counter++;
 	}
 }
@@ -249,4 +288,3 @@ void	raycaster(t_data *data)
 		i++;
 	}
 }
-

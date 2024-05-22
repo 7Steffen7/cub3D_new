@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: aweissha <aweissha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:07:59 by aweissha          #+#    #+#             */
-/*   Updated: 2024/05/21 13:35:21 by sparth           ###   ########.fr       */
+/*   Updated: 2024/05/21 18:00:36 by aweissha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,6 +243,22 @@ void	ft_hook(void *param)
 	raycaster(data);
 }
 
+void	init_textures(t_data *data)
+{
+	data->textures[0] = mlx_load_png(data->path_to_the_north_texture);
+	if (!(data->textures[0]))
+		ft_mlx_error_and_free(mlx_strerror(mlx_errno), mlx_errno, data);
+	data->textures[1] = mlx_load_png(data->path_to_the_east_texture);
+	if (!(data->textures[1]))
+		ft_mlx_error_and_free(mlx_strerror(mlx_errno), mlx_errno, data);	
+	data->textures[2] = mlx_load_png(data->path_to_the_south_texture);
+	if (!(data->textures[2]))
+		ft_mlx_error_and_free(mlx_strerror(mlx_errno), mlx_errno, data);
+	data->textures[3] = mlx_load_png(data->path_to_the_west_texture);
+	if (!(data->textures[3]))
+		ft_mlx_error_and_free(mlx_strerror(mlx_errno), mlx_errno, data);
+}
+
 int	main(int argc, char *argv[])
 {
 	t_data	*data;
@@ -251,6 +267,7 @@ int	main(int argc, char *argv[])
 	data = init_data(argc, argv);
 	// parse_map(data, argv);
 	// print_map(data);
+	init_textures(data);
 	raycaster(data);
 
 	mlx_loop_hook(data->mlx, ft_hook, data);
