@@ -1,7 +1,7 @@
-EA ./textures/fake_texture_east
-WE ./textures/fake_texture_west
-NO ./textures/fake_texture_north
-SO ./textures/fake_texture_south
+EA ./textures/bluestone.png
+WE ./textures/colorstone.png
+NO ./textures/eagle.png
+SO ./textures/mossy.png
 
 
 C 225,30,0

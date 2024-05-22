@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aweissha <aweissha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:07:59 by aweissha          #+#    #+#             */
-/*   Updated: 2024/05/21 18:00:36 by aweissha         ###   ########.fr       */
+/*   Updated: 2024/05/22 23:31:23 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,14 +115,16 @@ void    print_background(t_data *data)
 	{
 		x = 0;
 		while (x != data->screen_width)
-			mlx_put_pixel(data->img, x++, y, 0x87CEEBFF);
+			mlx_put_pixel(data->img, x++, y, data->color_ceiling);
+			// mlx_put_pixel(data->img, x++, y, 0x87CEEBFF);
 		y++;
 	}
 	while (y != data->screen_height)
 	{
 		x = 0;
 		while (x != data->screen_width)
-			mlx_put_pixel(data->img, x++, y, 0x00000000);
+			mlx_put_pixel(data->img, x++, y, data->color_floor);
+			// mlx_put_pixel(data->img, x++, y, 0x00000000);
 		y++;
 	}
 }
