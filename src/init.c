@@ -6,7 +6,7 @@
 /*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:07:03 by aweissha          #+#    #+#             */
-/*   Updated: 2024/05/22 21:07:05 by sparth           ###   ########.fr       */
+/*   Updated: 2024/05/23 00:05:48 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ t_data	*init_data(int argc, char *argv[])
 	data->map = NULL;
 	data->map_height = 0;
 	data->map_width = 0;
+	data->map_start = 0; // check if needed
 	data->color_ceiling = 0x0;
 	data->color_floor = 0x0;
 	data->color_ceiling_check = false;

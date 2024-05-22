@@ -6,7 +6,7 @@
 /*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 18:08:43 by sparth            #+#    #+#             */
-/*   Updated: 2024/05/22 23:33:52 by sparth           ###   ########.fr       */
+/*   Updated: 2024/05/23 01:02:13 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ void	find_player(t_data *data)
 		x = 0;
 		while (data->map[y][x])
 		{
-			if (data->map[y][x] == 'N' || data->map[y][x] == 'E'
-				|| data->map[y][x] == 'S' || data->map[y][x] == 'W')
+			if ((data->map[y][x] == 'N' || data->map[y][x] == 'E'
+				|| data->map[y][x] == 'S' || data->map[y][x] == 'W') && ft_isdigit(data->map[y][x + 1]))
 			{
 				data->init_player_dir = data->map[y][x];
 				data->player->position.x = (double)x;
@@ -141,6 +141,7 @@ void	get_dimensions(char *file, t_data *data)
 		line = get_next_line(fd);
 		if (!line)
 			break;
+		// if ()
 		if (ft_mod_strlen(line) > data->map_width)
 			data->map_width = ft_mod_strlen(line);
 		free(line);

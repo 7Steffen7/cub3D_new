@@ -6,7 +6,7 @@
 /*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:02:00 by aweissha          #+#    #+#             */
-/*   Updated: 2024/05/22 15:57:25 by sparth           ###   ########.fr       */
+/*   Updated: 2024/05/22 23:59:35 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ typedef struct s_data
 	int				screen_height;
 	int				map_width;
 	int				map_height;
+	int				map_start;
+	bool			player_exist;
 	char			init_player_dir;
 	char			**map;
 	mlx_texture_t	*textures[4];

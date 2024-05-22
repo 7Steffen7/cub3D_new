@@ -6,7 +6,7 @@
 /*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:07:59 by aweissha          #+#    #+#             */
-/*   Updated: 2024/05/22 23:31:23 by sparth           ###   ########.fr       */
+/*   Updated: 2024/05/23 01:09:11 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -239,8 +239,8 @@ void	ft_hook(void *param)
 			&& data->map[(int)(temp_dir_y - WALL_DIST)][(int)(data->player->position.x)] != '1')
 			data->player->position.y = temp_dir_y;
 	}
-	// printf("player_x: %f\n", data->player->position.x);
-	// printf("player_y: %f\n", data->player->position.y);
+	printf("player_x: %f\n", data->player->position.x);
+	printf("player_y: %f\n", data->player->position.y);
 	print_background(data);
 	raycaster(data);
 }
