@@ -6,7 +6,7 @@
 /*   By: aweissha <aweissha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 10:53:58 by aweissha          #+#    #+#             */
-/*   Updated: 2024/05/22 13:39:28 by aweissha         ###   ########.fr       */
+/*   Updated: 2024/05/22 16:53:56 by aweissha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,7 +218,13 @@ int	find_color_from_texture(int	counter, t_data *data)
 	ray = data->ray;
 	tex_width = data->textures[ray->side]->width;
 	ray->tex_y = (int)(((counter - ray->line_top) / (float)ray->line_height) * data->textures[ray->side]->height);
-	color = data->textures[ray->side]->pixels[tex_width * ray->tex_y + ray->tex_x];
+	color = data->textures[ray->side]->pixels[tex_width * 4 * ray->tex_y + ray->tex_x * 4];
+	color *= 256;
+	color += data->textures[ray->side]->pixels[tex_width * 4 * ray->tex_y + ray->tex_x * 4 + 1];
+	color *= 256;
+	color += data->textures[ray->side]->pixels[tex_width * 4 * ray->tex_y + ray->tex_x * 4 + 2];
+	color *= 256;
+	color += data->textures[ray->side]->pixels[tex_width * 4 * ray->tex_y + ray->tex_x * 4 + 3];
 	return (color);
 }
 

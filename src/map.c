@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: aweissha <aweissha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 18:08:43 by sparth            #+#    #+#             */
+<<<<<<< texture_2
+/*   Updated: 2024/05/24 15:14:48 by aweissha         ###   ########.fr       */
+=======
 /*   Updated: 2024/05/23 01:02:13 by sparth           ###   ########.fr       */
+>>>>>>> master
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -323,6 +327,16 @@ void	get_textures_and_colors(char *file, t_data *data)
 	// printf("path_north: %s\n", data->path_to_the_north_texture);
 	// printf("path_south: %s\n", data->path_to_the_south_texture);
 }
+
+// void	get_textures_and_colors(char *file, t_data *data)
+// {
+// 	file = NULL;
+// 	data->path_to_the_east_texture = ft_strdup("/Users/aweissha/Documents/42cursus/Cub3D_new_4/textures/bluestone.png");
+// 	data->path_to_the_west_texture = ft_strdup("/Users/aweissha/Documents/42cursus/Cub3D_new_4/textures/colorstone.png");
+// 	data->path_to_the_north_texture = ft_strdup("/Users/aweissha/Documents/42cursus/Cub3D_new_4/textures/eagle.png");
+// 	data->path_to_the_south_texture = ft_strdup("/Users/aweissha/Documents/42cursus/Cub3D_new_4/textures/mossy.png");
+// }
+
 
 void	parse_map(t_data *data, char *argv[])
 {
