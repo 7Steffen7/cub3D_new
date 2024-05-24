@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aweissha <aweissha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 18:08:43 by sparth            #+#    #+#             */
-<<<<<<< texture_2
-/*   Updated: 2024/05/24 15:14:48 by aweissha         ###   ########.fr       */
-=======
-/*   Updated: 2024/05/23 01:02:13 by sparth           ###   ########.fr       */
->>>>>>> master
+/*   Updated: 2024/05/24 15:48:29 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,6 +163,7 @@ void	print_map(char **map, t_data *data)
 	while (i < data->map_height)
 		printf("%s\n", map[i++]);
 }
+
 void	delete_nl(char *line)
 {
 	int	i;
@@ -232,7 +229,6 @@ unsigned int	color_calc(int red, int green, int blue)
 	result += blue;
 	result *= 256;
 	result += transparent;
-	// result *= 256;
 	return (result);
 }
 
@@ -319,13 +315,18 @@ void	get_textures_and_colors(char *file, t_data *data)
 	}
 	// check close
 	// check if every texture and color is given
-	close (fd);
+	if (close(fd) == -1)
+	{
+		//free stuff
+		printf("fatal error! closing %s failed\n", line);
+		exit (1);
+	}
 	printf("color ceiling: %u\n", data->color_ceiling);
 	printf("color floor: %u\n", data->color_floor);
-	// printf("path_east: %s\n", data->path_to_the_east_texture);
-	// printf("path_west: %s\n", data->path_to_the_west_texture);
-	// printf("path_north: %s\n", data->path_to_the_north_texture);
-	// printf("path_south: %s\n", data->path_to_the_south_texture);
+	printf("path_east: %s\n", data->path_to_the_east_texture);
+	printf("path_west: %s\n", data->path_to_the_west_texture);
+	printf("path_north: %s\n", data->path_to_the_north_texture);
+	printf("path_south: %s\n", data->path_to_the_south_texture);
 }
 
 // void	get_textures_and_colors(char *file, t_data *data)
