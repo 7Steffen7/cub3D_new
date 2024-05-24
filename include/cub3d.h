@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aweissha <aweissha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:02:00 by aweissha          #+#    #+#             */
-/*   Updated: 2024/05/22 12:50:32 by aweissha         ###   ########.fr       */
+/*   Updated: 2024/05/22 23:59:35 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,23 +67,29 @@ typedef struct s_ray
 
 typedef struct s_data
 {
-	int			screen_width;
-	int			screen_height;
-	int			map_width;
-	int			map_height;
-	char		init_player_dir;
-	char		**map;
-	mlx_texture_t*	textures[4];
-	mlx_t		*mlx;
-	mlx_image_t	*img;
-	t_player	*player;
-	t_ray		*ray;
-	double		time;
-	double		prev_time;
-	char		*path_to_the_east_texture;
-	char		*path_to_the_west_texture;
-	char		*path_to_the_north_texture;
-	char		*path_to_the_south_texture;
+	int				screen_width;
+	int				screen_height;
+	int				map_width;
+	int				map_height;
+	int				map_start;
+	bool			player_exist;
+	char			init_player_dir;
+	char			**map;
+	mlx_texture_t	*textures[4];
+	mlx_t			*mlx;
+	mlx_image_t		*img;
+	t_player		*player;
+	t_ray			*ray;
+	double			time;
+	double			prev_time;
+	char			*path_to_the_east_texture;
+	char			*path_to_the_west_texture;
+	char			*path_to_the_north_texture;
+	char			*path_to_the_south_texture;
+	unsigned int	color_ceiling;
+	unsigned int	color_floor;
+	bool			color_ceiling_check;
+	bool			color_floor_check;
 }	t_data;
 
 // init.c
