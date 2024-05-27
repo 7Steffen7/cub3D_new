@@ -6,7 +6,7 @@
 /*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:02:00 by aweissha          #+#    #+#             */
-/*   Updated: 2024/05/22 23:59:35 by sparth           ###   ########.fr       */
+/*   Updated: 2024/05/27 17:11:17 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,12 @@
 # define WALL_DIST 0.25
 # define FOV_IN_DEGREE 60
 # define PI 3.14159265358979
+
+typedef struct s_cord
+{
+	int	x;
+	int	y;
+}	t_cord;
 
 typedef struct s_vector
 {
@@ -122,6 +128,9 @@ void	raycaster(t_data *data);
 // map.c
 void	parse_map(t_data *data, char *argv[]);
 void	find_player(t_data *data);
+void	print_map(char **map, t_data *data);
 
+// map_validation.c
+void	map_validation(t_data *data);
 
 #endif

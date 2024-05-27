@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aweissha <aweissha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 18:08:43 by sparth            #+#    #+#             */
-/*   Updated: 2024/05/24 15:28:40 by aweissha         ###   ########.fr       */
+/*   Updated: 2024/05/27 18:31:30 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void	find_player(t_data *data)
 				data->init_player_dir = data->map[y][x];
 				data->player->position.x = (double)x;
 				data->player->position.y = (double)y;
+				data->map[y][x] = '0';
 				return ;
 			}
 			x++;
@@ -81,13 +82,26 @@ void	find_player(t_data *data)
 	printf("Invalid Map, No Player found\n");
 	exit (1);
 }
+void	line_prep(char *line, int line_len)
+{
+	int	i;
+
+	i = 0;
+	while (i < line_len - 1)
+	{
+		if (line[i] == ' ' || line[i] == '\0')
+			line[i] = '0';
+		i++;
+	}
+	line[i] = '\0';
+}
 
 void	create_map(char *file, t_data *data)
 {
 	char	*line;
 	// char	**map;
 	int		fd;
-	int		line_len;
+	// int		line_len;
 	int		i;
 	
 	i = 0;
@@ -103,25 +117,62 @@ void	create_map(char *file, t_data *data)
 		printf("memory allocation failed\n");
 		exit (1);
 	}
+	while (data->map_start--)
+	{
+		line = get_next_line(fd);
+		if (!line)
+			break;
+		free(line);
+		line = NULL;
+	}
 	while (1)
 	{
 		line = get_next_line(fd);
 		if (!line)
 			break;
-		line_len = ft_mod_strlen(line);
-		data->map[i] = (char *)malloc(sizeof(char) * (line_len + 1));
+		// line_len = ft_mod_strlen(line);
+		data->map[i] = (char *)ft_calloc(sizeof(char), (data->map_width + 1));
 		if (!data->map[i])
 		{
 			free(line);
 			free_and_exit_map(data->map, i);
 		}
 		ft_strllcpy(data->map[i], line, ft_mod_strlen(line) + 1);
+		printf("%s\n", data->map[i]);
+		line_prep(data->map[i], data->map_width + 1);
 		free(line);
 		line = NULL;
 		i++;
 	}
 	data->map[i] = NULL;
 	close(fd);
+}
+
+bool	get_dim(t_data *data, int fd, char *line)
+{
+	
+	while (line && !ft_strchr(line, ',') && !ft_strchr(line, '.') && !ft_strchr(line, '/')
+		&& !ft_strchr(line, 'C') && !ft_strchr(line, 'F') && !ft_strchr(line, '\t'))
+	{
+		if (ft_mod_strlen(line) > data->map_width)
+			data->map_width = ft_mod_strlen(line);
+		if (ft_strchr(line, 'N') || ft_strchr(line, 'S' || ft_strchr(line, 'W') || ft_strchr(line, 'E')))
+		{
+			if (data->player_exist == true)
+			{
+				// free_everything
+				printf("only one player is valid!\n");
+				exit (1);
+			}
+			else
+				data->player_exist = true;
+		}
+		data->map_height++;
+		free(line);
+		line = NULL;
+		line = get_next_line(fd);
+	}
+	return (data->player_exist);
 }
 
 void	get_dimensions(char *file, t_data *data)
@@ -141,12 +192,31 @@ void	get_dimensions(char *file, t_data *data)
 		line = get_next_line(fd);
 		if (!line)
 			break;
-		// if ()
-		if (ft_mod_strlen(line) > data->map_width)
-			data->map_width = ft_mod_strlen(line);
-		free(line);
-		line = NULL;
-		data->map_height++;
+		if (!ft_strchr(line, ',') && !ft_strchr(line, '.') && !ft_strchr(line, '/')
+			&& !ft_strchr(line, 'C') && !ft_strchr(line, 'F' && !ft_strchr(line, '\t' && ft_strchr(line, '1') || ft_strchr(line, '0'))))
+		{
+			if (get_dim(data, fd, line))
+			{
+				// printf("data->map_start: %d\n", data->map_start);
+				// printf("data->map_height: %d\n", data->map_height);
+				// printf("data->map_width: %d\n", data->map_width);
+				break;
+			}
+			else
+			{
+				data->map_start += data->map_height;
+				data->map_height = 0;
+				data->map_width = 0;
+			}
+		}
+		// if (ft_mod_strlen(line) > data->map_width)
+		// 	data->map_width = ft_mod_strlen(line);
+		else
+		{
+			free(line);
+			line = NULL;
+		}
+		data->map_start++;
 	}
 	if (close(fd) == -1)
 	{
@@ -313,11 +383,18 @@ void	get_textures_and_colors(char *file, t_data *data)
 		free(line);
 		line = NULL;
 	}
-	// check close
 	// check if every texture and color is given
+	if (!data->path_to_the_east_texture || !data->path_to_the_west_texture || !data->path_to_the_north_texture
+		|| !data->path_to_the_south_texture || !data->color_ceiling || !data->color_floor)
+	{
+		//free everything
+		printf("textures or colors incomplete or in the wrong format!\n");
+		exit (1);
+	}
+	// check close
 	close (fd);
-	printf("color ceiling: %u\n", data->color_ceiling);
-	printf("color floor: %u\n", data->color_floor);
+	// printf("color ceiling: %u\n", data->color_ceiling);
+	// printf("color floor: %u\n", data->color_floor);
 	// printf("path_east: %s\n", data->path_to_the_east_texture);
 	// printf("path_west: %s\n", data->path_to_the_west_texture);
 	// printf("path_north: %s\n", data->path_to_the_north_texture);
@@ -339,5 +416,5 @@ void	parse_map(t_data *data, char *argv[])
 	get_textures_and_colors(argv[1], data);
 	get_dimensions(argv[1], data);
 	create_map(argv[1], data);
-	print_map(data->map, data);
+	// print_map(data->map, data);
 }
