@@ -6,7 +6,7 @@
 /*   By: aweissha <aweissha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 10:53:58 by aweissha          #+#    #+#             */
-/*   Updated: 2024/05/28 15:50:50 by aweissha         ###   ########.fr       */
+/*   Updated: 2024/05/29 16:53:15 by aweissha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -314,6 +314,54 @@ void	render_image(t_data *data)
 	line_to_image(data);
 }
 
+unsigned int	find_weapon_color(float x, float y, t_data *data)
+{
+	mlx_texture_t	*gun;
+	unsigned int	color;
+	int				gun_x;
+	int				gun_y;
+	
+	if (data->weapon_shot >= 0)
+		gun = data->weapon_shot_textures[data->weapon_shot];
+	else
+		gun = data->weapon_textures[data->weapon];
+	gun_x = (int)gun->width * x;
+	gun_y = (int)gun->height * y;
+	color = gun->pixels[gun->width * 4 * gun_y + gun_x * 4];
+	color *= 256;
+	color += gun->pixels[gun->width * 4 * gun_y + gun_x * 4 + 1];
+	color *= 256;
+	color += gun->pixels[gun->width * 4 * gun_y + gun_x * 4 + 2];
+	color *= 256;
+	color += gun->pixels[gun->width * 4 * gun_y + gun_x * 4 + 3];
+	// printf("color: %x\n", color);
+	return (color);
+}
+
+void	add_weapon(t_data *data)
+{
+	int				x;
+	int				y;
+	unsigned int	color;
+
+	if (data->weapon < 0 && data->weapon_shot < 0)
+		return ;
+	y = SCREEN_HEIGHT / 2;
+	while (y < SCREEN_HEIGHT)
+	{
+		x = SCREEN_WIDTH / 3;
+		while (x < (SCREEN_WIDTH / 3) * 2)
+		{
+			color = find_weapon_color((float)(x - SCREEN_WIDTH / 3)/((SCREEN_WIDTH / 3) * 2 - SCREEN_WIDTH / 3), (float)(y - SCREEN_HEIGHT / 2)/(SCREEN_HEIGHT - SCREEN_HEIGHT / 2), data);
+			if (color != 2300413183 && color !=	2300282111 && color != 2300413183)
+				mlx_put_pixel(data->img, x, y, color);
+			x++;
+		}
+		y++;
+	}
+	data->weapon_shot = -1;
+}
+
 void	raycaster(t_data *data)
 {
 	int	i;
@@ -335,4 +383,5 @@ void	raycaster(t_data *data)
 		render_image(data);
 		i++;
 	}
+	add_weapon(data);
 }

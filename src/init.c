@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: aweissha <aweissha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:07:03 by aweissha          #+#    #+#             */
-/*   Updated: 2024/05/27 16:33:53 by sparth           ###   ########.fr       */
+/*   Updated: 2024/05/29 16:06:49 by aweissha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,8 @@ t_data	*init_data(int argc, char *argv[])
 	data->color_floor = 0x0;
 	data->color_ceiling_check = false;
 	data->color_floor_check = false;
+	data->weapon = -1;
+	data->weapon_shot = -1;
 	parse_map(data, argv);
 	init_player(data);
 	map_validation(data);
