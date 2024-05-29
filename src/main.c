@@ -6,7 +6,7 @@
 /*   By: aweissha <aweissha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:07:59 by aweissha          #+#    #+#             */
-/*   Updated: 2024/05/28 15:50:59 by aweissha         ###   ########.fr       */
+/*   Updated: 2024/05/28 16:51:36 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,6 +243,7 @@ void	ft_hook(void *param)
 	// printf("player_y: %f\n", data->player->position.y);
 	print_background(data);
 	raycaster(data);
+	mini_map(data);
 }
 
 void	init_textures(t_data *data)
