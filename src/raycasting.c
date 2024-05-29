@@ -214,13 +214,20 @@ int	find_color_from_texture(int	counter, t_data *data)
 	t_ray	*ray;
 	int		color;
 	int		tex_width;
+	float	f;
+	float	a;
 
 	ray = data->ray;
 	tex_width = data->textures[ray->side]->width;
+	f = (0.5 - 0.5 * ray->perp_length)/ 0.5;
+	a = ((counter - ray->line_top) / (float)ray->line_height);
 	if (ray->perp_length < 1)
-		ray->tex_y = (int)(((counter - ray->line_top) / (float)ray->line_height) * (data->textures[ray->side]->height - (data->textures[ray->side]->height * ((0.5 - tan(atan(0.5)) * ray->perp_length)/ 0.5)))) + ((data->textures[ray->side]->height / 2) * (0.5 - tan(atan(0.5)) * ray->perp_length)/ 0.5);
+	{
+		ray->tex_y = data->textures[ray->side]->height * (a - a * f + 0.5 * f);
+		// ray->tex_y = (int)(((counter - ray->line_top) / (float)ray->line_height) * (data->textures[ray->side]->height - (data->textures[ray->side]->height * factor))) + ((0.5 * data->textures[ray->side]->height) * factor);
+	}
 	else
-		ray->tex_y = (int)(((counter - ray->line_top) / (float)ray->line_height) * data->textures[ray->side]->height);
+		ray->tex_y = ((counter - ray->line_top) / (float)ray->line_height) * data->textures[ray->side]->height;
 	color = data->textures[ray->side]->pixels[tex_width * 4 * ray->tex_y + ray->tex_x * 4];
 	color *= 256;
 	color += data->textures[ray->side]->pixels[tex_width * 4 * ray->tex_y + ray->tex_x * 4 + 1];
@@ -230,6 +237,38 @@ int	find_color_from_texture(int	counter, t_data *data)
 	color += data->textures[ray->side]->pixels[tex_width * 4 * ray->tex_y + ray->tex_x * 4 + 3];
 	return (color);
 }
+
+// int	find_color_from_texture(int	counter, t_data *data)
+// {
+// 	t_ray	*ray;
+// 	u_int32_t		color;
+// 	u_int32_t		tex_width;
+// 	float	f;
+// 	float	a;
+// 	u_int32_t	*pixels;
+
+// 	ray = data->ray;
+// 	pixels = (u_int32_t *)(data->textures[ray->side]->pixels);
+// 	tex_width = data->textures[ray->side]->width;
+// 	f = (0.5 - 0.5 * ray->perp_length)/ 0.5;
+// 	a = ((counter - ray->line_top) / (float)ray->line_height);
+// 	if (ray->perp_length < 1)
+// 	{
+// 		ray->tex_y = data->textures[ray->side]->height * (a - a * f + 0.5 * f);
+// 		// ray->tex_y = (int)(((counter - ray->line_top) / (float)ray->line_height) * (data->textures[ray->side]->height - (data->textures[ray->side]->height * factor))) + ((0.5 * data->textures[ray->side]->height) * factor);
+// 	}
+// 	else
+// 		ray->tex_y = ((counter - ray->line_top) / (float)ray->line_height) * data->textures[ray->side]->height;
+// 	color = ((pixels[tex_width * ray->tex_y + ray->tex_x] & 0x00FFFFFF) << 8) | ((pixels[tex_width * ray->tex_y + ray->tex_x] & 0xFF000000) >> 24);
+// 	// printf("color hex: %x\n", color);
+// 	// color *= 256;
+// 	// color += data->textures[ray->side]->pixels[tex_width * 4 * ray->tex_y + ray->tex_x * 4 + 1];
+// 	// color *= 256;
+// 	// color += data->textures[ray->side]->pixels[tex_width * 4 * ray->tex_y + ray->tex_x * 4 + 2];
+// 	// color *= 256;
+// 	// color += data->textures[ray->side]->pixels[tex_width * 4 * ray->tex_y + ray->tex_x * 4 + 3];
+// 	return (color);
+// }
 
 void	line_to_image(t_data *data)
 {
