@@ -21,6 +21,7 @@ SRCS =		$(SRC_DIR)main.c \
 			$(SRC_DIR)raycasting.c \
 			$(SRC_DIR)map.c \
 			$(SRC_DIR)map_validation.c \
+			$(SRC_DIR)mini_map.c \
 
 
 OBJS = $(SRCS:.c=.o)
