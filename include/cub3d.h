@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: aweissha <aweissha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:02:00 by aweissha          #+#    #+#             */
-/*   Updated: 2024/05/28 16:52:17 by sparth           ###   ########.fr       */
+/*   Updated: 2024/05/29 16:27:25 by aweissha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ typedef struct s_data
 	char			init_player_dir;
 	char			**map;
 	mlx_texture_t	*textures[4];
+	mlx_texture_t	*weapon_textures[3];
+	mlx_texture_t	*weapon_shot_textures[3];
 	mlx_t			*mlx;
 	mlx_image_t		*img;
 	t_player		*player;
@@ -96,6 +98,8 @@ typedef struct s_data
 	unsigned int	color_floor;
 	bool			color_ceiling_check;
 	bool			color_floor_check;
+	int				weapon;
+	int				weapon_shot;
 }	t_data;
 
 // init.c
