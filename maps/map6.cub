@@ -1,6 +1,6 @@
 EA ./textures/bluestone.png
 WE ./textures/colorstone.png
-NO ./textures/eagle.png
+NO ./textures/mossy.png
 SO ./textures/mossy.png
 
 C 225,30,0
