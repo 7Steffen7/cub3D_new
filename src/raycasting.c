@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aweissha <aweissha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 10:53:58 by aweissha          #+#    #+#             */
 /*   Updated: 2024/05/29 16:53:15 by aweissha         ###   ########.fr       */

@@ -137,4 +137,7 @@ void	print_map(char **map, t_data *data);
 // map_validation.c
 void	map_validation(t_data *data);
 
+// mini_map.c
+void	mini_map(t_data *data);
+
 #endif

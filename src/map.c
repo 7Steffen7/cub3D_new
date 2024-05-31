@@ -6,7 +6,7 @@
 /*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 18:08:43 by sparth            #+#    #+#             */
-/*   Updated: 2024/05/27 18:31:30 by sparth           ###   ########.fr       */
+/*   Updated: 2024/05/28 19:47:57 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -302,7 +302,7 @@ unsigned int	color_calc(int red, int green, int blue)
 	return (result);
 }
 
-unsigned int	get_color(char *line, bool check_if_double)
+unsigned int	get_color(t_data *data, char *line, char color)
 {
 	char **strarr;
 	int	red;
@@ -311,12 +311,29 @@ unsigned int	get_color(char *line, bool check_if_double)
 	int	i;
 	
 	i = 0;
-	if (check_if_double == true)
+	if (color == 'C')
 	{
-		//free stuff
-		printf("Color error! Only one color for floor and one for ceiling accepted\n");
-		exit (1);
+		if (data->color_ceiling_check == true)
+		{
+			//free stuff
+			printf("Color error! Only one color for floor and one for ceiling accepted\n");
+			exit (1);
+		}
+		else
+			data->color_ceiling_check = true;
 	}
+	if (color == 'F')
+	{
+		if (data->color_floor_check == true)
+		{
+			//free stuff
+			printf("Color error! Only one color for floor and one for ceiling accepted\n");
+			exit (1);
+		}
+		else
+			data->color_floor_check = true;
+	}
+		
 	line = line + 2;
 	strarr = ft_split(line, ',');
 	while (strarr[i])
@@ -376,9 +393,9 @@ void	get_textures_and_colors(char *file, t_data *data)
 		else if (!ft_strncmp(line, "SO ", 3))
 			data->path_to_the_south_texture = check_texture(line, data->path_to_the_south_texture);
 		else if (!ft_strncmp(line, "C ", 2))
-			data->color_ceiling = get_color(line, data->color_ceiling_check);
+			data->color_ceiling = get_color(data, line, 'C');
 		else if (!ft_strncmp(line, "F ", 2))
-			data->color_floor = get_color(line, data->color_floor_check);
+			data->color_floor = get_color(data, line, 'F');
 			
 		free(line);
 		line = NULL;

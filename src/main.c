@@ -254,6 +254,7 @@ void	ft_hook(void *param)
 	// printf("player_y: %f\n", data->player->position.y);
 	print_background(data);
 	raycaster(data);
+	mini_map(data);
 }
 
 void	init_textures(t_data *data)
