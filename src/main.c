@@ -6,7 +6,7 @@
 /*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:07:59 by aweissha          #+#    #+#             */
-/*   Updated: 2024/05/31 18:37:30 by sparth           ###   ########.fr       */
+/*   Updated: 2024/06/03 17:18:45 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,8 +241,8 @@ void	ft_hook(void *param)
 	}
 	// printf("player_x: %f\n", data->player->position.x);
 	// printf("player_y: %f\n", data->player->position.y);
-	printf("dir_x: %f\n", data->player->direction.x);
-	printf("dir_y: %f\n", data->player->direction.y);
+	// printf("dir_x: %f\n", data->player->direction.x);
+	// printf("dir_y: %f\n", data->player->direction.y);
 	print_background(data);
 	raycaster(data);
 	mini_map(data);

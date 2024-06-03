@@ -6,7 +6,7 @@
 /*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 16:51:43 by sparth            #+#    #+#             */
-/*   Updated: 2024/05/31 18:33:50 by sparth           ###   ########.fr       */
+/*   Updated: 2024/06/03 21:25:29 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,14 +65,19 @@
 // pixel width = 8 
 void	draw_block(t_data *data, int y, int x, unsigned int color)
 {
-	int	map_start_x;
-	int	map_start_y;
-	int	j;
-	int	k;
-	int	y_offset;
-	int	x_offset;
-	int temp_x;
-	int temp_y;
+	int		map_start_x;
+	int		map_start_y;
+	int		j;
+	int		k;
+	int		y_offset;
+	int		x_offset;
+	int 	temp_x;
+	int 	temp_y;
+	float	theta;
+	int		pivot_x;
+	int		pivot_y;
+	int		pos_x;
+	int		pos_y;
 
 	x_offset = (int)(data->player->position.x * 10) % 10;
 	y_offset = (int)(data->player->position.y * 10) % 10;
@@ -82,6 +87,12 @@ void	draw_block(t_data *data, int y, int x, unsigned int color)
 	// printf("y_offset: %d\n", y_offset);
 	map_start_x = data->screen_width - (data->screen_width / 8);
 	map_start_y = data->screen_height / 8;
+	pivot_x = data->screen_width - (data->screen_width / 8 );
+	pivot_y = ((data->screen_height / 8));
+	// pivot_x = data->screen_width - (data->screen_width / 8 ) / 2;
+	// pivot_y = ((data->screen_height / 8) / 2);
+	// printf("pivot_x: %d\n", pivot_x);
+	// printf("pivot_y: %d\n", pivot_y);
 	if (color == 0x87CEEBFF)
 	{
 		map_start_x -= x_offset;
@@ -93,7 +104,31 @@ void	draw_block(t_data *data, int y, int x, unsigned int color)
 	// 	map_start_y -= y_offset;
 	// }
 	k = 0;
-	while (k < 8)
+	theta = atan2(data->player->direction.x * -1, data->player->direction.y * - 1);
+	while (k < 8 && color == 0x87CEEBFF)
+	{
+		j = 0;
+		while (j < 8)
+		{
+			temp_x = map_start_x + j + (8 * x);
+			temp_y = map_start_y + k + (8 * y);
+			// printf("temp_x: %d new_x: %f\n", temp_x, -1 * temp_x * cos(theta) - temp_y * sin(theta));
+			// printf("temp_y: %d new_y: %f\n", temp_y, temp_x * sin(theta) - temp_y * cos(theta));
+			// mlx_put_pixel(data->img, temp_x, temp_y, color);
+			pos_x = (pivot_x + (temp_x - pivot_x) * cos(theta)) - (temp_y - pivot_y) * sin(theta);
+			pos_y = pivot_y + (temp_x - pivot_x) * sin(theta) + (temp_y - pivot_y) * cos(theta);
+			// printf("pos_x: %d\n", pos_x);
+			// printf("pos_y: %d\n", pos_y);
+			// if (pos_x >= 0 && pos_x <= SCREEN_WIDTH && pos_y >= 0 && pos_y <= SCREEN_HEIGHT)
+			if (pos_y >= 0 && pos_y <= SCREEN_HEIGHT)
+				mlx_put_pixel(data->img, pos_x, pos_y, color);
+			// mlx_put_pixel(data->img, temp_x, temp_y, color);
+			// mlx_put_pixel(data->img, map_start_x + j + (8 * x), map_start_y + k + (8 * y), color);
+			j++;
+		}
+		k++;
+	}
+	while (k < 8 && color != 0x87CEEBFF)
 	{
 		j = 0;
 		while (j < 8)
@@ -101,11 +136,11 @@ void	draw_block(t_data *data, int y, int x, unsigned int color)
 			temp_x = map_start_x + j + (8 * x);
 			temp_y = map_start_y + k + (8 * y);
 			mlx_put_pixel(data->img, temp_x, temp_y, color);
-			// mlx_put_pixel(data->img, map_start_x + j + (8 * x), map_start_y + k + (8 * y), color);
 			j++;
 		}
 		k++;
 	}
+	
 }
 
 // player start position is in the middle of the map 
@@ -145,6 +180,7 @@ void	mini_map(t_data *data)
 		}	
 		y++;
 	}
+
 
 	y = -height_max + 1;
 	while (y < height_max)
