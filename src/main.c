@@ -6,7 +6,7 @@
 /*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:07:59 by aweissha          #+#    #+#             */
-/*   Updated: 2024/06/04 01:35:13 by sparth           ###   ########.fr       */
+/*   Updated: 2024/06/04 22:20:04 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,11 +196,21 @@ void	ft_hook(void *param)
 		// 	data->player->position.x = temp_straight_x;
 		// if  (temp_straight_y > WALL_DIST && temp_straight_y < MAP_HEIGHT - WALL_DIST)
 		// 	data->player->position.y = temp_straight_y;
-		if (data->map[(int)(data->player->position.y)][(int)(temp_straight_x + WALL_DIST)] != '1'
-			&& data->map[(int)(data->player->position.y)][(int)(temp_straight_x - WALL_DIST)] != '1')
+		if (data->map[(int)(data->player->position.y + WALL_DIST)][(int)(temp_straight_x + WALL_DIST)] != '1'
+			&& data->map[(int)(data->player->position.y + WALL_DIST)][(int)(temp_straight_x - WALL_DIST)] != '1'
+			&& data->map[(int)(data->player->position.y - WALL_DIST)][(int)(temp_straight_x + WALL_DIST)] != '1'
+			&& data->map[(int)(data->player->position.y  - WALL_DIST)][(int)(temp_straight_x - WALL_DIST)] != '1')
 			data->player->position.x = temp_straight_x;
-		if (data->map[(int)(temp_straight_y + WALL_DIST)][(int)(data->player->position.x)] != '1'
-			&& data->map[(int)(temp_straight_y - WALL_DIST)][(int)(data->player->position.x)] != '1')
+		// if (data->map[(int)(data->player->position.y)][(int)(temp_straight_x + WALL_DIST)] != '1'
+		// 	&& data->map[(int)(data->player->position.y)][(int)(temp_straight_x - WALL_DIST)] != '1')
+		// 	data->player->position.x = temp_straight_x;
+		// if (data->map[(int)(temp_straight_y + WALL_DIST)][(int)(data->player->position.x)] != '1'
+		// 	&& data->map[(int)(temp_straight_y - WALL_DIST)][(int)(data->player->position.x)] != '1')
+		// 	data->player->position.y = temp_straight_y;
+		if (data->map[(int)(temp_straight_y + WALL_DIST)][(int)(data->player->position.x + WALL_DIST)] != '1'
+			&& data->map[(int)(temp_straight_y - WALL_DIST)][(int)(data->player->position.x + WALL_DIST)] != '1' 
+			&& data->map[(int)(temp_straight_y + WALL_DIST)][(int)(data->player->position.x - WALL_DIST)] != '1'
+			&& data->map[(int)(temp_straight_y - WALL_DIST)][(int)(data->player->position.x - WALL_DIST )] != '1')
 			data->player->position.y = temp_straight_y;
 	}
 	if (mlx_is_key_down(data->mlx, MLX_KEY_S))
@@ -209,11 +219,17 @@ void	ft_hook(void *param)
 		angle = atan2(data->player->direction.y, data->player->direction.x);
 		temp_straight_x += speed * cos(angle);
 		temp_straight_y += speed * sin(angle);
-		if (data->map[(int)(data->player->position.y)][(int)(temp_straight_x + WALL_DIST)] != '1'
-			&& data->map[(int)(data->player->position.y)][(int)(temp_straight_x - WALL_DIST)] != '1')
+		if (data->map[(int)(data->player->position.y + WALL_DIST)][(int)(temp_straight_x + WALL_DIST)] != '1'
+			&& data->map[(int)(data->player->position.y + WALL_DIST)][(int)(temp_straight_x - WALL_DIST)] != '1'
+			&& data->map[(int)(data->player->position.y - WALL_DIST)][(int)(temp_straight_x + WALL_DIST)] != '1'
+			&& data->map[(int)(data->player->position.y - WALL_DIST)][(int)(temp_straight_x - WALL_DIST)] != '1')
 			data->player->position.x = temp_straight_x;
-		if (data->map[(int)(temp_straight_y + WALL_DIST)][(int)(data->player->position.x)] != '1'
-			&& data->map[(int)(temp_straight_y - WALL_DIST)][(int)(data->player->position.x)] != '1')
+
+			
+		if (data->map[(int)(temp_straight_y + WALL_DIST)][(int)(data->player->position.x + WALL_DIST)] != '1'
+			&& data->map[(int)(temp_straight_y - WALL_DIST)][(int)(data->player->position.x + WALL_DIST)] != '1'
+			&& data->map[(int)(temp_straight_y + WALL_DIST)][(int)(data->player->position.x - WALL_DIST)] != '1'
+			&& data->map[(int)(temp_straight_y - WALL_DIST)][(int)(data->player->position.x - WALL_DIST)] != '1')
 			data->player->position.y = temp_straight_y;
 	}
 	if (mlx_is_key_down(data->mlx, MLX_KEY_D))
@@ -223,12 +239,24 @@ void	ft_hook(void *param)
 		perp_y = data->player->direction.x;
 		temp_dir_x += speed * perp_x;
 		temp_dir_y += speed * perp_y;
-		if (data->map[(int)(data->player->position.y)][(int)(temp_dir_x + WALL_DIST)] != '1'
-			&& data->map[(int)(data->player->position.y)][(int)(temp_dir_x - WALL_DIST)] != '1')
+		if (data->map[(int)(data->player->position.y + WALL_DIST)][(int)(temp_dir_x + WALL_DIST)] != '1'
+			&& data->map[(int)(data->player->position.y + WALL_DIST)][(int)(temp_dir_x - WALL_DIST)] != '1'
+			&& data->map[(int)(data->player->position.y - WALL_DIST)][(int)(temp_dir_x + WALL_DIST)] != '1'
+			&& data->map[(int)(data->player->position.y - WALL_DIST)][(int)(temp_dir_x - WALL_DIST)] != '1')
 			data->player->position.x = temp_dir_x;
-		if (data->map[(int)(temp_dir_y + WALL_DIST)][(int)(data->player->position.x)] != '1'
-			&& data->map[(int)(temp_dir_y - WALL_DIST)][(int)(data->player->position.x)] != '1')
+			
+			
+		if (data->map[(int)(temp_dir_y + WALL_DIST)][(int)(data->player->position.x + WALL_DIST)] != '1'
+			&& data->map[(int)(temp_dir_y - WALL_DIST)][(int)(data->player->position.x + WALL_DIST)] != '1'
+			&& data->map[(int)(temp_dir_y + WALL_DIST)][(int)(data->player->position.x - WALL_DIST)] != '1'
+			&& data->map[(int)(temp_dir_y - WALL_DIST)][(int)(data->player->position.x - WALL_DIST)] != '1')
 			data->player->position.y = temp_dir_y;
+		// if (data->map[(int)(data->player->position.y)][(int)(temp_dir_x + WALL_DIST)] != '1'
+		// 	&& data->map[(int)(data->player->position.y)][(int)(temp_dir_x - WALL_DIST)] != '1')
+		// 	data->player->position.x = temp_dir_x;
+		// if (data->map[(int)(temp_dir_y + WALL_DIST)][(int)(data->player->position.x)] != '1'
+		// 	&& data->map[(int)(temp_dir_y - WALL_DIST)][(int)(data->player->position.x)] != '1')
+		// 	data->player->position.y = temp_dir_y;
 
 		// if (temp_dir_x > WALL_DIST && temp_dir_x < MAP_WIDTH - WALL_DIST)
 		// 	data->player->position.x = temp_dir_x;
@@ -242,12 +270,25 @@ void	ft_hook(void *param)
 		perp_y = data->player->direction.x;
 		temp_dir_x += speed * perp_x;
 		temp_dir_y += speed * perp_y;
-		if (data->map[(int)(data->player->position.y)][(int)(temp_dir_x + WALL_DIST)] != '1'
-			&& data->map[(int)(data->player->position.y)][(int)(temp_dir_x - WALL_DIST)] != '1')
+		if (data->map[(int)(data->player->position.y + WALL_DIST)][(int)(temp_dir_x + WALL_DIST)] != '1'
+			&& data->map[(int)(data->player->position.y + WALL_DIST)][(int)(temp_dir_x - WALL_DIST)] != '1'
+			&& data->map[(int)(data->player->position.y - WALL_DIST)][(int)(temp_dir_x + WALL_DIST)] != '1'
+			&& data->map[(int)(data->player->position.y - WALL_DIST)][(int)(temp_dir_x - WALL_DIST)] != '1')
 			data->player->position.x = temp_dir_x;
-		if (data->map[(int)(temp_dir_y + WALL_DIST)][(int)(data->player->position.x)] != '1'
-			&& data->map[(int)(temp_dir_y - WALL_DIST)][(int)(data->player->position.x)] != '1')
+			
+			
+		if (data->map[(int)(temp_dir_y + WALL_DIST)][(int)(data->player->position.x + WALL_DIST)] != '1'
+			&& data->map[(int)(temp_dir_y - WALL_DIST)][(int)(data->player->position.x + WALL_DIST)] != '1'
+			&& data->map[(int)(temp_dir_y + WALL_DIST)][(int)(data->player->position.x - WALL_DIST)] != '1'
+			&& data->map[(int)(temp_dir_y - WALL_DIST)][(int)(data->player->position.x - WALL_DIST)] != '1')
 			data->player->position.y = temp_dir_y;
+		
+		// if (data->map[(int)(data->player->position.y)][(int)(temp_dir_x + WALL_DIST)] != '1'
+		// 	&& data->map[(int)(data->player->position.y)][(int)(temp_dir_x - WALL_DIST)] != '1')
+		// 	data->player->position.x = temp_dir_x;
+		// if (data->map[(int)(temp_dir_y + WALL_DIST)][(int)(data->player->position.x)] != '1'
+		// 	&& data->map[(int)(temp_dir_y - WALL_DIST)][(int)(data->player->position.x)] != '1')
+		// 	data->player->position.y = temp_dir_y;
 	}
 	if (mlx_is_key_down(data->mlx, MLX_KEY_1))
 		data->weapon = -1;

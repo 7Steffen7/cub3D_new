@@ -6,7 +6,7 @@
 /*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:02:00 by aweissha          #+#    #+#             */
-/*   Updated: 2024/06/04 01:59:29 by sparth           ###   ########.fr       */
+/*   Updated: 2024/06/04 18:36:42 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,5 +140,6 @@ void	map_validation(t_data *data);
 
 // mini_map.c
 void	mini_map(t_data *data);
+void	map_ray(t_data *data, int index, double perp_len);
 
 #endif
