@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: aweissha <aweissha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 10:53:58 by aweissha          #+#    #+#             */
-/*   Updated: 2024/06/04 01:45:48 by sparth           ###   ########.fr       */
+/*   Updated: 2024/06/04 20:54:46 by aweissha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,6 +235,10 @@ int	find_color_from_texture(int	counter, t_data *data)
 	color += data->textures[ray->side]->pixels[tex_width * 4 * ray->tex_y + ray->tex_x * 4 + 2];
 	color *= 256;
 	color += data->textures[ray->side]->pixels[tex_width * 4 * ray->tex_y + ray->tex_x * 4 + 3];
+	if (data->map_height > data->map_width)
+		color -= 256 * (data->ray->perp_length / data->map_height);
+	else
+		color -= 256 * (data->ray->perp_length / data->map_width);
 	return (color);
 }
 
@@ -270,6 +274,29 @@ int	find_color_from_texture(int	counter, t_data *data)
 // 	return (color);
 // }
 
+
+void	fill_repeating_pixels(int *counter, int color, t_data *data)
+{
+	int	ratio;
+	int	start;
+
+	start = *counter - 1;
+	ratio = (int)(data->ray->line_height / data->textures[data->ray->side]->height);
+	while ((*counter - start) < ratio && *counter < data->ray->line_bottom)
+	{
+		if (data->ray->index >= 776 && data->ray->index <= 1016 && *counter >= 8 && *counter <= 184)
+		{
+			if(color % 255 > 127)
+				mlx_put_pixel(data->img, data->ray->index, *counter, color - 64);
+			else
+				mlx_put_pixel(data->img, data->ray->index, *counter, color + 64);
+		}
+		else
+			mlx_put_pixel(data->img, data->ray->index, *counter, color);
+		(*counter)++;
+	}
+}
+
 void	line_to_image(t_data *data)
 {
 	t_ray	*ray;
@@ -293,6 +320,8 @@ void	line_to_image(t_data *data)
 		else
 			mlx_put_pixel(data->img, ray->index, counter, color);
 		counter++;
+		if (ray->line_height > (int)data->textures[ray->side]->height)
+			fill_repeating_pixels(&counter, color, data);
 	}
 }
 
