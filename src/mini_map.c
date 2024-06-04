@@ -6,63 +6,29 @@
 /*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 16:51:43 by sparth            #+#    #+#             */
-/*   Updated: 2024/06/03 21:25:29 by sparth           ###   ########.fr       */
+/*   Updated: 2024/06/04 01:51:51 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-// void	mini_map(t_data *data)
-// {
-// 	int x;
-// 	int j;
-// 	int y;
-// 	int k;
-// 	int i;
-// 	int h;
-// 	int	block_height;
-// 	int	block_width;
-
-// 	block_width = ((data->screen_width / 4) / data->map_width);
-// 	block_height = ((data->screen_height / 4) / data->map_height);
-// 	printf("block_width: %d\n", block_width);
-// 	printf("block_height: %d\n", block_height);
-	
-
-// 	k = 0;
-// 	h = 0;
-// 	while (k < data->map_height)
-// 	{
-// 		y = 0;
-// 		while (y < block_width)
-// 		{
-// 			i = 0;
-// 			j = 0;
-// 			while (j < data->map_width)
-// 			{
-// 				x = 0;
-// 				while (x < block_width)
-// 				{
-// 					if (k == (int)data->player->position.y && j == (int)data->player->position.x)
-// 						mlx_put_pixel(data->img, i++, h, 0xFF0000FF);
-// 					else if (data->map[k][j] == '1')
-// 						mlx_put_pixel(data->img, i++, h, 0xFFFFEBFF);
-// 					else
-// 						mlx_put_pixel(data->img, i++, h, 0x87CEEBFF);
-// 					x++;
-// 				}
-// 				j++;
-// 			}
-// 			h++;
-// 			y++;
-// 		}
-// 		k++; 
-// 	}
-// }
-
-
 // pixel height = 8
 // pixel width = 8 
+
+//borders SCREEN WIDTH
+//1024 - (1024 / 8) = 896
+// 1 Block = 8 pixel
+// (1024 - 896) / 8 = 16 with padding +-15 blocks on each direction
+// min = 776
+// max = 1016
+
+//borders SCREEN HEIGHT
+// 768 / 8 = 96
+// 1 Block = 8 pixel
+// 96 / 8 = 12 with padding +- 11 blocks on each direction
+//min = 8
+// max = 184
+
 void	draw_block(t_data *data, int y, int x, unsigned int color)
 {
 	int		map_start_x;
@@ -72,63 +38,52 @@ void	draw_block(t_data *data, int y, int x, unsigned int color)
 	int		y_offset;
 	int		x_offset;
 	int 	temp_x;
+	int 	temp_x1;
 	int 	temp_y;
+	int 	temp_y1;
 	float	theta;
 	int		pivot_x;
 	int		pivot_y;
-	int		pos_x;
-	int		pos_y;
+	float	pos_x;
+	float	pos_x1;
+	float	pos_y;
+	float	pos_y1;
 
 	x_offset = (int)(data->player->position.x * 10) % 10;
 	y_offset = (int)(data->player->position.y * 10) % 10;
 	x_offset = x_offset * 8 / 10;
 	y_offset = y_offset * 8 / 10;
-	// printf("x_offset: %d\n", x_offset);
-	// printf("y_offset: %d\n", y_offset);
 	map_start_x = data->screen_width - (data->screen_width / 8);
 	map_start_y = data->screen_height / 8;
 	pivot_x = data->screen_width - (data->screen_width / 8 );
 	pivot_y = ((data->screen_height / 8));
-	// pivot_x = data->screen_width - (data->screen_width / 8 ) / 2;
-	// pivot_y = ((data->screen_height / 8) / 2);
-	// printf("pivot_x: %d\n", pivot_x);
-	// printf("pivot_y: %d\n", pivot_y);
-	if (color == 0x87CEEBFF)
+	if (color == wall_color_map)
 	{
 		map_start_x -= x_offset;
 		map_start_y -= y_offset;
 	}
-	// else
-	// {
-	// 	map_start_x -= x_offset;
-	// 	map_start_y -= y_offset;
-	// }
 	k = 0;
 	theta = atan2(data->player->direction.x * -1, data->player->direction.y * - 1);
-	while (k < 8 && color == 0x87CEEBFF)
+	while (k < 8 && color == wall_color_map)
 	{
 		j = 0;
 		while (j < 8)
 		{
 			temp_x = map_start_x + j + (8 * x);
 			temp_y = map_start_y + k + (8 * y);
-			// printf("temp_x: %d new_x: %f\n", temp_x, -1 * temp_x * cos(theta) - temp_y * sin(theta));
-			// printf("temp_y: %d new_y: %f\n", temp_y, temp_x * sin(theta) - temp_y * cos(theta));
-			// mlx_put_pixel(data->img, temp_x, temp_y, color);
 			pos_x = (pivot_x + (temp_x - pivot_x) * cos(theta)) - (temp_y - pivot_y) * sin(theta);
 			pos_y = pivot_y + (temp_x - pivot_x) * sin(theta) + (temp_y - pivot_y) * cos(theta);
-			// printf("pos_x: %d\n", pos_x);
-			// printf("pos_y: %d\n", pos_y);
-			// if (pos_x >= 0 && pos_x <= SCREEN_WIDTH && pos_y >= 0 && pos_y <= SCREEN_HEIGHT)
-			if (pos_y >= 0 && pos_y <= SCREEN_HEIGHT)
+			temp_x1 = map_start_x + j + 1 + (8 * x);
+			temp_y1 = map_start_y + k + 1 + (8 * y);
+			pos_x1 = (pivot_x + (temp_x1 - pivot_x) * cos(theta)) - (temp_y1 - pivot_y) * sin(theta);
+			pos_y1 = pivot_y + (temp_x1 - pivot_x) * sin(theta) + (temp_y1 - pivot_y) * cos(theta);
+			if (pos_y >= 8 && pos_y <= 184 && pos_x >= 776 && pos_x <= 1016)
 				mlx_put_pixel(data->img, pos_x, pos_y, color);
-			// mlx_put_pixel(data->img, temp_x, temp_y, color);
-			// mlx_put_pixel(data->img, map_start_x + j + (8 * x), map_start_y + k + (8 * y), color);
 			j++;
 		}
 		k++;
 	}
-	while (k < 8 && color != 0x87CEEBFF)
+	while (k < 8 && color != wall_color_map)
 	{
 		j = 0;
 		while (j < 8)
@@ -140,7 +95,6 @@ void	draw_block(t_data *data, int y, int x, unsigned int color)
 		}
 		k++;
 	}
-	
 }
 
 // player start position is in the middle of the map 
@@ -163,24 +117,13 @@ void	mini_map(t_data *data)
 
 	// 128 / 8 - 1
 	width_max = 15;
-	// 192 / 8 - 1
+	// 96 / 8 - 1
 	height_max = 11;
 	start_x = (int)data->player->position.x;
 	start_y = (int)data->player->position.y;
-	// printing left down quarter of the map
 
-	y = -height_max ;
-	while (y < height_max + 1)
-	{
-		x = -width_max ;
-		while (x < width_max)
-		{
-			draw_block(data, y, x, 0xFFFFEBFF);
-			x++;
-		}	
-		y++;
-	}
-
+	width_max += 5;
+	height_max += 5;
 
 	y = -height_max + 1;
 	while (y < height_max)
@@ -190,10 +133,10 @@ void	mini_map(t_data *data)
 		{
 			if (start_y + y == start_y && start_x + x == start_x)
 				draw_block(data, y, x, 0xFF0000FF);
-			else if (start_y + y < data->map_height && start_x + x < data->map_width
+			if (start_y + y < data->map_height && start_x + x < data->map_width
 				&& start_y + y >= 0 && start_x + x >= 0
 				&& data->map[start_y + y][start_x + x] == '1')
-				draw_block(data, y, x, 0x87CEEBFF);
+				draw_block(data, y, x, wall_color_map);
 			x++;
 		}	
 		y++;

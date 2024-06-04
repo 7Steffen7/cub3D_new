@@ -12,6 +12,8 @@ CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address
 
 MLX42FLAGS = -Iinclude -lglfw -framework Cocoa -framework OpenGL -framework IOKit
 
+HEADER_FILE = include/cub3d.h
+
 RM = rm -f
 
 
@@ -26,14 +28,14 @@ SRCS =		$(SRC_DIR)main.c \
 
 OBJS = $(SRCS:.c=.o)
 
-%.o: %.c
+%.o: %.c $(HEADER_FILE)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(NAME): $(OBJS)
+$(NAME): $(OBJS) 
 	@$(MAKE) -C $(LIBFT)
 	@$(CC) $(CFLAGS) $(MLX42FLAGS) $(OBJS) -o $(NAME) $(LIBFTTARGET) libmlx42.a 
 
-all: $(NAME)
+all: $(NAME) 
 
 clean:
 	@$(MAKE) -C $(LIBFT) fclean

@@ -6,7 +6,7 @@
 /*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:07:59 by aweissha          #+#    #+#             */
-/*   Updated: 2024/06/03 17:18:45 by sparth           ###   ########.fr       */
+/*   Updated: 2024/06/04 01:35:13 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,17 @@ void    print_background(t_data *data)
 	{
 		x = 0;
 		while (x != data->screen_width)
-			mlx_put_pixel(data->img, x++, y, data->color_ceiling);
+		{
+			if (x >= 776 && x <= 1016 && y >= 8 && y <= 184)
+			{
+				if(data->color_ceiling % 255 > 127)
+					mlx_put_pixel(data->img, x++, y, data->color_ceiling - 64);
+				else
+					mlx_put_pixel(data->img, x++, y, data->color_ceiling + 64);
+			}
+			else
+				mlx_put_pixel(data->img, x++, y, data->color_ceiling);
+		}
 			// mlx_put_pixel(data->img, x++, y, 0x87CEEBFF);
 		y++;
 	}
