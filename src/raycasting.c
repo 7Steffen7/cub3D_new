@@ -311,12 +311,7 @@ void	line_to_image(t_data *data)
 		// printf("counter: %d\n", counter);
 		color = find_color_from_texture(counter, data);
 		if (ray->index >= 776 && ray->index <= 1016 && counter >= 8 && counter <= 184)
-		{
-			if(color % 255 > 127)
-				mlx_put_pixel(data->img, ray->index, counter, color - 64);
-			else
-				mlx_put_pixel(data->img, ray->index, counter, color + 64);
-		}
+			mlx_put_pixel(data->img, ray->index, counter, color - 64);
 		else
 			mlx_put_pixel(data->img, ray->index, counter, color);
 		counter++;
@@ -402,6 +397,7 @@ void	add_weapon(t_data *data)
 void	raycaster(t_data *data)
 {
 	int	i;
+	double	mini_map_rays[103];
 	// t_vector ray_len;
 	i = 0;
 	while (i < data->screen_width)
@@ -418,6 +414,15 @@ void	raycaster(t_data *data)
 		
 		
 		render_image(data);
+		if (i % 10 == 0)
+			mini_map_rays[i / 10] = data->ray->perp_length;
+			// map_ray(data, i);
+		i++;
+	}
+	i = 0;
+	while (i < 102)
+	{
+		map_ray(data, i, mini_map_rays[i]);
 		i++;
 	}
 	add_weapon(data);
