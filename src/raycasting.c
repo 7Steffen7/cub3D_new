@@ -6,7 +6,7 @@
 /*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 10:53:58 by aweissha          #+#    #+#             */
-/*   Updated: 2024/05/29 16:53:15 by aweissha         ###   ########.fr       */
+/*   Updated: 2024/06/04 01:45:48 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -283,7 +283,15 @@ void	line_to_image(t_data *data)
 	{
 		// printf("counter: %d\n", counter);
 		color = find_color_from_texture(counter, data);
-		mlx_put_pixel(data->img, ray->index, counter, color);
+		if (ray->index >= 776 && ray->index <= 1016 && counter >= 8 && counter <= 184)
+		{
+			if(color % 255 > 127)
+				mlx_put_pixel(data->img, ray->index, counter, color - 64);
+			else
+				mlx_put_pixel(data->img, ray->index, counter, color + 64);
+		}
+		else
+			mlx_put_pixel(data->img, ray->index, counter, color);
 		counter++;
 	}
 }
