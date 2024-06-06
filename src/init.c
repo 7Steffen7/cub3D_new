@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aweissha <aweissha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:07:03 by aweissha          #+#    #+#             */
-/*   Updated: 2024/05/29 16:06:49 by aweissha         ###   ########.fr       */
+/*   Updated: 2024/06/06 22:58:03 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	init_player(t_data *data)
 {
 	data->player = malloc(sizeof(t_player));
 	if (data->player == NULL)
-		ft_error("Memory allocation of player struct failed\n", errno);
+		ft_error_and_free("Memory allocation of player struct failed", 1, data);
 	find_player(data);
 	if (data->init_player_dir == 'N')
 	{

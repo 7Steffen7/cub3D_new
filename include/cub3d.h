@@ -6,7 +6,7 @@
 /*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:02:00 by aweissha          #+#    #+#             */
-/*   Updated: 2024/06/04 18:36:42 by sparth           ###   ########.fr       */
+/*   Updated: 2024/06/06 13:14:20 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ void	ft_error(char *message, int code);
 void	ft_mlx_error(const char *message, int code);
 void	ft_mlx_error_and_free(const char *message, int code, t_data *data);
 void	ft_error_and_free(char *message, int code, t_data *data);
+void	print_error(int *error, char *line);
 
 // raycasting.c
 double	get_lower(double a, double b);

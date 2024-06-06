@@ -6,7 +6,7 @@
 /*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 16:34:46 by sparth            #+#    #+#             */
-/*   Updated: 2024/05/27 18:46:09 by sparth           ###   ########.fr       */
+/*   Updated: 2024/06/07 00:00:35 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ void	error_map_print(char **map, t_data *data)
 	int	j;
 
 	j = 0;
-	while(j < data->map_height)
+	printf("\n");
+	while(j < data->map_height && map[j])
 	{
 		i = 0;
 		while(map[j][i])
@@ -41,9 +42,13 @@ void	error_map_print(char **map, t_data *data)
 				printf("%c", map[j][i]);
 			i++;
 		}
+		free(map[j]);
 		printf("\n");
 		j++;
 	}
+	printf("\n");
+	if (map)
+		free(map);
 }
 
 void	check_if_valid(char **map, t_data *data)
@@ -53,19 +58,15 @@ void	check_if_valid(char **map, t_data *data)
 	i = 1;
 	if (ft_strchr(map[0], 'f') || ft_strchr(map[data->map_height - 1], 'f'))
 	{
-		//free everything
-		printf("map is not closed\n");
 		error_map_print(map, data);
-		exit (1);
+		ft_error_and_free("map is not closed!", 1, data);
 	}
 	while(i < data->map_height - 1)
 	{
 		if (map[i][0] == 'f' || map[i][data->map_width - 1] == 'f')
 		{
-			//free everything
-			printf("map is not closed\n");
 			error_map_print(map, data);
-			exit (1);
+			ft_error_and_free("map is not closed!", 1, data);
 		}
 		i++;
 	}
@@ -85,21 +86,13 @@ void	map_validation(t_data *data)
 	dim.y = data->map_height;
 	map = (char **)malloc(sizeof(char *) * data->map_height + 1);
 	if (!map)
-	{
-		//free everything
-		printf("malloc failed\n");
-		exit (1);
-	}
+		ft_error_and_free("malloc failed!", 1, data);
 	i = 0;
 	while (i < data->map_height)
 	{
 		map[i] = ft_strdup(data->map[i]);
 		if (!map[i])
-		{
-			//free everything
-			printf("strdup failed\n");
-			exit (1);
-		}
+			ft_error_and_free("ft_strdup failed!", 1, data);
 		i++;
 	}
 	// map[i] = NULL;

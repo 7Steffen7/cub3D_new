@@ -6,104 +6,11 @@
 /*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:07:59 by aweissha          #+#    #+#             */
-/*   Updated: 2024/06/04 22:20:04 by sparth           ###   ########.fr       */
+/*   Updated: 2024/06/05 16:32:37 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
-
-// char worldMap[MAP_HEIGHT][MAP_WIDTH]=
-// {
-// {'1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1'},
-// {'1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1'},
-// {'1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1'},
-// {'1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1'},
-// {'1','0','0','0','0','0','1','1','1','1','1','0','0','0','0','1','0','1','0','1','0','0','0','1'},
-// {'1','0','0','0','0','0','1','0','0','0','1','0','0','0','0','0','0','0','0','0','0','0','0','1'},
-// {'1','0','0','0','0','0','1','0','0','0','1','0','0','0','0','1','0','0','0','1','0','0','0','1'},
-// {'1','0','0','0','0','0','1','0','0','0','1','0','0','0','0','0','0','0','0','0','0','0','0','1'},
-// {'1','0','0','0','0','0','1','1','0','1','1','0','0','0','0','1','0','1','0','1','0','0','0','1'},
-// {'1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1'},
-// {'1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1'},
-// {'1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1'},
-// {'1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1'},
-// {'1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1'},
-// {'1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1'},
-// {'1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1'},
-// {'1','1','1','1','1','1','1','1','1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1'},
-// {'1','1','0','1','0','0','0','0','1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1'},
-// {'1','1','0','0','0','0','1','0','1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1'},
-// {'1','1','0','1','0','0','0','0','1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1'},
-// {'1','1','0','1','1','1','1','1','1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1'},
-// {'1','1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1'},
-// {'1','1','1','1','1','1','1','1','1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1'},
-// {'1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1'}
-// };
-
-// char worldMap[MAP_HEIGHT][MAP_WIDTH]=
-// {
-// {"111111111111111111111111"},
-// {"100000000000000000000001"},
-// {"100000000000000000000001"},
-// {"100000000000000000000001"},
-// {"100000111110000101010001"},
-// {"100000100010000000000001"},
-// {"100000100010000100010001"},
-// {"100000100010000000000001"},
-// {"100000110110000101010001"},
-// {"100000000000000000000001"},
-// {"100000000000000000000001"},
-// {"100000000000000000000001"},
-// {"100000000000000000000001"},
-// {"100000000000000000000001"},
-// {"100000000000000000000001"},
-// {"100000000000000000000001"},
-// {"111111111000000000000001"},
-// {"110100001000000000000001"},
-// {"110000101000000000000001"},
-// {"110100001000000000000001"},
-// {"110111111000000000000001"},
-// {"110000000000000000000001"},
-// {"111111111000000000000001"},
-// {"111111111111111111111111"}
-// };
-
-// // // for testing, parse_map() just defines data->map as worldMap
-// void	parse_map(t_data *data, char *argv[])
-// {
-// 	int	i;
-// 	int	j;
-
-// 	(void)argv;
-// 	i = 0;
-// 	j = 0;
-//     for (int i = 0; i < MAP_HEIGHT; i++) 
-// 	{
-//         for (int j = 0; j < MAP_WIDTH; j++) 
-// 		{
-//             data->map[i][j] = worldMap[i][j];
-// 			printf("%c", data->map[i][j]);
-//         }
-// 		printf("\n");
-//     }
-// }
-
-// void	print_map(t_data *data)
-// {
-// 	int	x;
-// 	int	y;
-
-// 	x = 0;
-// 	y = 0;
-//     for (int y = 0; y < mapHeight; y++) 
-// 	{
-//         for (int x = 0; x < mapWidth; x++) 
-// 		{
-// 			printf("%d,", data->map[x][y]);
-//         }
-// 		printf("\n");
-//     }
-// }
 
 void    print_background(t_data *data)
 {
@@ -117,16 +24,10 @@ void    print_background(t_data *data)
 		while (x != data->screen_width)
 		{
 			if (x >= 776 && x <= 1016 && y >= 8 && y <= 184)
-			{
-				if(data->color_ceiling % 255 > 127)
-					mlx_put_pixel(data->img, x++, y, data->color_ceiling - 64);
-				else
-					mlx_put_pixel(data->img, x++, y, data->color_ceiling + 64);
-			}
+				mlx_put_pixel(data->img, x++, y, data->color_ceiling - 64);
 			else
 				mlx_put_pixel(data->img, x++, y, data->color_ceiling);
 		}
-			// mlx_put_pixel(data->img, x++, y, 0x87CEEBFF);
 		y++;
 	}
 	while (y != data->screen_height)
@@ -134,9 +35,71 @@ void    print_background(t_data *data)
 		x = 0;
 		while (x != data->screen_width)
 			mlx_put_pixel(data->img, x++, y, data->color_floor);
-			// mlx_put_pixel(data->img, x++, y, 0x00000000);
 		y++;
 	}
+}
+
+void	player_rotation(t_data *data, int speed)
+{
+	double	radian;
+	float	temp_y;
+	float	temp_x;
+
+	radian = speed * (PI / 180);
+	temp_x = data->player->direction.x;
+	temp_y = data->player->direction.y;
+	data->player->direction.x = temp_x * cos(radian) - temp_y * sin(radian);
+	data->player->direction.y = temp_x * sin(radian) + temp_y * cos(radian);
+	temp_x = data->player->screen.x;
+	temp_y = data->player->screen.y;
+	data->player->screen.x = temp_x * cos(radian) - temp_y * sin(radian);
+	data->player->screen.y = temp_x * sin(radian) + temp_y * cos(radian);
+}
+
+void	player_vertical_movement(t_data *data, float speed)
+{
+	float	temp_x;
+	float	temp_y;
+	float	angle;
+
+	temp_x = data->player->position.x;
+	temp_y = data->player->position.y;
+	angle = atan2(data->player->direction.y, data->player->direction.x);
+	temp_x += speed * cos(angle);
+	temp_y += speed * sin(angle);
+	if (data->map[(int)(data->player->position.y + WALL_DIST)][(int)(temp_x + WALL_DIST)] != '1'
+		&& data->map[(int)(data->player->position.y + WALL_DIST)][(int)(temp_x - WALL_DIST)] != '1'
+		&& data->map[(int)(data->player->position.y - WALL_DIST)][(int)(temp_x + WALL_DIST)] != '1'
+		&& data->map[(int)(data->player->position.y  - WALL_DIST)][(int)(temp_x - WALL_DIST)] != '1')
+		data->player->position.x = temp_x;
+	if (data->map[(int)(temp_y + WALL_DIST)][(int)(data->player->position.x + WALL_DIST)] != '1'
+		&& data->map[(int)(temp_y - WALL_DIST)][(int)(data->player->position.x + WALL_DIST)] != '1' 
+		&& data->map[(int)(temp_y + WALL_DIST)][(int)(data->player->position.x - WALL_DIST)] != '1'
+		&& data->map[(int)(temp_y - WALL_DIST)][(int)(data->player->position.x - WALL_DIST )] != '1')
+		data->player->position.y = temp_y;
+}
+
+void	player_horizontal_movement(t_data *data, float speed)
+{
+	float	perp_x;
+	float	perp_y;
+	float	temp_x;
+	float	temp_y;
+
+	perp_x = -data->player->direction.y;
+	perp_y = data->player->direction.x;
+	temp_x = data->player->position.x + speed * perp_x;
+	temp_y = data->player->position.y + speed * perp_y;
+	if (data->map[(int)(data->player->position.y + WALL_DIST)][(int)(temp_x + WALL_DIST)] != '1'
+		&& data->map[(int)(data->player->position.y + WALL_DIST)][(int)(temp_x - WALL_DIST)] != '1'
+		&& data->map[(int)(data->player->position.y - WALL_DIST)][(int)(temp_x + WALL_DIST)] != '1'
+		&& data->map[(int)(data->player->position.y - WALL_DIST)][(int)(temp_x - WALL_DIST)] != '1')
+		data->player->position.x = temp_x;
+	if (data->map[(int)(temp_y + WALL_DIST)][(int)(data->player->position.x + WALL_DIST)] != '1'
+		&& data->map[(int)(temp_y - WALL_DIST)][(int)(data->player->position.x + WALL_DIST)] != '1'
+		&& data->map[(int)(temp_y + WALL_DIST)][(int)(data->player->position.x - WALL_DIST)] != '1'
+		&& data->map[(int)(temp_y - WALL_DIST)][(int)(data->player->position.x - WALL_DIST)] != '1')
+		data->player->position.y = temp_y;
 }
 
 // atan2 = return: angle in radians
@@ -144,152 +107,20 @@ void    print_background(t_data *data)
 void	ft_hook(void *param)
 {
 	t_data *data = param;
-	float	temp_y;
-	float	temp_x;
-	float	speed;
-	float	angle;
-	float	perp_x;
-	float	perp_y;
-	double	radian;
-	float	temp_straight_x;
-	float	temp_straight_y;
-	float	temp_dir_x;
-	float	temp_dir_y;
-
-	temp_straight_x = data->player->position.x;
-	temp_straight_y = data->player->position.y;
-	temp_dir_x = data->player->position.x;
-	temp_dir_y = data->player->position.y;
 	if (mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(data->mlx);
 	if (mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
-	{
-		radian = 2 * (PI / 180);
-		temp_x = data->player->direction.x;
-		temp_y = data->player->direction.y;
-		data->player->direction.x = temp_x * cos(radian) - temp_y * sin(radian);
-		data->player->direction.y = temp_x * sin(radian) + temp_y * cos(radian);
-		temp_x = data->player->screen.x;
-		temp_y = data->player->screen.y;
-		data->player->screen.x = temp_x * cos(radian) - temp_y * sin(radian);
-		data->player->screen.y = temp_x * sin(radian) + temp_y * cos(radian);
-	}
+		player_rotation(data, 2);
 	if (mlx_is_key_down(data->mlx, MLX_KEY_LEFT))
-	{
-		radian = -2 * (PI / 180);
-		temp_x = data->player->direction.x;
-		temp_y = data->player->direction.y;
-		data->player->direction.x = temp_x * cos(radian) - temp_y * sin(radian);
-		data->player->direction.y = temp_x * sin(radian) + temp_y * cos(radian);
-		temp_x = data->player->screen.x;
-		temp_y = data->player->screen.y;
-		data->player->screen.x = temp_x * cos(radian) - temp_y * sin(radian);
-		data->player->screen.y = temp_x * sin(radian) + temp_y * cos(radian);
-	}
+		player_rotation(data, -2);
 	if (mlx_is_key_down(data->mlx, MLX_KEY_W))
-	{
-		speed = 0.1;
-		angle = atan2(data->player->direction.y, data->player->direction.x);
-		temp_straight_x += speed * cos(angle);
-		temp_straight_y += speed * sin(angle);
-		// if (temp_straight_x > WALL_DIST && temp_straight_x < MAP_WIDTH - WALL_DIST)
-		// 	data->player->position.x = temp_straight_x;
-		// if  (temp_straight_y > WALL_DIST && temp_straight_y < MAP_HEIGHT - WALL_DIST)
-		// 	data->player->position.y = temp_straight_y;
-		if (data->map[(int)(data->player->position.y + WALL_DIST)][(int)(temp_straight_x + WALL_DIST)] != '1'
-			&& data->map[(int)(data->player->position.y + WALL_DIST)][(int)(temp_straight_x - WALL_DIST)] != '1'
-			&& data->map[(int)(data->player->position.y - WALL_DIST)][(int)(temp_straight_x + WALL_DIST)] != '1'
-			&& data->map[(int)(data->player->position.y  - WALL_DIST)][(int)(temp_straight_x - WALL_DIST)] != '1')
-			data->player->position.x = temp_straight_x;
-		// if (data->map[(int)(data->player->position.y)][(int)(temp_straight_x + WALL_DIST)] != '1'
-		// 	&& data->map[(int)(data->player->position.y)][(int)(temp_straight_x - WALL_DIST)] != '1')
-		// 	data->player->position.x = temp_straight_x;
-		// if (data->map[(int)(temp_straight_y + WALL_DIST)][(int)(data->player->position.x)] != '1'
-		// 	&& data->map[(int)(temp_straight_y - WALL_DIST)][(int)(data->player->position.x)] != '1')
-		// 	data->player->position.y = temp_straight_y;
-		if (data->map[(int)(temp_straight_y + WALL_DIST)][(int)(data->player->position.x + WALL_DIST)] != '1'
-			&& data->map[(int)(temp_straight_y - WALL_DIST)][(int)(data->player->position.x + WALL_DIST)] != '1' 
-			&& data->map[(int)(temp_straight_y + WALL_DIST)][(int)(data->player->position.x - WALL_DIST)] != '1'
-			&& data->map[(int)(temp_straight_y - WALL_DIST)][(int)(data->player->position.x - WALL_DIST )] != '1')
-			data->player->position.y = temp_straight_y;
-	}
+		player_vertical_movement(data, 0.1);
 	if (mlx_is_key_down(data->mlx, MLX_KEY_S))
-	{
-		speed = -0.1;
-		angle = atan2(data->player->direction.y, data->player->direction.x);
-		temp_straight_x += speed * cos(angle);
-		temp_straight_y += speed * sin(angle);
-		if (data->map[(int)(data->player->position.y + WALL_DIST)][(int)(temp_straight_x + WALL_DIST)] != '1'
-			&& data->map[(int)(data->player->position.y + WALL_DIST)][(int)(temp_straight_x - WALL_DIST)] != '1'
-			&& data->map[(int)(data->player->position.y - WALL_DIST)][(int)(temp_straight_x + WALL_DIST)] != '1'
-			&& data->map[(int)(data->player->position.y - WALL_DIST)][(int)(temp_straight_x - WALL_DIST)] != '1')
-			data->player->position.x = temp_straight_x;
-
-			
-		if (data->map[(int)(temp_straight_y + WALL_DIST)][(int)(data->player->position.x + WALL_DIST)] != '1'
-			&& data->map[(int)(temp_straight_y - WALL_DIST)][(int)(data->player->position.x + WALL_DIST)] != '1'
-			&& data->map[(int)(temp_straight_y + WALL_DIST)][(int)(data->player->position.x - WALL_DIST)] != '1'
-			&& data->map[(int)(temp_straight_y - WALL_DIST)][(int)(data->player->position.x - WALL_DIST)] != '1')
-			data->player->position.y = temp_straight_y;
-	}
+		player_vertical_movement(data, -0.1);
 	if (mlx_is_key_down(data->mlx, MLX_KEY_D))
-	{
-		speed = 0.2;
-		perp_x = -data->player->direction.y;
-		perp_y = data->player->direction.x;
-		temp_dir_x += speed * perp_x;
-		temp_dir_y += speed * perp_y;
-		if (data->map[(int)(data->player->position.y + WALL_DIST)][(int)(temp_dir_x + WALL_DIST)] != '1'
-			&& data->map[(int)(data->player->position.y + WALL_DIST)][(int)(temp_dir_x - WALL_DIST)] != '1'
-			&& data->map[(int)(data->player->position.y - WALL_DIST)][(int)(temp_dir_x + WALL_DIST)] != '1'
-			&& data->map[(int)(data->player->position.y - WALL_DIST)][(int)(temp_dir_x - WALL_DIST)] != '1')
-			data->player->position.x = temp_dir_x;
-			
-			
-		if (data->map[(int)(temp_dir_y + WALL_DIST)][(int)(data->player->position.x + WALL_DIST)] != '1'
-			&& data->map[(int)(temp_dir_y - WALL_DIST)][(int)(data->player->position.x + WALL_DIST)] != '1'
-			&& data->map[(int)(temp_dir_y + WALL_DIST)][(int)(data->player->position.x - WALL_DIST)] != '1'
-			&& data->map[(int)(temp_dir_y - WALL_DIST)][(int)(data->player->position.x - WALL_DIST)] != '1')
-			data->player->position.y = temp_dir_y;
-		// if (data->map[(int)(data->player->position.y)][(int)(temp_dir_x + WALL_DIST)] != '1'
-		// 	&& data->map[(int)(data->player->position.y)][(int)(temp_dir_x - WALL_DIST)] != '1')
-		// 	data->player->position.x = temp_dir_x;
-		// if (data->map[(int)(temp_dir_y + WALL_DIST)][(int)(data->player->position.x)] != '1'
-		// 	&& data->map[(int)(temp_dir_y - WALL_DIST)][(int)(data->player->position.x)] != '1')
-		// 	data->player->position.y = temp_dir_y;
-
-		// if (temp_dir_x > WALL_DIST && temp_dir_x < MAP_WIDTH - WALL_DIST)
-		// 	data->player->position.x = temp_dir_x;
-		// if (temp_dir_y > WALL_DIST && temp_dir_y < MAP_HEIGHT - WALL_DIST)
-		// 	data->player->position.y = temp_dir_y;
-	}
+		player_horizontal_movement(data, 0.2);
 	if (mlx_is_key_down(data->mlx, MLX_KEY_A))
-	{
-		speed = -0.2;
-		perp_x = -data->player->direction.y;
-		perp_y = data->player->direction.x;
-		temp_dir_x += speed * perp_x;
-		temp_dir_y += speed * perp_y;
-		if (data->map[(int)(data->player->position.y + WALL_DIST)][(int)(temp_dir_x + WALL_DIST)] != '1'
-			&& data->map[(int)(data->player->position.y + WALL_DIST)][(int)(temp_dir_x - WALL_DIST)] != '1'
-			&& data->map[(int)(data->player->position.y - WALL_DIST)][(int)(temp_dir_x + WALL_DIST)] != '1'
-			&& data->map[(int)(data->player->position.y - WALL_DIST)][(int)(temp_dir_x - WALL_DIST)] != '1')
-			data->player->position.x = temp_dir_x;
-			
-			
-		if (data->map[(int)(temp_dir_y + WALL_DIST)][(int)(data->player->position.x + WALL_DIST)] != '1'
-			&& data->map[(int)(temp_dir_y - WALL_DIST)][(int)(data->player->position.x + WALL_DIST)] != '1'
-			&& data->map[(int)(temp_dir_y + WALL_DIST)][(int)(data->player->position.x - WALL_DIST)] != '1'
-			&& data->map[(int)(temp_dir_y - WALL_DIST)][(int)(data->player->position.x - WALL_DIST)] != '1')
-			data->player->position.y = temp_dir_y;
-		
-		// if (data->map[(int)(data->player->position.y)][(int)(temp_dir_x + WALL_DIST)] != '1'
-		// 	&& data->map[(int)(data->player->position.y)][(int)(temp_dir_x - WALL_DIST)] != '1')
-		// 	data->player->position.x = temp_dir_x;
-		// if (data->map[(int)(temp_dir_y + WALL_DIST)][(int)(data->player->position.x)] != '1'
-		// 	&& data->map[(int)(temp_dir_y - WALL_DIST)][(int)(data->player->position.x)] != '1')
-		// 	data->player->position.y = temp_dir_y;
-	}
+		player_horizontal_movement(data, -0.2);
 	if (mlx_is_key_down(data->mlx, MLX_KEY_1))
 		data->weapon = -1;
 	if (mlx_is_key_down(data->mlx, MLX_KEY_2))
@@ -347,11 +178,7 @@ void	init_textures(t_data *data)
 int	main(int argc, char *argv[])
 {
 	t_data	*data;
-	// (void)argv;
-	// printf("hello\n");
 	data = init_data(argc, argv);
-	// parse_map(data, argv);
-	// print_map(data);
 	init_textures(data);
 	raycaster(data);
 

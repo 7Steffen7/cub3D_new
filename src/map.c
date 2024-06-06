@@ -6,7 +6,7 @@
 /*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 18:08:43 by sparth            #+#    #+#             */
-/*   Updated: 2024/05/28 19:47:57 by sparth           ###   ########.fr       */
+/*   Updated: 2024/06/06 22:59:44 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,16 +45,6 @@ size_t	ft_strllcpy(char *dst, const char *src, size_t dstsize)
 	return (src_i);
 }
 
-void	free_and_exit_map(char **map, int i)
-{
-	while (i--)
-		free(map[i]);
-	if (map)
-		free(map);
-	printf("memory allocation failed\n");
-	exit (1);
-}
-
 void	find_player(t_data *data)
 {
 	int	x;
@@ -79,8 +69,7 @@ void	find_player(t_data *data)
 		}
 		y++;
 	}
-	printf("Invalid Map, No Player found\n");
-	exit (1);
+	ft_error_and_free("Invalid Map, No Player found!", 1, data);
 }
 void	line_prep(char *line, int line_len)
 {
@@ -99,24 +88,21 @@ void	line_prep(char *line, int line_len)
 void	create_map(char *file, t_data *data)
 {
 	char	*line;
-	// char	**map;
 	int		fd;
-	// int		line_len;
 	int		i;
 	
 	i = 0;
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
-	{
-		printf("error opening file\n");
-		exit (1);
-	}
+		ft_error_and_free("error opening file", 1, data);
 	data->map = (char **)malloc(sizeof(char *) * (data->map_height + 1));
 	if (!data->map)
 	{
-		printf("memory allocation failed\n");
-		exit (1);
+		close(fd);
+		ft_error_and_free("memory allocation failed", 1, data);
 	}
+	// gnt flush because map was not at the end of the file and the static buffer still exists
+	get_next_line(-1);
 	while (data->map_start--)
 	{
 		line = get_next_line(fd);
@@ -125,17 +111,16 @@ void	create_map(char *file, t_data *data)
 		free(line);
 		line = NULL;
 	}
-	while (1)
+	while (i < data->map_height)
 	{
 		line = get_next_line(fd);
 		if (!line)
 			break;
-		// line_len = ft_mod_strlen(line);
 		data->map[i] = (char *)ft_calloc(sizeof(char), (data->map_width + 1));
 		if (!data->map[i])
 		{
 			free(line);
-			free_and_exit_map(data->map, i);
+			ft_error_and_free("memory allocation failed", 1, data);
 		}
 		ft_strllcpy(data->map[i], line, ft_mod_strlen(line) + 1);
 		printf("%s\n", data->map[i]);
@@ -145,14 +130,15 @@ void	create_map(char *file, t_data *data)
 		i++;
 	}
 	data->map[i] = NULL;
-	close(fd);
+	if( close(fd) == -1)
+		ft_error_and_free("fatal error: close() failed", 1, data);
 }
 
 bool	get_dim(t_data *data, int fd, char *line)
 {
 	
 	while (line && !ft_strchr(line, ',') && !ft_strchr(line, '.') && !ft_strchr(line, '/')
-		&& !ft_strchr(line, 'C') && !ft_strchr(line, 'F') && !ft_strchr(line, '\t'))
+		&& !ft_strchr(line, 'C') && !ft_strchr(line, 'F') && !ft_strchr(line, '\t') && !ft_strchr(line, 'f') && ft_strchr(line, '1'))
 	{
 		if (ft_mod_strlen(line) > data->map_width)
 			data->map_width = ft_mod_strlen(line);
@@ -160,9 +146,9 @@ bool	get_dim(t_data *data, int fd, char *line)
 		{
 			if (data->player_exist == true)
 			{
-				// free_everything
-				printf("only one player is valid!\n");
-				exit (1);
+				close (fd);
+				free(line);
+				ft_error_and_free("only one player is valid!", 1, data);
 			}
 			else
 				data->player_exist = true;
@@ -183,17 +169,14 @@ void	get_dimensions(char *file, t_data *data)
 	
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
-	{
-		printf("error opening file\n");
-		exit (1);
-	}
+		ft_error_and_free("error opening file", 1, data);
 	while (1)
 	{
 		line = get_next_line(fd);
 		if (!line)
 			break;
 		if (!ft_strchr(line, ',') && !ft_strchr(line, '.') && !ft_strchr(line, '/')
-			&& !ft_strchr(line, 'C') && !ft_strchr(line, 'F' && !ft_strchr(line, '\t' && ft_strchr(line, '1') || ft_strchr(line, '0'))))
+			&& !ft_strchr(line, 'C') && !ft_strchr(line, 'F' && !ft_strchr(line, '\t' && (ft_strchr(line, '1')))))
 		{
 			if (get_dim(data, fd, line))
 			{
@@ -219,10 +202,7 @@ void	get_dimensions(char *file, t_data *data)
 		data->map_start++;
 	}
 	if (close(fd) == -1)
-	{
-		printf("fatal error: closing the file failed\n");
-		exit (1);
-	}
+		ft_error_and_free("fatal error: closing the file failed", 1, data);
 }
 
 void	print_map(char **map, t_data *data)
@@ -246,42 +226,50 @@ void	delete_nl(char *line)
 	}
 }
 
-char	*check_texture(char *line, char *dir)
+bool	ft_isspace(char c)
+{
+	if ((c >= '\t' && c <= '\r') || c == ' ')
+		return (true);
+	return (false);
+}
+
+void	strcut(char *str)
+{
+	int	len;
+	
+	len = ft_strlen(str);
+	while (ft_isspace(str[--len]))
+		str[len] = '\0';
+}
+
+char	*check_texture(char *line, char *dir, int *error)
 {
 	int		fd;
 	ssize_t	bytes_read;
 	char	buffer[1];
 	char	*prep_line;
 	
-	line = line + 3;
-	delete_nl(line);
+	line += 2;
+	if (!ft_isspace(*line))
+		*error = 12;
+	while (ft_isspace(*line))
+		line++;
 	if (dir)
-	{
-		//free stuff
-		printf("Invalid file! Conflict between texture files\n");
-		exit (1);
-	}
+		*error = 1;
+	strcut(line);
 	fd = open(line, O_RDONLY);
 	if (fd == -1)
-	{
-		//free stuff
-		printf("Error opening %s\n", line);
-		exit (1);
-	}
+		*error = 2;
 	bytes_read = read(fd, buffer, 1);
-	if (bytes_read == -1)
-	{
-		//free stuff
-		printf("Permission denied: %s\n", line);
-		exit (1);
-	}
-	if (close(fd) == -1)
-	{
-		//free stuff
-		printf("fatal error! closing %s failed\n", line);
-		exit (1);
-	}
+	if (bytes_read == -1 && *error != 2)
+		*error = 3;
+	if (close(fd) == -1 && *error < 2)
+		*error = 4;
 	prep_line = ft_strdup(line);
+	if (!prep_line)
+		*error = 5;
+	if (*error)
+		print_error(error, line);
 	return (prep_line);
 }
 
@@ -298,11 +286,46 @@ unsigned int	color_calc(int red, int green, int blue)
 	result += blue;
 	result *= 256;
 	result += transparent;
-	// result *= 256;
 	return (result);
 }
 
-unsigned int	get_color(t_data *data, char *line, char color)
+bool	ft_isnum(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] && ft_isspace(str[i]))
+		i++;
+	while (str[i] && !ft_isspace(str[i]))
+	{
+		if (!ft_isdigit(str[i]))
+			return (false);
+		i++;
+	}
+	while (str[i])
+	{
+		if (!ft_isspace(str[i]))
+			return (false);
+		i++;
+	}
+	return (true);
+}
+
+int	ft_strcheck(char *str)
+{
+	int	i;
+	int	count;
+
+	i = 0;
+	count = 0;
+	while (str[i] && ft_isspace(str[i]))
+		i++;
+	while (str[i + count] && !ft_isspace(str[i + count]))
+		count++;
+	return (count);
+}
+
+unsigned int	get_color(t_data *data, char *line, char color, int *error)
 {
 	char **strarr;
 	int	red;
@@ -311,122 +334,97 @@ unsigned int	get_color(t_data *data, char *line, char color)
 	int	i;
 	
 	i = 0;
+	red = 0;
+	blue = 0;
+	green = 0;
 	if (color == 'C')
 	{
 		if (data->color_ceiling_check == true)
-		{
-			//free stuff
-			printf("Color error! Only one color for floor and one for ceiling accepted\n");
-			exit (1);
-		}
+			*error = 6;
 		else
 			data->color_ceiling_check = true;
 	}
 	if (color == 'F')
 	{
 		if (data->color_floor_check == true)
-		{
-			//free stuff
-			printf("Color error! Only one color for floor and one for ceiling accepted\n");
-			exit (1);
-		}
+			*error = 6;
 		else
 			data->color_floor_check = true;
 	}
-		
-	line = line + 2;
+	++line;
+	if (!ft_isspace(*line))
+		*error = 7;
+	while (ft_isspace(*line))
+		line++;
 	strarr = ft_split(line, ',');
+	if (!strarr)
+		*error = 5;
 	while (strarr[i])
 	{
-		if (ft_strlen(strarr[i]) > 3)
-		{
-			//free stuff
-			printf("numbers too large - expected rgb input 0-255 -> '255,255,255'\n");
-			exit (1);
-		}
+		if (ft_strcheck(strarr[i]) > 3 && *error == 0)
+			*error = 8;
+		if (!ft_isnum(strarr[i]))
+			*error = 11;
 		i++;
 	}
-	if (i != 3)
+	if (i != 3 && *error == 0)
+		*error = 9;
+	else if (i == 3)
 	{
-		//free stuff
-		printf("color syntax wrong - expected rgb input 0-255 -> '255,255,255'\n");
-		exit (1);
+		blue = ft_atoi(strarr[2]);
+		green = ft_atoi(strarr[1]);
+		red = ft_atoi(strarr[0]);
 	}
-	blue = ft_atoi(strarr[2]);
-	green = ft_atoi(strarr[1]);
-	red = ft_atoi(strarr[0]);
-	if (blue > 255 || green > 255 || red > 255)
-	{
-		printf("numbers too large - expected rgb input 0-255 -> '255,255,255'\n");
-		exit (1);
-	}
+	if ((blue > 255 || green > 255 || red > 255) && *error == 0)
+		*error = 8;
 	while (strarr[i--])
 		free(strarr[i]);
 	if (strarr)
 		free(strarr);
+	if (*error)
+		print_error(error, NULL);
 	return (color_calc(red, green, blue));
-	// next step save checked value to hexa value in struct;
 }
 
 void	get_textures_and_colors(char *file, t_data *data)
 {
-	int			fd;
-	char		*line;
+	int		fd;
+	char	*line;
+	int		error;
 
+	error = 0;
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
-	{
-		printf("error opening file\n");
-		exit (1);
-	}
+		ft_error_and_free("error opening file", 1, data);
 	while (1)
 	{
 		line = get_next_line(fd);
 		if (!line)
 			break;
-		if (!ft_strncmp(line, "EA ", 3))
-			data->path_to_the_east_texture = check_texture(line, data->path_to_the_east_texture);
-		else if (!ft_strncmp(line, "WE ", 3))
-			data->path_to_the_west_texture = check_texture(line, data->path_to_the_west_texture);
-		else if (!ft_strncmp(line, "NO ", 3))
-			data->path_to_the_north_texture = check_texture(line, data->path_to_the_north_texture);
-		else if (!ft_strncmp(line, "SO ", 3))
-			data->path_to_the_south_texture = check_texture(line, data->path_to_the_south_texture);
-		else if (!ft_strncmp(line, "C ", 2))
-			data->color_ceiling = get_color(data, line, 'C');
-		else if (!ft_strncmp(line, "F ", 2))
-			data->color_floor = get_color(data, line, 'F');
-			
+		delete_nl(line);
+		if (!ft_strncmp(line, "EA", 2))
+			data->path_to_the_east_texture = check_texture(line, data->path_to_the_east_texture, &error);
+		else if (!ft_strncmp(line, "WE", 2))
+			data->path_to_the_west_texture = check_texture(line, data->path_to_the_west_texture, &error);
+		else if (!ft_strncmp(line, "NO", 2))
+			data->path_to_the_north_texture = check_texture(line, data->path_to_the_north_texture, &error);
+		else if (!ft_strncmp(line, "SO", 2))
+			data->path_to_the_south_texture = check_texture(line, data->path_to_the_south_texture, &error);
+		else if (!ft_strncmp(line, "C", 1))
+			data->color_ceiling = get_color(data, line, 'C', &error);
+		else if (!ft_strncmp(line, "F", 1))
+			data->color_floor = get_color(data, line, 'F', &error);
 		free(line);
 		line = NULL;
+		if (error)
+			break;
 	}
-	// check if every texture and color is given
+	if (close(fd) == -1)
+		ft_error_and_free("fatal error! close failed", 1, data);
 	if (!data->path_to_the_east_texture || !data->path_to_the_west_texture || !data->path_to_the_north_texture
-		|| !data->path_to_the_south_texture || !data->color_ceiling || !data->color_floor)
-	{
-		//free everything
-		printf("textures or colors incomplete or in the wrong format!\n");
-		exit (1);
-	}
-	// check close
-	close (fd);
-	// printf("color ceiling: %u\n", data->color_ceiling);
-	// printf("color floor: %u\n", data->color_floor);
-	// printf("path_east: %s\n", data->path_to_the_east_texture);
-	// printf("path_west: %s\n", data->path_to_the_west_texture);
-	// printf("path_north: %s\n", data->path_to_the_north_texture);
-	// printf("path_south: %s\n", data->path_to_the_south_texture);
+		|| !data->path_to_the_south_texture || !data->color_ceiling || !data->color_floor || error)
+		ft_error_and_free("textures or colors incomplete / invalid", 1, data);
 }
-
-// void	get_textures_and_colors(char *file, t_data *data)
-// {
-// 	file = NULL;
-// 	data->path_to_the_east_texture = ft_strdup("/Users/aweissha/Documents/42cursus/Cub3D_new_4/textures/bluestone.png");
-// 	data->path_to_the_west_texture = ft_strdup("/Users/aweissha/Documents/42cursus/Cub3D_new_4/textures/colorstone.png");
-// 	data->path_to_the_north_texture = ft_strdup("/Users/aweissha/Documents/42cursus/Cub3D_new_4/textures/eagle.png");
-// 	data->path_to_the_south_texture = ft_strdup("/Users/aweissha/Documents/42cursus/Cub3D_new_4/textures/mossy.png");
-// }
-
 
 void	parse_map(t_data *data, char *argv[])
 {
