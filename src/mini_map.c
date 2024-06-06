@@ -6,7 +6,7 @@
 /*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 16:51:43 by sparth            #+#    #+#             */
-/*   Updated: 2024/06/04 20:47:01 by sparth           ###   ########.fr       */
+/*   Updated: 2024/06/05 15:29:22 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,18 +161,6 @@ void	draw_block(t_data *data, int y, int x, unsigned int color)
 		k++;
 	}
 	draw_arrow(data);
-	// while (k < 8 && color != wall_color_map)
-	// {
-	// 	j = 0;
-	// 	while (j < 8)
-	// 	{
-	// 		temp_x = map_start_x + j + (8 * x);
-	// 		temp_y = map_start_y + k + (8 * y);
-	// 		mlx_put_pixel(data->img, temp_x, temp_y, color);
-	// 		j++;
-	// 	}
-	// 	k++;
-	// }
 }
 
 // player start position is in the middle of the map 
