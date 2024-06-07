@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: aweissha <aweissha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:07:03 by aweissha          #+#    #+#             */
-/*   Updated: 2024/06/07 17:59:57 by sparth           ###   ########.fr       */
+/*   Updated: 2024/06/07 18:40:43 by aweissha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,6 @@ t_data	*init_data(int argc, char *argv[])
 	data->path_to_the_north_texture = NULL;
 	data->path_to_the_south_texture = NULL;
 	data->time = 0;
-	data->prev_time = 0;
 	data->map = NULL;
 	data->map_height = 0;
 	data->map_width = 0;
@@ -132,6 +131,11 @@ t_data	*init_data(int argc, char *argv[])
 	data->weapon_shot = -1;
 	data->mouse_temp_x = 512;
 	data->mouse_temp_y = 384;
+	data->textures[0] = NULL;
+	data->textures[1] = NULL;
+	data->textures[2] = NULL;
+	data->textures[3] = NULL;
+	data->door_texture[0] = NULL;
 	parse_map(data, argv);
 	init_player(data);
 	map_validation(data);

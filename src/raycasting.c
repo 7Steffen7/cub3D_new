@@ -6,7 +6,7 @@
 /*   By: aweissha <aweissha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 10:53:58 by aweissha          #+#    #+#             */
-/*   Updated: 2024/06/04 20:54:46 by aweissha         ###   ########.fr       */
+/*   Updated: 2024/06/07 21:23:13 by aweissha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,10 @@ void	calc_texture(t_data *data)
 	else if (ray->side == 1 || ray->side == 3)
 		ray->wall_x = ray->pos.y;
 	ray->wall_x -= floor(ray->wall_x);
-	ray->tex_x = (int)(ray->wall_x * data->textures[ray->side]->width);
+	if (ray->wall == 'D')
+		ray->tex_x = (int)(ray->wall_x * data->door_texture[0]->width);
+	else
+		ray->tex_x = (int)(ray->wall_x * data->textures[ray->side]->width);
 }
 
 
@@ -199,7 +202,7 @@ void	ray_algorithm(t_data *data)
 	t_ray	*ray;
 
 	ray = data->ray;
-	while ((ray->wall) == '0')
+	while ((ray->wall) == '0' || (ray->wall) == 'd')
 	{
 		// printf("hello from ray algorithm\n");
 		elongate_ray(ray);
@@ -209,32 +212,46 @@ void	ray_algorithm(t_data *data)
 	calc_texture(data);
 }
 
+int	ft_pixel(int r, int g, int b, int a)
+{
+	return (r << 24 | g << 16 | b << 8 | a);
+}
+
 int	find_color_from_texture(int	counter, t_data *data)
 {
-	t_ray	*ray;
 	int		color;
+	mlx_texture_t	*texture;
 	int		tex_width;
 	float	f;
 	float	a;
 
-	ray = data->ray;
-	tex_width = data->textures[ray->side]->width;
-	f = (0.5 - 0.5 * ray->perp_length)/ 0.5;
-	a = ((counter - ray->line_top) / (float)ray->line_height);
-	if (ray->perp_length < 1)
+	if (data->ray->wall == 'D')
+		texture = data->door_texture[0];
+	else
+		texture = data->textures[data->ray->side];
+	tex_width = texture->width;
+	f = (0.5 - 0.5 * data->ray->perp_length)/ 0.5;
+	a = ((counter - data->ray->line_top) / (float)data->ray->line_height);
+	if (data->ray->perp_length < 1)
 	{
-		ray->tex_y = data->textures[ray->side]->height * (a - a * f + 0.5 * f);
+		data->ray->tex_y = texture->height * (a - a * f + 0.5 * f);
 		// ray->tex_y = (int)(((counter - ray->line_top) / (float)ray->line_height) * (data->textures[ray->side]->height - (data->textures[ray->side]->height * factor))) + ((0.5 * data->textures[ray->side]->height) * factor);
 	}
 	else
-		ray->tex_y = ((counter - ray->line_top) / (float)ray->line_height) * data->textures[ray->side]->height;
-	color = data->textures[ray->side]->pixels[tex_width * 4 * ray->tex_y + ray->tex_x * 4];
-	color *= 256;
-	color += data->textures[ray->side]->pixels[tex_width * 4 * ray->tex_y + ray->tex_x * 4 + 1];
-	color *= 256;
-	color += data->textures[ray->side]->pixels[tex_width * 4 * ray->tex_y + ray->tex_x * 4 + 2];
-	color *= 256;
-	color += data->textures[ray->side]->pixels[tex_width * 4 * ray->tex_y + ray->tex_x * 4 + 3];
+		data->ray->tex_y = ((counter - data->ray->line_top) / (float)data->ray->line_height) * texture->height;
+	// color = texture->pixels[tex_width * 4 * data->ray->tex_y + data->ray->tex_x * 4];
+	// color *= 256;
+	// color += texture->pixels[tex_width * 4 * data->ray->tex_y + data->ray->tex_x * 4 + 1];
+	// color *= 256;
+	// color += texture->pixels[tex_width * 4 * data->ray->tex_y + data->ray->tex_x * 4 + 2];
+	// color *= 256;
+	// color += texture->pixels[tex_width * 4 * data->ray->tex_y + data->ray->tex_x * 4 + 3];
+	color = ft_pixel(texture->pixels[tex_width * 4 * data->ray->tex_y + data->ray->tex_x * 4],
+		texture->pixels[tex_width * 4 * data->ray->tex_y + data->ray->tex_x * 4 + 1]
+		/ (1.0 + data->ray->perp_length * 0.02),
+		texture->pixels[tex_width * 4 * data->ray->tex_y + data->ray->tex_x * 4 + 2]
+		/ (1.0 + data->ray->perp_length * 0.02),
+		texture->pixels[tex_width * 4 * data->ray->tex_y + data->ray->tex_x * 4 + 3]);
 	if (data->map_height > data->map_width)
 		color -= 256 * (data->ray->perp_length / data->map_height);
 	else
