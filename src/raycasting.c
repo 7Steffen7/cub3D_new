@@ -6,7 +6,7 @@
 /*   By: aweissha <aweissha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 10:53:58 by aweissha          #+#    #+#             */
-/*   Updated: 2024/06/07 17:54:00 by aweissha         ###   ########.fr       */
+/*   Updated: 2024/06/07 21:23:13 by aweissha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,6 +212,11 @@ void	ray_algorithm(t_data *data)
 	calc_texture(data);
 }
 
+int	ft_pixel(int r, int g, int b, int a)
+{
+	return (r << 24 | g << 16 | b << 8 | a);
+}
+
 int	find_color_from_texture(int	counter, t_data *data)
 {
 	int		color;
@@ -234,13 +239,19 @@ int	find_color_from_texture(int	counter, t_data *data)
 	}
 	else
 		data->ray->tex_y = ((counter - data->ray->line_top) / (float)data->ray->line_height) * texture->height;
-	color = texture->pixels[tex_width * 4 * data->ray->tex_y + data->ray->tex_x * 4];
-	color *= 256;
-	color += texture->pixels[tex_width * 4 * data->ray->tex_y + data->ray->tex_x * 4 + 1];
-	color *= 256;
-	color += texture->pixels[tex_width * 4 * data->ray->tex_y + data->ray->tex_x * 4 + 2];
-	color *= 256;
-	color += texture->pixels[tex_width * 4 * data->ray->tex_y + data->ray->tex_x * 4 + 3];
+	// color = texture->pixels[tex_width * 4 * data->ray->tex_y + data->ray->tex_x * 4];
+	// color *= 256;
+	// color += texture->pixels[tex_width * 4 * data->ray->tex_y + data->ray->tex_x * 4 + 1];
+	// color *= 256;
+	// color += texture->pixels[tex_width * 4 * data->ray->tex_y + data->ray->tex_x * 4 + 2];
+	// color *= 256;
+	// color += texture->pixels[tex_width * 4 * data->ray->tex_y + data->ray->tex_x * 4 + 3];
+	color = ft_pixel(texture->pixels[tex_width * 4 * data->ray->tex_y + data->ray->tex_x * 4],
+		texture->pixels[tex_width * 4 * data->ray->tex_y + data->ray->tex_x * 4 + 1]
+		/ (1.0 + data->ray->perp_length * 0.02),
+		texture->pixels[tex_width * 4 * data->ray->tex_y + data->ray->tex_x * 4 + 2]
+		/ (1.0 + data->ray->perp_length * 0.02),
+		texture->pixels[tex_width * 4 * data->ray->tex_y + data->ray->tex_x * 4 + 3]);
 	if (data->map_height > data->map_width)
 		color -= 256 * (data->ray->perp_length / data->map_height);
 	else
