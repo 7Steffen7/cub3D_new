@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: aweissha <aweissha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:07:59 by aweissha          #+#    #+#             */
-/*   Updated: 2024/06/05 16:32:37 by sparth           ###   ########.fr       */
+/*   Updated: 2024/06/07 19:01:56 by aweissha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,32 @@ void	player_horizontal_movement(t_data *data, float speed)
 		data->player->position.y = temp_y;
 }
 
+void	open_close_door(t_data *data)
+{
+	t_vector		door_position;
+	int				map_x;
+	int				map_y;
+	long			time;
+	struct timeval	tv;
+
+	door_position.x = data->player->position.x + (data->player->direction.x / vector_len(data->player->direction));
+	door_position.y = data->player->position.y + (data->player->direction.y / vector_len(data->player->direction));
+	map_x = (int)door_position.x;
+	map_y = (int)door_position.y;
+	gettimeofday(&tv, NULL);
+	time = tv.tv_sec * 1000 + tv.tv_usec / 1000;
+	// printf("hello from open_close_door\n");
+	if ((time - data->time) >= 200)
+	{
+		// printf("time: %ld\n", time);
+		if (data->map[map_y][map_x] == 'D')
+			data->map[map_y][map_x] = 'd';
+		else if (data->map[map_y][map_x] == 'd')
+			data->map[map_y][map_x] = 'D';
+		data->time = time;
+	}
+}
+
 // atan2 = return: angle in radians
 // perp = perpendicular vector
 void	ft_hook(void *param)
@@ -129,6 +155,8 @@ void	ft_hook(void *param)
 		data->weapon = 1;
 	if (mlx_is_key_down(data->mlx, MLX_KEY_4))
 		data->weapon = 2;
+	if (mlx_is_key_down(data->mlx, MLX_KEY_SPACE))
+		open_close_door(data);
 	if (mlx_is_mouse_down(data->mlx, MLX_MOUSE_BUTTON_LEFT))
 		data->weapon_shot = data->weapon;
 	
@@ -172,6 +200,9 @@ void	init_textures(t_data *data)
 		ft_mlx_error_and_free(mlx_strerror(mlx_errno), mlx_errno, data);
 	data->weapon_shot_textures[2] = mlx_load_png("./textures/knive_stab.png");
 	if (!(data->weapon_shot_textures[2]))
+		ft_mlx_error_and_free(mlx_strerror(mlx_errno), mlx_errno, data);
+	data->door_texture[0] = mlx_load_png("./textures/door.png");
+	if (!(data->door_texture[0]))
 		ft_mlx_error_and_free(mlx_strerror(mlx_errno), mlx_errno, data);
 }
 

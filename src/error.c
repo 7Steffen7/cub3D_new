@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: aweissha <aweissha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 19:11:02 by aweissha          #+#    #+#             */
-/*   Updated: 2024/06/06 23:13:43 by sparth           ###   ########.fr       */
+/*   Updated: 2024/06/07 15:47:20 by aweissha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	free_everything(t_data *data)
 	int	i;
 
 	i = 0;
-	// free_textures(data);    always segfaults...
+	free_textures(data);  
 	if (data->mlx)
 		mlx_terminate(data->mlx);
 	if (data->player)

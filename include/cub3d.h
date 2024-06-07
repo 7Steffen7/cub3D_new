@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: aweissha <aweissha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:02:00 by aweissha          #+#    #+#             */
-/*   Updated: 2024/06/06 13:14:20 by sparth           ###   ########.fr       */
+/*   Updated: 2024/06/07 18:51:43 by aweissha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <limits.h>
 # include <math.h>
 # include <fcntl.h>
+# include <sys/time.h>
 # include "../MLX42/include/MLX42/MLX42.h"
 # include "../libft/libft.h"
 
@@ -83,14 +84,14 @@ typedef struct s_data
 	char			init_player_dir;
 	char			**map;
 	mlx_texture_t	*textures[4];
+	mlx_texture_t	*door_texture[1];
 	mlx_texture_t	*weapon_textures[3];
 	mlx_texture_t	*weapon_shot_textures[3];
 	mlx_t			*mlx;
 	mlx_image_t		*img;
 	t_player		*player;
 	t_ray			*ray;
-	double			time;
-	double			prev_time;
+	long			time;
 	char			*path_to_the_east_texture;
 	char			*path_to_the_west_texture;
 	char			*path_to_the_north_texture;

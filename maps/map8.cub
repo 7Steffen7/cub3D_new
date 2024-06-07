@@ -4,7 +4,7 @@ EA ./textures/bluestone.png
 
 WE	./textures/colorstone.png		
 
-NO ./textures/mossy.png
+NO ./textures/mossy.png 	 	 
 
  
 C	135,206,	 	235 	 
