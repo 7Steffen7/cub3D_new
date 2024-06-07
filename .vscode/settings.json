@@ -1,6 +1,15 @@
 {
 	"files.associations": {
 		"cub3d.h": "c",
-		"complex": "c"
+		"complex": "c",
+		"array": "c",
+		"iterator": "c",
+		"string": "c",
+		"string_view": "c",
+		"vector": "c",
+		"stdio.h": "c",
+		"stdlib.h": "c",
+		"libft.h": "c",
+		"mlx42.h": "c"
 	}
 }

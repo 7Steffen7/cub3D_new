@@ -129,6 +129,8 @@ t_data	*init_data(int argc, char *argv[])
 	data->color_floor_check = false;
 	data->weapon = -1;
 	data->weapon_shot = -1;
+	data->mouse_temp_x = 512;
+	data->mouse_temp_y = 384;
 	data->textures[0] = NULL;
 	data->textures[1] = NULL;
 	data->textures[2] = NULL;

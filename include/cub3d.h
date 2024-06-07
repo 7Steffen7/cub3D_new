@@ -102,6 +102,8 @@ typedef struct s_data
 	bool			color_floor_check;
 	int				weapon;
 	int				weapon_shot;
+	int				mouse_temp_x;
+	int				mouse_temp_y;
 }	t_data;
 
 // init.c

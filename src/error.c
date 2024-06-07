@@ -6,7 +6,7 @@
 /*   By: aweissha <aweissha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 19:11:02 by aweissha          #+#    #+#             */
-/*   Updated: 2024/06/07 15:47:20 by aweissha         ###   ########.fr       */
+/*   Updated: 2024/06/07 16:26:39 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,3 +106,4 @@ void	ft_error_and_free(char *message, int code, t_data *data)
 	free_everything(data);
 	ft_error(message, code);
 }
+
