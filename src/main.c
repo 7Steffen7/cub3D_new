@@ -6,7 +6,7 @@
 /*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:07:59 by aweissha          #+#    #+#             */
-/*   Updated: 2024/06/05 16:32:37 by sparth           ###   ########.fr       */
+/*   Updated: 2024/06/07 20:40:29 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,19 @@ void	player_horizontal_movement(t_data *data, float speed)
 // perp = perpendicular vector
 void	ft_hook(void *param)
 {
+	int	mouse_x;
+	int	mouse_y;
 	t_data *data = param;
+	
+	mlx_get_mouse_pos(data->mlx, &mouse_x, &mouse_y);
+	if (mouse_x != data->mouse_temp_x)
+	{
+		
+		player_rotation(data, (mouse_x - data->mouse_temp_x) / 2);
+		mlx_set_mouse_pos(data->mlx, data->mouse_temp_x, data->mouse_temp_y);
+		mouse_x = data->mouse_temp_x;
+	}
+
 	if (mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(data->mlx);
 	if (mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
@@ -181,7 +193,8 @@ int	main(int argc, char *argv[])
 	data = init_data(argc, argv);
 	init_textures(data);
 	raycaster(data);
-
+	mlx_set_mouse_pos(data->mlx, data->mouse_temp_x, data->mouse_temp_y);
+	mlx_set_cursor_mode(data->mlx, MLX_MOUSE_HIDDEN);
 	mlx_loop_hook(data->mlx, ft_hook, data);
 	mlx_loop(data->mlx);
 	free_everything(data);

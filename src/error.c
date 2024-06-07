@@ -6,7 +6,7 @@
 /*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 19:11:02 by aweissha          #+#    #+#             */
-/*   Updated: 2024/06/06 23:13:43 by sparth           ###   ########.fr       */
+/*   Updated: 2024/06/07 16:26:39 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,3 +106,4 @@ void	ft_error_and_free(char *message, int code, t_data *data)
 	free_everything(data);
 	ft_error(message, code);
 }
+

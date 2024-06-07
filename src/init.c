@@ -6,7 +6,7 @@
 /*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:07:03 by aweissha          #+#    #+#             */
-/*   Updated: 2024/06/06 22:58:03 by sparth           ###   ########.fr       */
+/*   Updated: 2024/06/07 17:59:57 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,8 @@ t_data	*init_data(int argc, char *argv[])
 	data->color_floor_check = false;
 	data->weapon = -1;
 	data->weapon_shot = -1;
+	data->mouse_temp_x = 512;
+	data->mouse_temp_y = 384;
 	parse_map(data, argv);
 	init_player(data);
 	map_validation(data);

@@ -6,7 +6,7 @@
 /*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:02:00 by aweissha          #+#    #+#             */
-/*   Updated: 2024/06/06 13:14:20 by sparth           ###   ########.fr       */
+/*   Updated: 2024/06/07 16:32:22 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,8 @@ typedef struct s_data
 	bool			color_floor_check;
 	int				weapon;
 	int				weapon_shot;
+	int				mouse_temp_x;
+	int				mouse_temp_y;
 }	t_data;
 
 // init.c
