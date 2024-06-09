@@ -19,8 +19,14 @@ RM = rm -f
 
 SRCS =		$(SRC_DIR)main.c \
 			$(SRC_DIR)init.c \
+			$(SRC_DIR)init_2.c \
 			$(SRC_DIR)error.c \
 			$(SRC_DIR)raycasting.c \
+			$(SRC_DIR)raycasting_utils.c \
+			$(SRC_DIR)ray_algorithm.c \
+			$(SRC_DIR)render.c \
+			$(SRC_DIR)textures.c \
+			$(SRC_DIR)weapon.c \
 			$(SRC_DIR)map.c \
 			$(SRC_DIR)map_validation.c \
 			$(SRC_DIR)mini_map.c \

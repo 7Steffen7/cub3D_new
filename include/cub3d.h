@@ -6,7 +6,7 @@
 /*   By: aweissha <aweissha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:02:00 by aweissha          #+#    #+#             */
-/*   Updated: 2024/06/07 18:51:43 by aweissha         ###   ########.fr       */
+/*   Updated: 2024/06/09 16:27:40 by aweissha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,14 @@ typedef struct s_data
 void	init_ray(int ray_index, t_data *data);
 void	ft_init_mlx(t_data *data);
 void	init_player(t_data *data);
+void	init_textures(t_data *data);
 t_data	*init_data(int argc, char *argv[]);
+
+// init_2.c
+void	init_ray_2(t_data *data);
+void	init_textures_2(t_data *data);
+void	init_data_textures(t_data *data);
+void	init_data_params(t_data *data);
 
 // error.c
 void	free_everything(t_data *data);
@@ -120,19 +127,36 @@ void	ft_mlx_error_and_free(const char *message, int code, t_data *data);
 void	ft_error_and_free(char *message, int code, t_data *data);
 void	print_error(int *error, char *line);
 
-// raycasting.c
-double	get_lower(double a, double b);
+// ray_algorithm.c
 double	find_factor(t_ray *ray);
 void	elongate_ray(t_ray *ray);
-int 	is_integer(double x);
-void	check_side(t_ray *ray);
 void	check_for_wall(t_data *data);
-double	vector_len(t_vector vector);
 void	calc_perp_length(t_data *data);
+
+// raycasting.c
 void	ray_algorithm(t_data *data);
+void	raycaster(t_data *data);
+
+// raycasting_utils.c
+double	get_lower(double a, double b);
+int 	is_integer(double x);
+int		ft_pixel(int r, int g, int b, int a);
+double	vector_len(t_vector vector);
+
+// render.c
+void	fill_repeating_pixels(int *counter, int color, t_data *data);
 void	line_to_image(t_data *data);
 void	render_image(t_data *data);
-void	raycaster(t_data *data);
+
+// textures.c
+void	check_side(t_ray *ray);
+void	calc_texture(t_data *data);
+void	calc_tex_y(int counter, mlx_texture_t *texture, t_data *data);
+int		find_color_from_texture(int	counter, t_data *data);
+
+// weapon.c
+unsigned int	find_weapon_color(float x, float y, t_data *data);
+void			add_weapon(t_data *data);
 
 // map.c
 void	parse_map(t_data *data, char *argv[]);
