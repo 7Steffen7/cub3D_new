@@ -6,7 +6,7 @@
 /*   By: aweissha <aweissha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:07:03 by aweissha          #+#    #+#             */
-/*   Updated: 2024/06/07 18:40:43 by aweissha         ###   ########.fr       */
+/*   Updated: 2024/06/09 16:41:45 by aweissha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	init_ray(int ray_index, t_data *data)
 	if (data->ray == NULL)
 		data->ray = malloc(sizeof(t_ray));
 	if (data->ray == NULL)
-		ft_error_and_free("Memory allocation of ray failed\n", errno, data);	
+		ft_error_and_free("Memory allocation of ray failed\n", errno, data);
 	player = data->player;
 	ray = data->ray;
 	ray->index = ray_index;
@@ -29,33 +29,25 @@ void	init_ray(int ray_index, t_data *data)
 	ray->pos.x = player->position.x;
 	ray->pos.y = player->position.y;
 	ray->factor = ((2 * ray_index) / (float)data->screen_width) - 1;
-	// printf("ray_factor %f\n", ray->factor);
 	ray->dir.x = player->direction.x + player->screen.x * ray->factor;
 	ray->dir.y = player->direction.y + player->screen.y * ray->factor;
 	ray->map_x = (int)player->position.x;
 	ray->map_y = (int)player->position.y;
-	ray->wall = '0';
-	ray->perp_length = 0;
-	ray->side = 0;
-	ray->wall_x = 0;
-	ray->tex_x = 0;
-	ray->tex_y = 0;
-	ray->line_height = 0;
-	ray->line_bottom = 0;
-	ray->line_top = 0;
+	init_ray_2(data);
 }
 
 void	ft_init_mlx(t_data *data)
 {
-	data->mlx = mlx_init(data->screen_width, data->screen_height, "Cub3d", false);
+	data->mlx = mlx_init(data->screen_width,
+			data->screen_height, "Cub3d", false);
 	if (data->mlx == NULL)
 		ft_mlx_error_and_free(mlx_strerror(mlx_errno), mlx_errno, data);
-	data->img = mlx_new_image(data->mlx, data->screen_width, data->screen_height);
+	data->img = mlx_new_image(data->mlx, data->screen_width,
+			data->screen_height);
 	if (data->img == NULL)
 		ft_mlx_error_and_free(mlx_strerror(mlx_errno), mlx_errno, data);
 	if (mlx_image_to_window(data->mlx, data->img, 0, 0) < 0)
 		ft_mlx_error_and_free(mlx_strerror(mlx_errno), mlx_errno, data);
-	
 }
 
 void	init_player(t_data *data)
@@ -68,14 +60,16 @@ void	init_player(t_data *data)
 	{
 		data->player->direction.x = 0;
 		data->player->direction.y = -0.5;
-		data->player->screen.x = -data->player->direction.y * tan((FOV_IN_DEGREE / 2) * (PI / 180));
+		data->player->screen.x = -data->player->direction.y
+			* tan((FOV_IN_DEGREE / 2) * (PI / 180));
 		data->player->screen.y = 0;
 	}
 	else if (data->init_player_dir == 'S')
 	{
 		data->player->direction.x = 0;
 		data->player->direction.y = 0.5;
-		data->player->screen.x = -data->player->direction.y * tan((FOV_IN_DEGREE / 2) * (PI / 180));
+		data->player->screen.x = -data->player->direction.y
+			* tan((FOV_IN_DEGREE / 2) * (PI / 180));
 		data->player->screen.y = 0;
 	}
 	else if (data->init_player_dir == 'W')
@@ -83,21 +77,49 @@ void	init_player(t_data *data)
 		data->player->direction.x = -0.5;
 		data->player->direction.y = 0;
 		data->player->screen.x = 0;
-		data->player->screen.y = data->player->direction.x * tan((FOV_IN_DEGREE / 2) * (PI / 180));
+		data->player->screen.y = data->player->direction.x
+			* tan((FOV_IN_DEGREE / 2) * (PI / 180));
 	}
 	else if (data->init_player_dir == 'E')
 	{
 		data->player->direction.x = 0.5;
 		data->player->direction.y = 0;
 		data->player->screen.x = 0;
-		data->player->screen.y = data->player->direction.x * tan((FOV_IN_DEGREE / 2) * (PI / 180));
+		data->player->screen.y = data->player->direction.x
+			* tan((FOV_IN_DEGREE / 2) * (PI / 180));
 	}
+}
+
+void	init_textures(t_data *data)
+{
+	data->textures[0] = mlx_load_png(data->path_to_the_north_texture);
+	if (!(data->textures[0]))
+		ft_mlx_error_and_free(mlx_strerror(mlx_errno), mlx_errno, data);
+	data->textures[1] = mlx_load_png(data->path_to_the_east_texture);
+	if (!(data->textures[1]))
+		ft_mlx_error_and_free(mlx_strerror(mlx_errno), mlx_errno, data);
+	data->textures[2] = mlx_load_png(data->path_to_the_south_texture);
+	if (!(data->textures[2]))
+		ft_mlx_error_and_free(mlx_strerror(mlx_errno), mlx_errno, data);
+	data->textures[3] = mlx_load_png(data->path_to_the_west_texture);
+	if (!(data->textures[3]))
+		ft_mlx_error_and_free(mlx_strerror(mlx_errno), mlx_errno, data);
+	data->weapon_textures[0] = mlx_load_png("./textures/gun.png");
+	if (!(data->weapon_textures[0]))
+		ft_mlx_error_and_free(mlx_strerror(mlx_errno), mlx_errno, data);
+	data->weapon_textures[1] = mlx_load_png("./textures/gun_2.png");
+	if (!(data->weapon_textures[1]))
+		ft_mlx_error_and_free(mlx_strerror(mlx_errno), mlx_errno, data);
+	data->weapon_textures[2] = mlx_load_png("./textures/knive.png");
+	if (!(data->weapon_textures[2]))
+		ft_mlx_error_and_free(mlx_strerror(mlx_errno), mlx_errno, data);
+	init_textures_2(data);
 }
 
 t_data	*init_data(int argc, char *argv[])
 {
 	t_data	*data;
-	
+
 	if (argc != 2)
 	{
 		printf("input: './cub3D' 'name_of_map'");
@@ -106,39 +128,17 @@ t_data	*init_data(int argc, char *argv[])
 	data = malloc(sizeof(t_data));
 	if (data == NULL)
 		ft_error("Memory allocation of data struct failed\n", errno);
-	data->screen_width = SCREEN_WIDTH;
-	data->screen_height = SCREEN_HEIGHT;
+	init_data_params(data);
 	data->mlx = NULL;
 	data->img = NULL;
 	data->player = NULL;
 	data->ray = NULL;
-	data->path_to_the_east_texture = NULL;
-	data->path_to_the_west_texture = NULL;
-	data->path_to_the_north_texture = NULL;
-	data->path_to_the_south_texture = NULL;
-	data->time = 0;
 	data->map = NULL;
-	data->map_height = 0;
-	data->map_width = 0;
-	data->map_start = 0; // check if needed
-	data->init_player_dir = '0';
-	data->player_exist = false;
-	data->color_ceiling = 0x0;
-	data->color_floor = 0x0;
-	data->color_ceiling_check = false;
-	data->color_floor_check = false;
-	data->weapon = -1;
-	data->weapon_shot = -1;
-	data->mouse_temp_x = 512;
-	data->mouse_temp_y = 384;
-	data->textures[0] = NULL;
-	data->textures[1] = NULL;
-	data->textures[2] = NULL;
-	data->textures[3] = NULL;
-	data->door_texture[0] = NULL;
+	init_data_textures(data);
 	parse_map(data, argv);
 	init_player(data);
 	map_validation(data);
 	ft_init_mlx(data);
+	init_textures(data);
 	return (data);
 }

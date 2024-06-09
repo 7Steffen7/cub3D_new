@@ -6,7 +6,7 @@
 /*   By: aweissha <aweissha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:07:59 by aweissha          #+#    #+#             */
-/*   Updated: 2024/06/07 20:40:29 by sparth           ###   ########.fr       */
+/*   Updated: 2024/06/09 14:22:14 by aweissha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,48 +181,10 @@ void	ft_hook(void *param)
 	mini_map(data);
 }
 
-void	init_textures(t_data *data)
-{
-	data->textures[0] = mlx_load_png(data->path_to_the_north_texture);
-	if (!(data->textures[0]))
-		ft_mlx_error_and_free(mlx_strerror(mlx_errno), mlx_errno, data);
-	data->textures[1] = mlx_load_png(data->path_to_the_east_texture);
-	if (!(data->textures[1]))
-		ft_mlx_error_and_free(mlx_strerror(mlx_errno), mlx_errno, data);	
-	data->textures[2] = mlx_load_png(data->path_to_the_south_texture);
-	if (!(data->textures[2]))
-		ft_mlx_error_and_free(mlx_strerror(mlx_errno), mlx_errno, data);
-	data->textures[3] = mlx_load_png(data->path_to_the_west_texture);
-	if (!(data->textures[3]))
-		ft_mlx_error_and_free(mlx_strerror(mlx_errno), mlx_errno, data);
-	data->weapon_textures[0] = mlx_load_png("./textures/gun.png");
-	if (!(data->weapon_textures[0]))
-		ft_mlx_error_and_free(mlx_strerror(mlx_errno), mlx_errno, data);
-	data->weapon_textures[1] = mlx_load_png("./textures/gun_2.png");
-	if (!(data->weapon_textures[1]))
-		ft_mlx_error_and_free(mlx_strerror(mlx_errno), mlx_errno, data);
-	data->weapon_textures[2] = mlx_load_png("./textures/knive.png");
-	if (!(data->weapon_textures[2]))
-		ft_mlx_error_and_free(mlx_strerror(mlx_errno), mlx_errno, data);
-	data->weapon_shot_textures[0] = mlx_load_png("./textures/gun_shot.png");
-	if (!(data->weapon_shot_textures[0]))
-		ft_mlx_error_and_free(mlx_strerror(mlx_errno), mlx_errno, data);
-	data->weapon_shot_textures[1] = mlx_load_png("./textures/gun_2_shot.png");
-	if (!(data->weapon_shot_textures[1]))
-		ft_mlx_error_and_free(mlx_strerror(mlx_errno), mlx_errno, data);
-	data->weapon_shot_textures[2] = mlx_load_png("./textures/knive_stab.png");
-	if (!(data->weapon_shot_textures[2]))
-		ft_mlx_error_and_free(mlx_strerror(mlx_errno), mlx_errno, data);
-	data->door_texture[0] = mlx_load_png("./textures/door.png");
-	if (!(data->door_texture[0]))
-		ft_mlx_error_and_free(mlx_strerror(mlx_errno), mlx_errno, data);
-}
-
 int	main(int argc, char *argv[])
 {
 	t_data	*data;
 	data = init_data(argc, argv);
-	init_textures(data);
 	raycaster(data);
 	mlx_set_mouse_pos(data->mlx, data->mouse_temp_x, data->mouse_temp_y);
 	mlx_set_cursor_mode(data->mlx, MLX_MOUSE_HIDDEN);
@@ -230,5 +192,3 @@ int	main(int argc, char *argv[])
 	mlx_loop(data->mlx);
 	free_everything(data);
 }
-//  to do:
-// reset image before raycasting whenever a movement is made
