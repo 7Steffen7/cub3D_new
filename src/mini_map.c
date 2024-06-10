@@ -6,7 +6,7 @@
 /*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 16:51:43 by sparth            #+#    #+#             */
-/*   Updated: 2024/06/05 15:29:22 by sparth           ###   ########.fr       */
+/*   Updated: 2024/06/10 16:31:41 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,6 @@ void	map_ray(t_data *data, int index, double perp_len)
 	x = 896 - ((len * 8) * cos(radian));
 	y = 96 - ((len * 8) * sin(radian));
 	bresenham(data, 896, x, 96, y);
-	// printf("index: %d x: %d y: %d\n", index / 10, x, y);
-
 }
 
 void	draw_arrow(t_data *data)
@@ -71,18 +69,12 @@ void	draw_arrow(t_data *data)
 	while (i > -6)
 	{
 		while (i <= step)
-		{
-			mlx_put_pixel(data->img, player_x + i, player_y, 0xFFFFFF55);
-			i++;
-		}
+			mlx_put_pixel(data->img, player_x + i++, player_y, 0xFFFFFF55);
 		i -= 1;
 		i *= -1;
 		player_y++;
 		while (i <= step)
-		{
-			mlx_put_pixel(data->img, player_x + i, player_y, 0xFFFFFF55);
-			i++;
-		}
+			mlx_put_pixel(data->img, player_x + i++, player_y, 0xFFFFFF55);
 		player_y++;
 		i *= -1;
 		step++;
@@ -106,42 +98,32 @@ void	draw_arrow(t_data *data)
 //min = 8
 // max = 184
 
-void	draw_block(t_data *data, int y, int x, unsigned int color)
+void	draw_block(t_data *data, int y, int x, char type)
 {
-	int		map_start_x;
-	int		map_start_y;
-	int		j;
-	int		k;
-	int		y_offset;
-	int		x_offset;
-	int 	temp_x;
-	int 	temp_x1;
-	int 	temp_y;
-	int 	temp_y1;
-	float	theta;
-	int		pivot_x;
-	int		pivot_y;
-	float	pos_x;
-	float	pos_x1;
-	float	pos_y;
-	float	pos_y1;
+	int				map_start_x;
+	int				map_start_y;
+	int				j;
+	int				k;
+	int 			temp_x;
+	int 			temp_y;
+	float			theta;
+	int				pivot_x;
+	int				pivot_y;
+	float			pos_x;
+	float			pos_y;
+	unsigned int	color;
 
-	x_offset = (int)(data->player->position.x * 10) % 10;
-	y_offset = (int)(data->player->position.y * 10) % 10;
-	x_offset = x_offset * 8 / 10;
-	y_offset = y_offset * 8 / 10;
-	map_start_x = data->screen_width - (data->screen_width / 8);
-	map_start_y = data->screen_height / 8;
+	if (type == '1')
+		color = wall_color_map;
+	else
+		color = door_color_map;
+	map_start_x = data->screen_width - (data->screen_width / 8) - (((int)(data->player->position.x * 10) % 10) * 8 / 10);
+	map_start_y = data->screen_height / 8 - (((int)(data->player->position.y * 10) % 10) * 8 / 10);
 	pivot_x = data->screen_width - (data->screen_width / 8 );
 	pivot_y = ((data->screen_height / 8));
-	if (color == wall_color_map)
-	{
-		map_start_x -= x_offset;
-		map_start_y -= y_offset;
-	}
 	k = 0;
 	theta = atan2(data->player->direction.x * -1, data->player->direction.y * - 1);
-	while (k < 8 && color == wall_color_map)
+	while (k < 8)
 	{
 		j = 0;
 		while (j < 8)
@@ -150,17 +132,12 @@ void	draw_block(t_data *data, int y, int x, unsigned int color)
 			temp_y = map_start_y + k + (8 * y);
 			pos_x = (pivot_x + (temp_x - pivot_x) * cos(theta)) - (temp_y - pivot_y) * sin(theta);
 			pos_y = pivot_y + (temp_x - pivot_x) * sin(theta) + (temp_y - pivot_y) * cos(theta);
-			temp_x1 = map_start_x + j + 1 + (8 * x);
-			temp_y1 = map_start_y + k + 1 + (8 * y);
-			pos_x1 = (pivot_x + (temp_x1 - pivot_x) * cos(theta)) - (temp_y1 - pivot_y) * sin(theta);
-			pos_y1 = pivot_y + (temp_x1 - pivot_x) * sin(theta) + (temp_y1 - pivot_y) * cos(theta);
 			if (pos_y >= 8 && pos_y <= 184 && pos_x >= 776 && pos_x <= 1016)
 				mlx_put_pixel(data->img, pos_x, pos_y, color);
 			j++;
 		}
 		k++;
 	}
-	draw_arrow(data);
 }
 
 // player start position is in the middle of the map 
@@ -170,42 +147,33 @@ void	draw_block(t_data *data, int y, int x, unsigned int color)
 // step 2. consider the float value of the player
 // step 3. try to implement map rotation
 // alternative implement arrow that shows player direction
-
+// 128 / 8 - 1
+// 96 / 8 - 1
 void	mini_map(t_data *data)
 {
 	int	start_x;
 	int	start_y;
-	int	width_max;
-	int	height_max;
 	int	x;
 	int	y;
 
-
-	// 128 / 8 - 1
-	width_max = 15;
-	// 96 / 8 - 1
-	height_max = 11;
 	start_x = (int)data->player->position.x;
 	start_y = (int)data->player->position.y;
-
-	width_max += 5;
-	height_max += 5;
-
-	y = -height_max + 1;
-	while (y < height_max)
+	y = -MINIMAP_HEIGHT + 1;
+	while (y < MINIMAP_HEIGHT)
 	{
-		x = -width_max + 1;
-		while (x < width_max)
+		x = -MINIMAP_WIDTH + 1;
+		while (x < MINIMAP_WIDTH)
 		{
-			if (start_y + y == start_y && start_x + x == start_x)
-				draw_block(data, y, x, 0xFF0000FF);
 			if (start_y + y < data->map_height && start_x + x < data->map_width
-				&& start_y + y >= 0 && start_x + x >= 0
-				&& data->map[start_y + y][start_x + x] == '1')
-				draw_block(data, y, x, wall_color_map);
+				&& start_y + y >= 0 && start_x + x >= 0)
+			{
+				if (data->map[start_y + y][start_x + x] == '1'
+					|| data->map[start_y + y][start_x + x] == 'D')
+					draw_block(data, y, x, data->map[start_y + y][start_x + x]);
+			}
 			x++;
 		}	
 		y++;
 	}
-	
+	draw_arrow(data);
 }

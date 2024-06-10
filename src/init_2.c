@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aweissha <aweissha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 14:45:55 by aweissha          #+#    #+#             */
-/*   Updated: 2024/06/09 16:39:52 by aweissha         ###   ########.fr       */
+/*   Updated: 2024/06/09 23:40:18 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,6 @@ void	init_data_params(t_data *data)
 	data->weapon_shot = -1;
 	data->mouse_temp_x = 512;
 	data->mouse_temp_y = 384;
+	data->last_color_texture = 0;
+	data->mouse = false;
 }

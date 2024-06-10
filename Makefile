@@ -8,7 +8,8 @@ LIBFTTARGET	= $(LIBFT)libft.a
 SRC_DIR = src/
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address
+CFLAGS = -Wunreachable-code -Ofast -Wall -Werror -Wextra 
+# -g -fsanitize=address
 
 MLX42FLAGS = -Iinclude -lglfw -framework Cocoa -framework OpenGL -framework IOKit
 
@@ -28,8 +29,11 @@ SRCS =		$(SRC_DIR)main.c \
 			$(SRC_DIR)textures.c \
 			$(SRC_DIR)weapon.c \
 			$(SRC_DIR)map.c \
+			$(SRC_DIR)map_utils.c \
+			$(SRC_DIR)map_utils2.c \
 			$(SRC_DIR)map_validation.c \
 			$(SRC_DIR)mini_map.c \
+			$(SRC_DIR)player_movement.c \
 
 
 OBJS = $(SRCS:.c=.o)

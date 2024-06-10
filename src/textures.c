@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aweissha <aweissha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 14:57:13 by aweissha          #+#    #+#             */
-/*   Updated: 2024/06/09 16:27:05 by aweissha         ###   ########.fr       */
+/*   Updated: 2024/06/09 23:56:04 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	check_side(t_ray *ray)
 {
-	if (fabs(ray->pos.x - round(ray->pos.x))
-		< fabs(ray->pos.y - round(ray->pos.y))
+	if (fabsf(ray->pos.x - roundf(ray->pos.x))
+		< fabsf(ray->pos.y - roundf(ray->pos.y))
 		&& is_integer(ray->pos.x) == 1)
 	{
 		if (ray->dir.x > 0)

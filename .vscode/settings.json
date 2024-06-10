@@ -10,6 +10,7 @@
 		"stdio.h": "c",
 		"stdlib.h": "c",
 		"libft.h": "c",
-		"mlx42.h": "c"
+		"mlx42.h": "c",
+		"__node_handle": "c"
 	}
 }

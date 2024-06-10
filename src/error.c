@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aweissha <aweissha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 19:11:02 by aweissha          #+#    #+#             */
-/*   Updated: 2024/06/09 15:18:14 by aweissha         ###   ########.fr       */
+/*   Updated: 2024/06/10 17:31:18 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-void	print_error(int *error, char *line)
+int	print_error(int *error, char *line)
 {
 	if (*error == 1)
 		printf("Invalid file! Conflict between texture files\n");
@@ -38,6 +38,7 @@ void	print_error(int *error, char *line)
 		printf("color input should be numeric and seperated be commas\n");
 	if (*error == 12)
 		printf("texture indication and file must be seperated! example: 'EA file.png'\n");
+	return (0);
 }
 
 void	free_textures(t_data *data)
@@ -105,4 +106,31 @@ void	ft_error_and_free(char *message, int code, t_data *data)
 {
 	free_everything(data);
 	ft_error(message, code);
+}
+
+void	error_map_print(char **map, t_data *data)
+{
+	int	i;
+	int	j;
+
+	j = 0;
+	printf("\n");
+	while(j < data->map_height && map[j])
+	{
+		i = 0;
+		while(map[j][i])
+		{
+			if (map[j][i] == 'f')
+				printf("\033[0;31mf\033[0m");
+			else
+				printf("%c", map[j][i]);
+			i++;
+		}
+		free(map[j]);
+		printf("\n");
+		j++;
+	}
+	printf("\n");
+	if (map)
+		free(map);
 }
