@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aweissha <aweissha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 15:07:03 by aweissha          #+#    #+#             */
-/*   Updated: 2024/06/09 16:31:41 by aweissha         ###   ########.fr       */
+/*   Updated: 2024/06/09 23:59:20 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,19 @@
 
 void	fill_repeating_pixels(int *counter, int color, t_data *data)
 {
-	int	ratio;
+	float	ratio;
 	int	start;
 
-	start = *counter - 1;
-	ratio = (int)(data->ray->line_height
+	start = (*counter) - 1;
+	ratio = ((float)data->ray->line_height
 			/ data->textures[data->ray->side]->height);
-	while ((*counter - start) < ratio && *counter < data->ray->line_bottom)
+	while (((*counter) - start) < ratio && (*counter) < data->ray->line_bottom)
 	{
 		if (data->ray->index >= 776 && data->ray->index <= 1016
-			&& *counter >= 8 && *counter <= 184)
+			&& (*counter) >= 8 && (*counter) <= 184)
 		{
-			if (color % 255 > 127)
 				mlx_put_pixel(data->img, data->ray->index,
 					*counter, color - 64);
-			else
-				mlx_put_pixel(data->img, data->ray->index,
-					*counter, color + 64);
 		}
 		else
 			mlx_put_pixel(data->img, data->ray->index, *counter, color);
@@ -55,8 +51,8 @@ void	line_to_image(t_data *data)
 		else
 			mlx_put_pixel(data->img, ray->index, counter, color);
 		counter++;
-		if (ray->line_height > (int)data->textures[ray->side]->height)
-			fill_repeating_pixels(&counter, color, data);
+		// if (ray->line_height > (int)data->textures[ray->side]->height)
+		// 	fill_repeating_pixels(&counter, color, data);
 	}
 }
 

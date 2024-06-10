@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_algorithm.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aweissha <aweissha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 15:01:37 by aweissha          #+#    #+#             */
-/*   Updated: 2024/06/09 16:38:50 by aweissha         ###   ########.fr       */
+/*   Updated: 2024/06/09 23:55:21 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,12 +89,12 @@ void	calc_perp_length(t_data *data)
 	ray = data->ray;
 	player = data->player;
 	ray->perp_length
-		= ((sqrt(pow(ray->pos.x - ray->start_pos.x, 2)
-					+ pow(ray->pos.y - ray->start_pos.y, 2))
-				- sqrt(pow(vector_len(player->direction), 2)
-					+ pow((vector_len(player->screen) * ray->factor), 2)))
-			/ (sqrt(pow(vector_len(player->direction), 2)
-					+ pow((vector_len(player->screen) * ray->factor), 2)))
+		= ((sqrtf(powf(ray->pos.x - ray->start_pos.x, 2)
+					+ powf(ray->pos.y - ray->start_pos.y, 2))
+				- sqrtf(powf(vector_len(player->direction), 2)
+					+ powf((vector_len(player->screen) * ray->factor), 2)))
+			/ (sqrtf(powf(vector_len(player->direction), 2)
+					+ powf((vector_len(player->screen) * ray->factor), 2)))
 			* vector_len(player->direction))
 		+ vector_len(player->direction);
 }

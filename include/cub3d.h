@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aweissha <aweissha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:02:00 by aweissha          #+#    #+#             */
-/*   Updated: 2024/06/09 16:27:40 by aweissha         ###   ########.fr       */
+/*   Updated: 2024/06/10 17:31:11 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,15 @@
 # include "../MLX42/include/MLX42/MLX42.h"
 # include "../libft/libft.h"
 
-// # define MAP_WIDTH 24
-// # define MAP_HEIGHT 24
+# define MINIMAP_WIDTH 20
+# define MINIMAP_HEIGHT 16
 # define SCREEN_WIDTH 1024
 # define SCREEN_HEIGHT 768
 # define WALL_DIST 0.25
 # define FOV_IN_DEGREE 60
 # define PI 3.14159265358979
 # define wall_color_map 0xFFFFEBFF
+# define door_color_map 0x808080FF
 
 typedef struct s_cord
 {
@@ -42,8 +43,8 @@ typedef struct s_cord
 
 typedef struct s_vector
 {
-	double	x;
-	double	y;
+	float	x;
+	float	y;
 }	t_vector;
 
 typedef struct s_player
@@ -104,6 +105,8 @@ typedef struct s_data
 	int				weapon_shot;
 	int				mouse_temp_x;
 	int				mouse_temp_y;
+	int				last_color_texture;
+	bool			mouse;
 }	t_data;
 
 // init.c
@@ -125,7 +128,8 @@ void	ft_error(char *message, int code);
 void	ft_mlx_error(const char *message, int code);
 void	ft_mlx_error_and_free(const char *message, int code, t_data *data);
 void	ft_error_and_free(char *message, int code, t_data *data);
-void	print_error(int *error, char *line);
+int		print_error(int *error, char *line);
+void	error_map_print(char **map, t_data *data);
 
 // ray_algorithm.c
 double	find_factor(t_ray *ray);
@@ -139,9 +143,9 @@ void	raycaster(t_data *data);
 
 // raycasting_utils.c
 double	get_lower(double a, double b);
-int 	is_integer(double x);
+int 	is_integer(float x);
 int		ft_pixel(int r, int g, int b, int a);
-double	vector_len(t_vector vector);
+float	vector_len(t_vector vector);
 
 // render.c
 void	fill_repeating_pixels(int *counter, int color, t_data *data);
@@ -163,11 +167,33 @@ void	parse_map(t_data *data, char *argv[]);
 void	find_player(t_data *data);
 void	print_map(char **map, t_data *data);
 
+//map_utils.c
+int		ft_mod_strlen(const char *s);
+size_t	ft_strllcpy(char *dst, const char *src, size_t dstsize);
+bool	ft_isspace(char c);
+int		ft_strcheck(char *str);
+void	strcut(char *str);
+
+//map_utils2.c
+void			line_prep(char *line, int line_len);
+void			delete_nl(char *line);
+unsigned int	color_calc(int red, int green, int blue);
+bool			ft_isnum(char *str);
+	
+
 // map_validation.c
 void	map_validation(t_data *data);
 
 // mini_map.c
 void	mini_map(t_data *data);
 void	map_ray(t_data *data, int index, double perp_len);
+
+//player_movement.c
+void	player_movement(t_data *data, int mouse_x, int mouse_y);
+void	player_vertical_movement(t_data *data, float speed);
+void	player_rotation(t_data *data, int speed);
+void	player_horizontal_movement(t_data *data, float speed);
+bool	able_2_walk(char **map, double y, double x);
+
 
 #endif
