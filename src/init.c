@@ -6,7 +6,7 @@
 /*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:07:03 by aweissha          #+#    #+#             */
-/*   Updated: 2024/06/11 15:31:06 by sparth           ###   ########.fr       */
+/*   Updated: 2024/06/11 15:38:46 by aweissha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,13 @@ void	ft_init_mlx(t_data *data)
 	data->mlx = mlx_init(data->screen_width,
 			data->screen_height, "Cub3d", false);
 	if (data->mlx == NULL)
-		ft_mlx_error_and_free(mlx_strerror(mlx_errno), mlx_errno, data);
+		ft_error_and_free("mlx_init failed\n", mlx_errno, data);
 	data->img = mlx_new_image(data->mlx, data->screen_width,
 			data->screen_height);
 	if (data->img == NULL)
-		ft_mlx_error_and_free(mlx_strerror(mlx_errno), mlx_errno, data);
+		ft_error_and_free("mlx_new_image failed\n", mlx_errno, data);
 	if (mlx_image_to_window(data->mlx, data->img, 0, 0) < 0)
-		ft_mlx_error_and_free(mlx_strerror(mlx_errno), mlx_errno, data);
+		ft_error_and_free("mlx_image_to_window failed\n", mlx_errno, data);
 }
 
 void	init_player(t_data *data)
@@ -70,25 +70,25 @@ void	init_textures(t_data *data)
 {
 	data->textures[0] = mlx_load_png(data->no_texture);
 	if (!(data->textures[0]))
-		ft_mlx_error_and_free(mlx_strerror(mlx_errno), mlx_errno, data);
+		ft_error_and_free("mlx_load_png failed\n", mlx_errno, data);
 	data->textures[1] = mlx_load_png(data->ea_texture);
 	if (!(data->textures[1]))
-		ft_mlx_error_and_free(mlx_strerror(mlx_errno), mlx_errno, data);
+		ft_error_and_free("mlx_load_png failed\n", mlx_errno, data);
 	data->textures[2] = mlx_load_png(data->so_texture);
 	if (!(data->textures[2]))
-		ft_mlx_error_and_free(mlx_strerror(mlx_errno), mlx_errno, data);
+		ft_error_and_free("mlx_load_png failed\n", mlx_errno, data);
 	data->textures[3] = mlx_load_png(data->we_texture);
 	if (!(data->textures[3]))
-		ft_mlx_error_and_free(mlx_strerror(mlx_errno), mlx_errno, data);
+		ft_error_and_free("mlx_load_png failed\n", mlx_errno, data);
 	data->weapon_textures[0] = mlx_load_png("./textures/gun.png");
 	if (!(data->weapon_textures[0]))
-		ft_mlx_error_and_free(mlx_strerror(mlx_errno), mlx_errno, data);
+		ft_error_and_free("mlx_load_png failed\n", mlx_errno, data);
 	data->weapon_textures[1] = mlx_load_png("./textures/gun_2.png");
 	if (!(data->weapon_textures[1]))
-		ft_mlx_error_and_free(mlx_strerror(mlx_errno), mlx_errno, data);
+		ft_error_and_free("mlx_load_png failed\n", mlx_errno, data);
 	data->weapon_textures[2] = mlx_load_png("./textures/knive.png");
 	if (!(data->weapon_textures[2]))
-		ft_mlx_error_and_free(mlx_strerror(mlx_errno), mlx_errno, data);
+		ft_error_and_free("mlx_load_png failed\n", mlx_errno, data);
 	init_textures_2(data);
 }
 

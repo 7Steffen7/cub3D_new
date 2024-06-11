@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   mini_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: aweissha <aweissha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 16:51:43 by sparth            #+#    #+#             */
 /*   Updated: 2024/06/11 16:21:12 by sparth           ###   ########.fr       */
@@ -90,9 +90,9 @@ void	draw_block(t_data *data, int y, int x, char type)
 	t_block	map;
 
 	if (type == '1')
-		map.color = wall_color_map;
+		map.color = WALL_COLOR_MAP;
 	else
-		map.color = door_color_map;
+		map.color = DOOR_COLOR_MAP;
 	map.start_x = data->screen_width - (data->screen_width / 8) \
 		- (((int)(data->player->position.x * 10) % 10) * 8 / 10);
 	map.start_y = data->screen_height / 8 \

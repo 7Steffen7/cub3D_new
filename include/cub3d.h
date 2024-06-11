@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: aweissha <aweissha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:02:00 by aweissha          #+#    #+#             */
 /*   Updated: 2024/06/11 16:32:11 by sparth           ###   ########.fr       */
@@ -17,7 +17,6 @@
 # include <stdlib.h>
 # include <stdbool.h>
 # include <errno.h>
-# include <float.h>
 # include <limits.h>
 # include <math.h>
 # include <fcntl.h>
@@ -32,8 +31,8 @@
 # define WALL_DIST 0.25
 # define FOV_IN_DEGREE 60
 # define PI 3.14159265358979
-# define wall_color_map 0xFFFFEBFF
-# define door_color_map 0x808080FF
+# define WALL_COLOR_MAP 0xFFFFEBFF
+# define DOOR_COLOR_MAP 0x808080FF
 
 typedef struct s_block
 {
@@ -122,11 +121,11 @@ typedef struct s_data
 }	t_data;
 
 // init.c
-void	init_ray(int ray_index, t_data *data);
-void	ft_init_mlx(t_data *data);
-void	init_player(t_data *data);
-void	init_textures(t_data *data);
-t_data	*init_data(int argc, char *argv[]);
+void			init_ray(int ray_index, t_data *data);
+void			ft_init_mlx(t_data *data);
+void			init_player(t_data *data);
+void			init_textures(t_data *data);
+t_data			*init_data(int argc, char *argv[]);
 
 // init_2.c
 void	init_ray_2(t_data *data);
@@ -137,49 +136,51 @@ void	player_dir_init(t_data *data, float x, float y, char dir);
 
 
 // error.c
-void	free_everything(t_data *data);
-void	ft_error(char *message, int code);
-void	ft_mlx_error(const char *message, int code);
-void	ft_mlx_error_and_free(const char *message, int code, t_data *data);
-void	ft_error_and_free(char *message, int code, t_data *data);
-int		print_error(int *error, char *line);
-void	error_map_print(char **map, t_data *data);
+void			free_textures(t_data *data);
+void			free_map(t_data *data);
+void			free_everything(t_data *data);
+void			ft_error(const char *message, int code);
+void			ft_error_and_free(const char *message, int code, t_data *data);
+
+// error_2.c
+int				print_error(int *error, char *line);
+void			error_map_print(char **map, t_data *data);
 
 // ray_algorithm.c
-double	find_factor(t_ray *ray);
-void	elongate_ray(t_ray *ray);
-void	check_for_wall(t_data *data);
-void	calc_perp_length(t_data *data);
+double			find_factor(t_ray *ray);
+void			elongate_ray(t_ray *ray);
+void			check_for_wall(t_data *data);
+void			calc_perp_length(t_data *data);
 
 // raycasting.c
-void	ray_algorithm(t_data *data);
-void	raycaster(t_data *data);
+void			ray_algorithm(t_data *data);
+void			raycaster(t_data *data);
 
 // raycasting_utils.c
-double	get_lower(double a, double b);
-int 	is_integer(float x);
-int		ft_pixel(int r, int g, int b, int a);
-float	vector_len(t_vector vector);
+double			get_lower(double a, double b);
+int				is_integer(float x);
+int				ft_pixel(int r, int g, int b, int a);
+float			vector_len(t_vector vector);
 
 // render.c
-void	fill_repeating_pixels(int *counter, int color, t_data *data);
-void	line_to_image(t_data *data);
-void	render_image(t_data *data);
+void			fill_repeating_pixels(int *counter, int color, t_data *data);
+void			line_to_image(t_data *data);
+void			render_image(t_data *data);
 
 // textures.c
-void	check_side(t_ray *ray);
-void	calc_texture(t_data *data);
-void	calc_tex_y(int counter, mlx_texture_t *texture, t_data *data);
-int		find_color_from_texture(int	counter, t_data *data);
+void			check_side(t_ray *ray);
+void			calc_texture(t_data *data);
+void			calc_tex_y(int counter, mlx_texture_t *texture, t_data *data);
+int				find_color_from_texture(int counter, t_data *data);
 
 // weapon.c
 unsigned int	find_weapon_color(float x, float y, t_data *data);
 void			add_weapon(t_data *data);
 
 // map.c
-void	parse_map(t_data *data, char *argv[]);
-void	find_player(t_data *data);
-void	print_map(char **map, t_data *data);
+void			parse_map(t_data *data, char *argv[]);
+void			find_player(t_data *data);
+void			print_map(char **map, t_data *data);
 
 //map2.c
 void	find_player(t_data *data);
@@ -197,11 +198,11 @@ unsigned int	get_color(t_data *data, char *line, char color, int *error);
 
 
 //map_utils.c
-int		ft_mod_strlen(const char *s);
-size_t	ft_strllcpy(char *dst, const char *src, size_t dstsize);
-bool	ft_isspace(char c);
-int		ft_strcheck(char *str);
-void	strcut(char *str);
+int				ft_mod_strlen(const char *s);
+size_t			ft_strllcpy(char *dst, const char *src, size_t dstsize);
+bool			ft_isspace(char c);
+int				ft_strcheck(char *str);
+void			strcut(char *str);
 
 //map_utils2.c
 void			line_prep(char *line, int line_len);
@@ -209,23 +210,21 @@ void			delete_nl(char *line);
 unsigned int	color_calc(int red, int green, int blue);
 bool			ft_isnum(char *str);
 
-
 // map_validation.c
-void	map_validation(t_data *data);
+void			map_validation(t_data *data);
 
 // mini_map.c
-void	mini_map(t_data *data);
-void	map_ray(t_data *data, int index, double perp_len);
+void			mini_map(t_data *data);
+void			map_ray(t_data *data, int index, double perp_len);
 
 //mini_map2.c
 void	draw_arrow(t_data *data);
 
 //player_movement.c
-void	player_movement(t_data *data, int mouse_x, int mouse_y);
-void	player_vertical_movement(t_data *data, float speed);
-void	player_rotation(t_data *data, int speed);
-void	player_horizontal_movement(t_data *data, float speed);
-bool	able_2_walk(char **map, double y, double x);
-
+void			player_movement(t_data *data, int mouse_x, int mouse_y);
+void			player_vertical_movement(t_data *data, float speed);
+void			player_rotation(t_data *data, int speed);
+void			player_horizontal_movement(t_data *data, float speed);
+bool			able_2_walk(char **map, double y, double x);
 
 #endif
