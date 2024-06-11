@@ -6,7 +6,7 @@
 /*   By: aweissha <aweissha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:02:00 by aweissha          #+#    #+#             */
-/*   Updated: 2024/06/11 15:23:15 by aweissha         ###   ########.fr       */
+/*   Updated: 2024/06/11 16:32:11 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,18 @@
 # define PI 3.14159265358979
 # define WALL_COLOR_MAP 0xFFFFEBFF
 # define DOOR_COLOR_MAP 0x808080FF
+
+typedef struct s_block
+{
+	int				start_x;
+	int				start_y;
+	int				j;
+	int				k;
+	int				pivot_x;
+	int				pivot_y;
+	float			theta;
+	unsigned int	color;
+}	t_block;
 
 typedef struct s_cord
 {
@@ -92,10 +104,10 @@ typedef struct s_data
 	t_player		*player;
 	t_ray			*ray;
 	long			time;
-	char			*path_to_the_east_texture;
-	char			*path_to_the_west_texture;
-	char			*path_to_the_north_texture;
-	char			*path_to_the_south_texture;
+	char			*ea_texture;
+	char			*we_texture;
+	char			*no_texture;
+	char			*so_texture;
 	unsigned int	color_ceiling;
 	unsigned int	color_floor;
 	bool			color_ceiling_check;
@@ -116,10 +128,12 @@ void			init_textures(t_data *data);
 t_data			*init_data(int argc, char *argv[]);
 
 // init_2.c
-void			init_ray_2(t_data *data);
-void			init_textures_2(t_data *data);
-void			init_data_textures(t_data *data);
-void			init_data_params(t_data *data);
+void	init_ray_2(t_data *data);
+void	init_textures_2(t_data *data);
+void	init_data_textures(t_data *data);
+void	init_data_params(t_data *data);
+void	player_dir_init(t_data *data, float x, float y, char dir);
+
 
 // error.c
 void			free_textures(t_data *data);
@@ -168,6 +182,21 @@ void			parse_map(t_data *data, char *argv[]);
 void			find_player(t_data *data);
 void			print_map(char **map, t_data *data);
 
+//map2.c
+void	find_player(t_data *data);
+void	create_map2(t_data *data, char *line, int i, int fd);
+void	create_map(char *file, t_data *data);
+void	dim_reset(t_data *data);
+void	dim_close_and_check(t_data *data, int fd);
+
+//map3.c
+bool			get_dim(t_data *data, int fd, char *line);
+void			get_dimensions(char *file, t_data *data);
+void			get_color_prep(t_data *data, char color, int *error);
+unsigned int	get_color2(char **strarr, int *error, int i);
+unsigned int	get_color(t_data *data, char *line, char color, int *error);
+
+
 //map_utils.c
 int				ft_mod_strlen(const char *s);
 size_t			ft_strllcpy(char *dst, const char *src, size_t dstsize);
@@ -187,6 +216,9 @@ void			map_validation(t_data *data);
 // mini_map.c
 void			mini_map(t_data *data);
 void			map_ray(t_data *data, int index, double perp_len);
+
+//mini_map2.c
+void	draw_arrow(t_data *data);
 
 //player_movement.c
 void			player_movement(t_data *data, int mouse_x, int mouse_y);

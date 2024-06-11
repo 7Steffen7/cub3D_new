@@ -6,7 +6,7 @@
 /*   By: aweissha <aweissha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 19:11:02 by aweissha          #+#    #+#             */
-/*   Updated: 2024/06/11 15:06:47 by aweissha         ###   ########.fr       */
+/*   Updated: 2024/06/11 15:33:50 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,14 +63,14 @@ void	free_everything(t_data *data)
 		free(data->player);
 	if (data->ray)
 		free(data->ray);
-	if (data->path_to_the_east_texture)
-		free(data->path_to_the_east_texture);
-	if (data->path_to_the_north_texture)
-		free(data->path_to_the_north_texture);
-	if (data->path_to_the_south_texture)
-		free(data->path_to_the_south_texture);
-	if (data->path_to_the_west_texture)
-		free(data->path_to_the_west_texture);
+	if (data->ea_texture)
+		free(data->ea_texture);
+	if (data->no_texture)
+		free(data->no_texture);
+	if (data->so_texture)
+		free(data->so_texture);
+	if (data->we_texture)
+		free(data->we_texture);
 	free_map(data);
 	if (data)
 		free(data);

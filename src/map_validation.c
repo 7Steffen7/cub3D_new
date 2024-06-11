@@ -6,7 +6,7 @@
 /*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 16:34:46 by sparth            #+#    #+#             */
-/*   Updated: 2024/06/10 15:47:40 by sparth           ###   ########.fr       */
+/*   Updated: 2024/06/11 15:21:46 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	check_if_valid(char **map, t_data *data)
 		error_map_print(map, data);
 		ft_error_and_free("map is not closed!", 1, data);
 	}
-	while(i < data->map_height - 1)
+	while (i < data->map_height - 1)
 	{
 		if (map[i][0] == 'f' || map[i][data->map_width - 1] == 'f')
 		{
@@ -68,7 +68,10 @@ void	map_free_and_check(char **map, bool error, t_data *data, int i)
 		free(map[i]);
 	free(map);
 	if (error == true)
-		ft_error_and_free("map contains invalid chars: FLOOR: 0 WALL: 1 PLAYER DIR: N S W E DOOR: D\n", 1, data);
+	{
+		printf("map contains invalid chars: FLOOR: 0 WALL: 1 ");
+		ft_error_and_free("PLAYER DIR: N S W E DOOR: D\n", 1, data);
+	}
 }
 
 void	map_validation(t_data *data)
@@ -78,7 +81,7 @@ void	map_validation(t_data *data)
 	char		**map;
 	int			i;
 	bool		error;
-	
+
 	error = false;
 	start.x = (int)data->player->position.x;
 	start.y = (int)data->player->position.y;

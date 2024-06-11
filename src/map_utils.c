@@ -6,7 +6,7 @@
 /*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 15:50:09 by sparth            #+#    #+#             */
-/*   Updated: 2024/06/10 15:52:18 by sparth           ###   ########.fr       */
+/*   Updated: 2024/06/11 14:27:04 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	ft_strcheck(char *str)
 void	strcut(char *str)
 {
 	int	len;
-	
+
 	len = ft_strlen(str);
 	while (ft_isspace(str[--len]))
 		str[len] = '\0';

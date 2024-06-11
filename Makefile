@@ -30,10 +30,13 @@ SRCS =		$(SRC_DIR)main.c \
 			$(SRC_DIR)textures.c \
 			$(SRC_DIR)weapon.c \
 			$(SRC_DIR)map.c \
+			$(SRC_DIR)map2.c \
+			$(SRC_DIR)map3.c \
 			$(SRC_DIR)map_utils.c \
 			$(SRC_DIR)map_utils2.c \
 			$(SRC_DIR)map_validation.c \
 			$(SRC_DIR)mini_map.c \
+			$(SRC_DIR)mini_map2.c \
 			$(SRC_DIR)player_movement.c \
 
 

@@ -69,10 +69,10 @@ void	init_data_params(t_data *data)
 	data->player_exist = false;
 	data->init_player_dir = '0';
 	data->time = 0;
-	data->path_to_the_east_texture = NULL;
-	data->path_to_the_west_texture = NULL;
-	data->path_to_the_north_texture = NULL;
-	data->path_to_the_south_texture = NULL;
+	data->ea_texture = NULL;
+	data->we_texture = NULL;
+	data->no_texture = NULL;
+	data->so_texture = NULL;
 	data->color_ceiling = 0x0;
 	data->color_floor = 0x0;
 	data->color_ceiling_check = false;
@@ -83,4 +83,22 @@ void	init_data_params(t_data *data)
 	data->mouse_temp_y = 384;
 	data->last_color_texture = 0;
 	data->mouse = false;
+}
+
+void	player_dir_init(t_data *data, float x, float y, char dir)
+{
+	data->player->direction.x = x;
+	data->player->direction.y = y;
+	if (dir == 'N' || dir == 'S')
+	{
+		data->player->screen.x = -data->player->direction.y
+			* tan((FOV_IN_DEGREE / 2) * (PI / 180));
+		data->player->screen.y = 0;
+	}
+	if (dir == 'W' || dir == 'E')
+	{
+		data->player->screen.x = 0;
+		data->player->screen.y = data->player->direction.x
+			* tan((FOV_IN_DEGREE / 2) * (PI / 180));
+	}
 }
