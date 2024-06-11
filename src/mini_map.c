@@ -6,79 +6,49 @@
 /*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 16:51:43 by sparth            #+#    #+#             */
-/*   Updated: 2024/06/10 16:31:41 by sparth           ###   ########.fr       */
+/*   Updated: 2024/06/11 16:21:12 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-void    bresenham(t_data *data, float x0, float x1, float y0, float y1)
+void	bresenham(t_data *data, t_vector start, t_vector end)
 {
-    float    x_step;
-    float    y_step;
-    int        max;
-    float    step;
-    int        i;
+	float	x_step;
+	float	y_step;
+	int		max;
+	float	step;
+	int		i;
 
-    i = 1;
-    x_step = x1 - x0;
-    y_step = y1 - y0;
-    max = fmaxf(fabsf(x_step),fabsf(y_step));
-    x_step /= max;
-    y_step /= max;
-
-    while((int)(x0 - x1) || (int)(y0 - y1))
-    {
-        step = i++ / max;
-        if (y0 >= 8 && y0 <= 184 && x0 >= 776 && x0 <= 1016)
-            mlx_put_pixel(data->img, x0, y0, 0x00AAFF77);
-            // mlx_put_pixel(data->img, x0, y0, 0xFFFF00FF);
-        x0 += x_step;
-        y0 += y_step;
-    }
+	i = 1;
+	x_step = end.x - start.x;
+	y_step = end.y - start.y;
+	max = fmaxf(fabsf(x_step), fabsf(y_step));
+	x_step /= max;
+	y_step /= max;
+	while ((int)(start.x - end.x) || (int)(start.y - end.y))
+	{
+		step = i++ / max;
+		if (start.y >= 8 && start.y <= 184 && start.x >= 776 && start.x <= 1016)
+			mlx_put_pixel(data->img, start.x, start.y, 0x00AAFF77);
+		start.x += x_step;
+		start.y += y_step;
+	}
 }
 
 void	map_ray(t_data *data, int index, double perp_len)
 {
-	float	radian;
-	int		x;
-	int		y;
-	float	len;
-	
+	float		radian;
+	float		len;
+	t_vector	start;
+	t_vector	end;
 
 	radian = (60 + (index * 0.58823529)) * (M_PI / 180);
 	len = perp_len / sin(radian);
-	x = 896 - ((len * 8) * cos(radian));
-	y = 96 - ((len * 8) * sin(radian));
-	bresenham(data, 896, x, 96, y);
-}
-
-void	draw_arrow(t_data *data)
-{
-	int	player_x;
-	int	player_y;
-	int	i;
-	int	step;
-	
-	player_x = 896;
-	player_y = 96;
-	
-	player_y -= 6;
-	i = 0;
-	step = 0;
-	while (i > -6)
-	{
-		while (i <= step)
-			mlx_put_pixel(data->img, player_x + i++, player_y, 0xFFFFFF55);
-		i -= 1;
-		i *= -1;
-		player_y++;
-		while (i <= step)
-			mlx_put_pixel(data->img, player_x + i++, player_y, 0xFFFFFF55);
-		player_y++;
-		i *= -1;
-		step++;
-	}
+	end.x = 896 - ((len * 8) * cos(radian));
+	end.y = 96 - ((len * 8) * sin(radian));
+	start = (t_vector){896, 96};
+	bresenham(data, start, end);
 }
 
 // pixel height = 8
@@ -98,57 +68,52 @@ void	draw_arrow(t_data *data)
 //min = 8
 // max = 184
 
-void	draw_block(t_data *data, int y, int x, char type)
+void	draw_block2(t_data *data, t_block map, int x, int y)
 {
-	int				map_start_x;
-	int				map_start_y;
-	int				j;
-	int				k;
-	int 			temp_x;
-	int 			temp_y;
-	float			theta;
-	int				pivot_x;
-	int				pivot_y;
+	int				temp_x;
+	int				temp_y;
 	float			pos_x;
 	float			pos_y;
-	unsigned int	color;
+
+	temp_x = map.start_x + map.j + (8 * x);
+	temp_y = map.start_y + map.k + (8 * y);
+	pos_x = (map.pivot_x + (temp_x - map.pivot_x) \
+		* cos(map.theta)) - (temp_y - map.pivot_y) * sin(map.theta);
+	pos_y = map.pivot_y + (temp_x - map.pivot_x) \
+		* sin(map.theta) + (temp_y - map.pivot_y) * cos(map.theta);
+	if (pos_y >= 8 && pos_y <= 184 && pos_x >= 776 && pos_x <= 1016)
+		mlx_put_pixel(data->img, pos_x, pos_y, map.color);
+}
+
+void	draw_block(t_data *data, int y, int x, char type)
+{
+	t_block	map;
 
 	if (type == '1')
-		color = wall_color_map;
+		map.color = wall_color_map;
 	else
-		color = door_color_map;
-	map_start_x = data->screen_width - (data->screen_width / 8) - (((int)(data->player->position.x * 10) % 10) * 8 / 10);
-	map_start_y = data->screen_height / 8 - (((int)(data->player->position.y * 10) % 10) * 8 / 10);
-	pivot_x = data->screen_width - (data->screen_width / 8 );
-	pivot_y = ((data->screen_height / 8));
-	k = 0;
-	theta = atan2(data->player->direction.x * -1, data->player->direction.y * - 1);
-	while (k < 8)
+		map.color = door_color_map;
+	map.start_x = data->screen_width - (data->screen_width / 8) \
+		- (((int)(data->player->position.x * 10) % 10) * 8 / 10);
+	map.start_y = data->screen_height / 8 \
+		- (((int)(data->player->position.y * 10) % 10) * 8 / 10);
+	map.pivot_x = data->screen_width - (data->screen_width / 8);
+	map.pivot_y = ((data->screen_height / 8));
+	map.k = 0;
+	map.theta = atan2(data->player->direction.x * -1, \
+	data->player->direction.y * -1);
+	while (map.k < 8)
 	{
-		j = 0;
-		while (j < 8)
+		map.j = 0;
+		while (map.j < 8)
 		{
-			temp_x = map_start_x + j + (8 * x);
-			temp_y = map_start_y + k + (8 * y);
-			pos_x = (pivot_x + (temp_x - pivot_x) * cos(theta)) - (temp_y - pivot_y) * sin(theta);
-			pos_y = pivot_y + (temp_x - pivot_x) * sin(theta) + (temp_y - pivot_y) * cos(theta);
-			if (pos_y >= 8 && pos_y <= 184 && pos_x >= 776 && pos_x <= 1016)
-				mlx_put_pixel(data->img, pos_x, pos_y, color);
-			j++;
+			draw_block2(data, map, x, y);
+			map.j++;
 		}
-		k++;
+		map.k++;
 	}
 }
 
-// player start position is in the middle of the map 
-// the map is getting printed starting from this position
-
-// step 1. typecast the player position as int (just print it is as a non wall square)
-// step 2. consider the float value of the player
-// step 3. try to implement map rotation
-// alternative implement arrow that shows player direction
-// 128 / 8 - 1
-// 96 / 8 - 1
 void	mini_map(t_data *data)
 {
 	int	start_x;
@@ -172,7 +137,7 @@ void	mini_map(t_data *data)
 					draw_block(data, y, x, data->map[start_y + y][start_x + x]);
 			}
 			x++;
-		}	
+		}
 		y++;
 	}
 	draw_arrow(data);

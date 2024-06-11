@@ -6,17 +6,17 @@
 /*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:07:59 by aweissha          #+#    #+#             */
-/*   Updated: 2024/06/10 15:29:55 by sparth           ###   ########.fr       */
+/*   Updated: 2024/06/11 15:04:01 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-void    print_background(t_data *data)
+void	print_background(t_data *data)
 {
-	int x;
-	int y;
-	
+	int	x;
+	int	y;
+
 	y = 0;
 	while (y < data->screen_height / 2)
 	{
@@ -39,8 +39,13 @@ void    print_background(t_data *data)
 	}
 }
 
-bool	door_check(char **map, double y, double x)
+bool	door_check(char **map, t_data *data)
 {
+	float	y;
+	float	x;
+
+	y = data->player->position.y;
+	x = data->player->position.x;
 	if (map[(int)(y + WALL_DIST)][(int)(x + WALL_DIST)] != 'd'
 		&& map[(int)(y + WALL_DIST)][(int)(x - WALL_DIST)] != 'd'
 		&& map[(int)(y - WALL_DIST)][(int)(x + WALL_DIST)] != 'd'
@@ -57,8 +62,10 @@ void	open_close_door(t_data *data)
 	long			time;
 	struct timeval	tv;
 
-	door_position.x = data->player->position.x + (data->player->direction.x / vector_len(data->player->direction));
-	door_position.y = data->player->position.y + (data->player->direction.y / vector_len(data->player->direction));
+	door_position.x = data->player->position.x + (data->player->direction.x \
+		/ vector_len(data->player->direction));
+	door_position.y = data->player->position.y + (data->player->direction.y \
+		/ vector_len(data->player->direction));
 	map_x = (int)door_position.x;
 	map_y = (int)door_position.y;
 	gettimeofday(&tv, NULL);
@@ -69,7 +76,7 @@ void	open_close_door(t_data *data)
 			data->map[map_y][map_x] = 'd';
 		else if (data->map[map_y][map_x] == 'd')
 		{
-			if (door_check(data->map, data->player->position.y, data->player->position.x))
+			if (door_check(data->map, data))
 				data->map[map_y][map_x] = 'D';
 		}
 		data->time = time;
@@ -78,10 +85,10 @@ void	open_close_door(t_data *data)
 
 void	ft_hook(void *param)
 {
-	t_data *data;
-	int	mouse_x;
-	int	mouse_y;
-	
+	t_data	*data;
+	int		mouse_x;
+	int		mouse_y;
+
 	mouse_x = 0;
 	mouse_y = 0;
 	data = param;
@@ -110,10 +117,10 @@ void	ft_hook(void *param)
 	// printf("dir_x: %f\n", data->player->direction.x);
 	// printf("dir_y: %f\n", data->player->direction.y);
 
-
 int	main(int argc, char *argv[])
 {
 	t_data	*data;
+
 	data = init_data(argc, argv);
 	init_textures(data);
 	raycaster(data);

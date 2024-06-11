@@ -6,7 +6,7 @@
 /*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 15:26:14 by sparth            #+#    #+#             */
-/*   Updated: 2024/06/10 15:30:56 by sparth           ###   ########.fr       */
+/*   Updated: 2024/06/11 14:30:13 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,12 @@ void	player_vertical_movement(t_data *data, float speed)
 	if (able_2_walk(data->map, temp_y, data->player->position.x))
 		data->player->position.y = temp_y;
 }
+
 void	player_movement(t_data *data, int mouse_x, int mouse_y)
 {
 	mlx_get_mouse_pos(data->mlx, &mouse_x, &mouse_y);
 	if (mouse_x != data->mouse_temp_x && data->mouse == true)
 	{
-		
 		player_rotation(data, (mouse_x - data->mouse_temp_x) / 2);
 		mlx_set_mouse_pos(data->mlx, data->mouse_temp_x, data->mouse_temp_y);
 		mouse_x = data->mouse_temp_x;

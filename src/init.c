@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aweissha <aweissha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:07:03 by aweissha          #+#    #+#             */
-/*   Updated: 2024/06/09 16:41:45 by aweissha         ###   ########.fr       */
+/*   Updated: 2024/06/11 15:31:06 by sparth           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,51 +57,27 @@ void	init_player(t_data *data)
 		ft_error_and_free("Memory allocation of player struct failed", 1, data);
 	find_player(data);
 	if (data->init_player_dir == 'N')
-	{
-		data->player->direction.x = 0;
-		data->player->direction.y = -0.5;
-		data->player->screen.x = -data->player->direction.y
-			* tan((FOV_IN_DEGREE / 2) * (PI / 180));
-		data->player->screen.y = 0;
-	}
+		player_dir_init(data, 0, -0.5, 'N');
 	else if (data->init_player_dir == 'S')
-	{
-		data->player->direction.x = 0;
-		data->player->direction.y = 0.5;
-		data->player->screen.x = -data->player->direction.y
-			* tan((FOV_IN_DEGREE / 2) * (PI / 180));
-		data->player->screen.y = 0;
-	}
+		player_dir_init(data, 0, 0.5, 'S');
 	else if (data->init_player_dir == 'W')
-	{
-		data->player->direction.x = -0.5;
-		data->player->direction.y = 0;
-		data->player->screen.x = 0;
-		data->player->screen.y = data->player->direction.x
-			* tan((FOV_IN_DEGREE / 2) * (PI / 180));
-	}
+		player_dir_init(data, -0.5, 0, 'W');
 	else if (data->init_player_dir == 'E')
-	{
-		data->player->direction.x = 0.5;
-		data->player->direction.y = 0;
-		data->player->screen.x = 0;
-		data->player->screen.y = data->player->direction.x
-			* tan((FOV_IN_DEGREE / 2) * (PI / 180));
-	}
+		player_dir_init(data, 0.5, 0, 'E');
 }
 
 void	init_textures(t_data *data)
 {
-	data->textures[0] = mlx_load_png(data->path_to_the_north_texture);
+	data->textures[0] = mlx_load_png(data->no_texture);
 	if (!(data->textures[0]))
 		ft_mlx_error_and_free(mlx_strerror(mlx_errno), mlx_errno, data);
-	data->textures[1] = mlx_load_png(data->path_to_the_east_texture);
+	data->textures[1] = mlx_load_png(data->ea_texture);
 	if (!(data->textures[1]))
 		ft_mlx_error_and_free(mlx_strerror(mlx_errno), mlx_errno, data);
-	data->textures[2] = mlx_load_png(data->path_to_the_south_texture);
+	data->textures[2] = mlx_load_png(data->so_texture);
 	if (!(data->textures[2]))
 		ft_mlx_error_and_free(mlx_strerror(mlx_errno), mlx_errno, data);
-	data->textures[3] = mlx_load_png(data->path_to_the_west_texture);
+	data->textures[3] = mlx_load_png(data->we_texture);
 	if (!(data->textures[3]))
 		ft_mlx_error_and_free(mlx_strerror(mlx_errno), mlx_errno, data);
 	data->weapon_textures[0] = mlx_load_png("./textures/gun.png");
