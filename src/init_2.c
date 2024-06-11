@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: aweissha <aweissha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 14:45:55 by aweissha          #+#    #+#             */
-/*   Updated: 2024/06/09 23:40:18 by sparth           ###   ########.fr       */
+/*   Updated: 2024/06/11 15:39:48 by aweissha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,16 @@ void	init_textures_2(t_data *data)
 {
 	data->weapon_shot_textures[0] = mlx_load_png("./textures/gun_shot.png");
 	if (!(data->weapon_shot_textures[0]))
-		ft_mlx_error_and_free(mlx_strerror(mlx_errno), mlx_errno, data);
+		ft_error_and_free("mlx_load_png failed\n", mlx_errno, data);
 	data->weapon_shot_textures[1] = mlx_load_png("./textures/gun_2_shot.png");
 	if (!(data->weapon_shot_textures[1]))
-		ft_mlx_error_and_free(mlx_strerror(mlx_errno), mlx_errno, data);
+		ft_error_and_free("mlx_load_png failed\n", mlx_errno, data);
 	data->weapon_shot_textures[2] = mlx_load_png("./textures/knive_stab.png");
 	if (!(data->weapon_shot_textures[2]))
-		ft_mlx_error_and_free(mlx_strerror(mlx_errno), mlx_errno, data);
+		ft_error_and_free("mlx_load_png failed\n", mlx_errno, data);
 	data->door_texture[0] = mlx_load_png("./textures/door.png");
 	if (!(data->door_texture[0]))
-		ft_mlx_error_and_free(mlx_strerror(mlx_errno), mlx_errno, data);
+		ft_error_and_free("mlx_load_png failed\n", mlx_errno, data);
 }
 
 void	init_data_textures(t_data *data)

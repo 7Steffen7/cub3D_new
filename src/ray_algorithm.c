@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_algorithm.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: aweissha <aweissha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 15:01:37 by aweissha          #+#    #+#             */
-/*   Updated: 2024/06/09 23:55:21 by sparth           ###   ########.fr       */
+/*   Updated: 2024/06/11 15:18:55 by aweissha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ double	find_factor(t_ray *ray)
 	double	a_y;
 	double	a;
 
-	a_x = DBL_MAX;
-	a_y = DBL_MAX;
+	a_x = __DBL_MAX__;
+	a_y = __DBL_MAX__;
 	if (ray->dir.x > 0)
 		a_x = (1 - ray->pos.x + ray->map_x) / ray->dir.x;
 	else if (ray->dir.x < 0)
@@ -47,14 +47,6 @@ void	elongate_ray(t_ray *ray)
 	ray->map_y = (int)ray->pos.y;
 }
 
-/*
-This function checks, if the ray is in a wall. 
-The ray is also consideres as in a wall,
-when its for example at position (2.0/1.5) and square (1/1) is a wall, 
-when the ray is facing to negative x. 
-When there is a negative dir in the ray,
-the previous square has to be checked.
-*/
 void	check_for_wall(t_data *data)
 {
 	t_ray	*ray;
