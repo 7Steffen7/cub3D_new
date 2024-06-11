@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sparth <sparth@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: aweissha <aweissha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 16:51:43 by sparth            #+#    #+#             */
-/*   Updated: 2024/06/10 16:31:41 by sparth           ###   ########.fr       */
+/*   Updated: 2024/06/11 15:20:22 by aweissha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,9 +114,9 @@ void	draw_block(t_data *data, int y, int x, char type)
 	unsigned int	color;
 
 	if (type == '1')
-		color = wall_color_map;
+		color = WALL_COLOR_MAP;
 	else
-		color = door_color_map;
+		color = DOOR_COLOR_MAP;
 	map_start_x = data->screen_width - (data->screen_width / 8) - (((int)(data->player->position.x * 10) % 10) * 8 / 10);
 	map_start_y = data->screen_height / 8 - (((int)(data->player->position.y * 10) % 10) * 8 / 10);
 	pivot_x = data->screen_width - (data->screen_width / 8 );
